@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2018_08_16_154830) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_bookmarks_on_post_id"
+    t.index ["user_id", "post_id"], name: "index_bookmarks_on_user_id_and_post_id", unique: true
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
@@ -28,7 +29,6 @@ ActiveRecord::Schema.define(version: 2018_08_16_154830) do
     t.text "content"
     t.bigint "user_id"
     t.integer "responses_count", default: 0
-    t.integer "votes_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "cached_votes_total", default: 0
@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 2018_08_16_154830) do
     t.bigint "user_id"
     t.bigint "post_id"
     t.boolean "author_thanked", default: false
-    t.integer "votes_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "cached_votes_total", default: 0
@@ -66,6 +65,7 @@ ActiveRecord::Schema.define(version: 2018_08_16_154830) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["response_id"], name: "index_thanks_on_response_id"
+    t.index ["user_id", "response_id"], name: "index_thanks_on_user_id_and_response_id", unique: true
     t.index ["user_id"], name: "index_thanks_on_user_id"
   end
 

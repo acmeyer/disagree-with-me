@@ -5,7 +5,6 @@ class CreateResponses < ActiveRecord::Migration[5.2]
       t.references :user
       t.references :post
       t.boolean :author_thanked, default: false
-      t.integer :votes_count, default: 0
 
       t.timestamps
     end
