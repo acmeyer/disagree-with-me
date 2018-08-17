@@ -5,4 +5,7 @@ class Response < ApplicationRecord
 
   validates :content, presence: true
   validates :post, presence: true
+
+  scope :thanked, -> { where(author_thanked: true) }
+  scope :not_thanked, -> { where(author_thanked: false) }
 end

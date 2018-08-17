@@ -2,7 +2,8 @@ class AuthToken < ApplicationRecord
   belongs_to :user, touch: true
   before_create :generate_unique_token
 
-  scope :not_expired, -> { where("expires_at > '#{DateTime.now.to_formatted_s(:db)}'") }
+  scope :not_expired, -> { where("expires_at > '#{DateTime.now.utc.to_formatted_s(:db)}'") }
+  scope :expired, -> { where("expires_at < '#{DateTime.now.utc.to_formatted_s(:db)}'") }
 
   def self.generate_new_token(user_id, ip_address, user_agent)
     user = User.find_by_id user_id
@@ -22,6 +23,11 @@ class AuthToken < ApplicationRecord
     self.last_used_at = DateTime.now
     self.ip_address = ip_address
     self.user_agent = user_agent
+    self.save!
+  end
+
+  def expire!
+    self.expires_at = DateTime.now
     self.save!
   end
 

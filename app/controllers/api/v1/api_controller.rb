@@ -1,6 +1,6 @@
 class Api::V1::ApiController < ApplicationController
   include ApiHelper
-  attr_reader :current_user
+  attr_accessor :current_user
   skip_before_action :verify_authenticity_token
 
   before_action :get_ip_address, :get_user_agent
@@ -9,9 +9,9 @@ class Api::V1::ApiController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
   rescue_from CanCan::AccessDenied, with: :forbidden
-  rescue_from Apis::V1::Forbidden, with: :forbidden
-  rescue_from Apis::V1::NotFound, with: :record_not_found
-  rescue_from Apis::V1::Invalid, with: :record_invalid
+  rescue_from Api::V1::Forbidden, with: :forbidden
+  rescue_from Api::V1::NotFound, with: :record_not_found
+  rescue_from Api::V1::Invalid, with: :record_invalid
 
   protected
   def record_not_found(e)

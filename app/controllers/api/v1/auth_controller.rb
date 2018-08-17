@@ -10,7 +10,7 @@ class Api::V1::AuthController < ApplicationController
   rescue_from Api::V1::Unauthorized, with: :unauthorized
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
 
-  def sign_in
+  def signin
     begin
       @user = User.find_for_authentication(:email => params[:email])
       if @user&.valid_password?(params[:password])
@@ -18,14 +18,14 @@ class Api::V1::AuthController < ApplicationController
         @user.reload
         render_user
       else
-        render_error_message(t('api.auth.invalid_password', default: 'Invalid password'))
+        render_error_message(t('api.auth.invalid_email_or_password', default: 'Invalid email or password.'))
       end
     rescue => e
       render_error_message(e.message)
     end
   end
 
-  def sign_up
+  def signup
     begin
       @user = User.new(user_sign_up_params)
       @user.save!
@@ -39,7 +39,7 @@ class Api::V1::AuthController < ApplicationController
 
   private
   def render_user
-    json = UserJson.new(@user, :full).call
+    json = UserJson.new(@user, :auth).call
     render json: json.as_json
   end
 
