@@ -1,4 +1,5 @@
 class Api::V1::ApiController < ApplicationController
+  include Pundit
   include ApiHelper
   attr_accessor :current_user
   skip_before_action :verify_authenticity_token
@@ -8,7 +9,7 @@ class Api::V1::ApiController < ApplicationController
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
-  rescue_from CanCan::AccessDenied, with: :forbidden
+  rescue_from Pundit::NotAuthorizedError, with: :forbidden
   rescue_from Api::V1::Forbidden, with: :forbidden
   rescue_from Api::V1::NotFound, with: :record_not_found
   rescue_from Api::V1::Invalid, with: :record_invalid

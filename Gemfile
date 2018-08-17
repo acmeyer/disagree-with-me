@@ -27,10 +27,10 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Helper Libraries
 #=============================
 gem 'devise'
-gem 'cancancan', '~> 2.0'
 gem 'acts_as_votable', '~> 0.11.1'
 gem 'oj'
 gem 'kaminari'
+gem 'pundit'
 
 # Frontend Libraries
 #=============================

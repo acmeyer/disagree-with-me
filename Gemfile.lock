@@ -61,7 +61,6 @@ GEM
     builder (3.2.3)
     byebug (10.0.2)
     callsite (0.0.11)
-    cancancan (2.2.0)
     capybara (3.6.0)
       addressable
       mini_mime (>= 0.1.3)
@@ -161,6 +160,8 @@ GEM
     popper_js (1.14.3)
     public_suffix (3.0.2)
     puma (3.12.0)
+    pundit (2.0.0)
+      activesupport (>= 3.0.0)
     rack (2.0.5)
     rack-contrib (2.0.1)
       rack (~> 2.0)
@@ -261,7 +262,6 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   bootstrap (~> 4.1.3)
   byebug
-  cancancan (~> 2.0)
   capybara (>= 2.15)
   chromedriver-helper
   coffee-rails (~> 4.2)
@@ -279,6 +279,7 @@ DEPENDENCIES
   oj
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
+  pundit
   rails (~> 5.2.1)
   sass-rails (~> 5.0)
   selenium-webdriver

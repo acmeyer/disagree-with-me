@@ -14,6 +14,9 @@ class User < ApplicationRecord
   has_many :bookmarked_posts, through: :bookmarks, source: :post
 
   after_save :expire_tokens, if: Proc.new { |user| user.saved_change_to_encrypted_password? }
+  after_initialize :set_default_role, :if => :new_record?
+
+  enum role: [:user, :admin]
 
   # after_create :add_to_marketing_email_list
   # before_destroy :remove_from_email_lists
@@ -23,6 +26,13 @@ class User < ApplicationRecord
   end
 
   private
+  def set_default_role
+    self.role ||= :user
+  end
+  
+  def expire_tokens
+    self.auth_tokens.update_all(expires_at: DateTime.now, updated_at: DateTime.now)
+  end
 
   # def add_to_marketing_email_list
   #   begin
@@ -47,8 +57,4 @@ class User < ApplicationRecord
   #     STDERR.puts("Error while adding user to Mailchimp marketing list: #{$!}")
   #   end
   # end
-
-  def expire_tokens
-    self.auth_tokens.update_all(expires_at: DateTime.now, updated_at: DateTime.now)
-  end
 end
