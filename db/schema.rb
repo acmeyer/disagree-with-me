@@ -10,10 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_16_154830) do
+ActiveRecord::Schema.define(version: 2018_08_17_024353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "auth_tokens", force: :cascade do |t|
+    t.string "token"
+    t.bigint "user_id"
+    t.datetime "last_used_at"
+    t.datetime "expires_at"
+    t.string "user_agent"
+    t.inet "ip_address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["token"], name: "index_auth_tokens_on_token"
+    t.index ["user_id"], name: "index_auth_tokens_on_user_id"
+  end
 
   create_table "bookmarks", force: :cascade do |t|
     t.bigint "post_id"
