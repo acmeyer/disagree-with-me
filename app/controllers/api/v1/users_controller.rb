@@ -32,30 +32,26 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
 
   def my_bookmarks
-    @bookmarks = @user.bookmarked_posts
-    render_bookmarks
+    @posts = @user.bookmarked_posts
+    render_posts
   end
 
   def my_thanks
-    @thanks = @user.thanked_responses
-    render_thanks
+    @responses = @user.thanked_responses
+    render_responses
   end
 
   def my_post_upvotes
-    @upvotes = @user.votes.up.for_type(Post)
-    render_post_upvotes
+    @posts = @user.votes.up.for_type(Post)
+    render_posts
   end
 
   def my_response_upvotes
-    @upvotes = @user.votes.up.for_type(Response)
-    render_response_upvotes
+    @responses = @user.votes.up.for_type(Response)
+    render_responses
   end
 
   private
-  def set_user_as_current_user
-    @user = current_user
-  end
-
   def render_error_message(message)
     render json: {error: message}, status: 422
   end
@@ -76,26 +72,6 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def render_responses
     json = @responses.map{|r| ResponseJson.new(r, @user, :full).call }
-    render json: json.as_json
-  end
-
-  def render_bookmarks
-    json = @bookmarks.map{|p| PostJson.new(p, @user, :full).call }
-    render json: json.as_json
-  end
-
-  def render_thanks
-    json = @thanks.map{|r| ResponseJson.new(r, @user, :full).call }
-    render json: json.as_json
-  end
-
-  def render_post_upvotes
-    json = @upvotes.map{|p| PostJson.new(p, @user, :full).call }
-    render json: json.as_json
-  end
-
-  def render_response_upvotes
-    json = @upvotes.map{|r| ResponseJson.new(r, @user, :full).call }
     render json: json.as_json
   end
 end

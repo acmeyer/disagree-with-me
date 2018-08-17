@@ -37,16 +37,24 @@ class PostJson
 
   def full_json(post, user, options)
     return nil if post.nil?
-    {
+    post_json = {
       id: post.id,
       content: post.content,
       responses_count: post.responses_count,
       upvotes_count: post.cached_votes_up,
-      is_author: user && user.id == post.user_id,
-      upvoted: user && user.voted_up_for?(post),
-      responded_to: user && user.responded_to_post?(post.id),
       created_at: post.created_at,
       updated_at: post.updated_at,
+    }
+    post_json = post_json.merge(post_user_json(post, user)) if user
+    return post_json
+  end
+
+  def post_user_json(post, user)
+    return nil if user.nil?
+    {
+      is_author: user.id == post.user_id,
+      upvoted: user.voted_up_for?(post),
+      responded_to: user.responded_to_post?(post.id),
     }
   end
 end

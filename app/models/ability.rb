@@ -2,7 +2,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    return if user.nil?
+    user ||= User.new
 
     can [:manage, :me, :change_password], User, id: user.id
 

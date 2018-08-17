@@ -30,6 +30,7 @@ gem 'devise'
 gem 'cancancan', '~> 2.0'
 gem 'acts_as_votable', '~> 0.11.1'
 gem 'oj'
+gem 'kaminari'
 
 # Frontend Libraries
 #=============================

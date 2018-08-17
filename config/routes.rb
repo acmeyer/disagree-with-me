@@ -18,9 +18,9 @@ Rails.application.routes.draw do
         get 'users/my_post_upvotes', to: 'users#my_post_upvotes'
         get 'users/my_response_upvotes', to: 'users#my_response_upvotes'
 
-        # resources :posts do
-        #   resources :responses
-        # end
+        resources :posts, only: [:index, :show, :create] do
+          resources :responses, only: [:index, :show, :create]
+        end
       end
     end
   end

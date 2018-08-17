@@ -51,6 +51,10 @@ class Api::V1::ApiController < ApplicationController
     self.current_user = valid_token.user
   end
 
+  def set_user_as_current_user
+    @user = current_user
+  end
+
   def get_ip_address
     @ip_address = request.remote_ip
   end
