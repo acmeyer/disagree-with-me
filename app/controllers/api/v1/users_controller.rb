@@ -1,6 +1,4 @@
 class Api::V1::UsersController < Api::V1::ApiController
-  authorize_resource
-
   before_action :set_user_as_current_user
 
   def me
@@ -52,10 +50,6 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
 
   private
-  def render_error_message(message)
-    render json: {error: message}, status: 422
-  end
-
   def user_password_params
     params.permit(:current_password, :password, :password_confirmation)
   end

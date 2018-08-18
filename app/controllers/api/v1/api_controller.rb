@@ -63,4 +63,8 @@ class Api::V1::ApiController < ApplicationController
   def get_user_agent
     @user_agent = request.user_agent
   end
+
+  def render_error_message(message)
+    render json: {error: message}, status: 422
+  end
 end

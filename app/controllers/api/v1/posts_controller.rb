@@ -12,7 +12,16 @@ class Api::V1::PostsController < Api::V1::ApiController
   end
 
   def create
-    # TODO
+    begin
+      if @post = Post.create(content: params[:content], author: @user)
+        @post.reload
+        render_post
+      else 
+        render_error_message(@post.errors.full_messages[0])
+      end
+    rescue => e
+      render_error_message(e.message)
+    end
   end
 
   private

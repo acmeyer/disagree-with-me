@@ -13,7 +13,16 @@ class Api::V1::ResponsesController < Api::V1::ApiController
   end
 
   def create
-    # TODO
+    begin
+      if @response = @post.responses.create(content: params[:content], author: @user)
+        @response.reload
+        render_response
+      else 
+        render_error_message(@response.errors.full_messages[0])
+      end
+    rescue => e
+      render_error_message(e.message)
+    end
   end
 
   private
