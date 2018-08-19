@@ -2,10 +2,12 @@ class Api::V1::UsersController < Api::V1::ApiController
   before_action :set_user_as_current_user
 
   def me
+    authorize @user
     render_user(:short)
   end
 
   def change_password
+    authorize @user
     begin
       if @user.update_with_password(user_password_params)
         AuthToken.generate_new_token(@user.id, @ip_address, @user_agent)
@@ -20,36 +22,42 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
 
   def my_posts
+    authorize @user
     @current_page = params[:page] || 1
     @posts = @user.posts
     render_posts
   end
 
   def my_responses
+    authorize @user
     @current_page = params[:page] || 1
     @responses = @user.responses
     render_responses
   end
 
   def my_bookmarks
+    authorize @user
     @current_page = params[:page] || 1
     @posts = @user.bookmarked_posts
     render_posts
   end
 
   def my_thanks
+    authorize @user
     @current_page = params[:page] || 1
     @responses = @user.thanked_responses
     render_responses
   end
 
   def my_post_upvotes
+    authorize @user
     @current_page = params[:page] || 1
     @posts = @user.votes.up.for_type(Post)
     render_posts
   end
 
   def my_response_upvotes
+    authorize @user
     @current_page = params[:page] || 1
     @responses = @user.votes.up.for_type(Response)
     render_responses
