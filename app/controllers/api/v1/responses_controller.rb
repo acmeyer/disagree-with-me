@@ -34,7 +34,7 @@ class Api::V1::ResponsesController < Api::V1::ApiController
   def render_responses
     json = ResponsesJson.new(
       @user,
-      @responses,
+      @responses.page(@current_page),
       @current_page,
       @responses.page(@current_page).total_pages,
       @responses.count,

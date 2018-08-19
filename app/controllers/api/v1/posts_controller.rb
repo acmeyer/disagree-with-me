@@ -29,7 +29,7 @@ class Api::V1::PostsController < Api::V1::ApiController
   def render_posts
     json = PostsJson.new(
       @user,
-      @posts,
+      @posts.page(@current_page),
       @current_page,
       @posts.page(@current_page).total_pages,
       @posts.count,
