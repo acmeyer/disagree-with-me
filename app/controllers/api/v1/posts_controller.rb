@@ -2,6 +2,7 @@ class Api::V1::PostsController < Api::V1::ApiController
   before_action :set_user_as_current_user
 
   def index
+    @current_page = params[:page] || 1
     @posts = Post.all
     render_posts
   end
@@ -26,7 +27,14 @@ class Api::V1::PostsController < Api::V1::ApiController
 
   private
   def render_posts
-    json = @posts.map{|p| PostJson.new(p, @user, :full).call }
+    json = PostsJson.new(
+      @user,
+      @posts,
+      @current_page,
+      @posts.page(@current_page).total_pages,
+      @posts.count,
+      :full
+    )
     render json: json.as_json
   end
 

@@ -20,31 +20,37 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
 
   def my_posts
+    @current_page = params[:page] || 1
     @posts = @user.posts
     render_posts
   end
 
   def my_responses
+    @current_page = params[:page] || 1
     @responses = @user.responses
     render_responses
   end
 
   def my_bookmarks
+    @current_page = params[:page] || 1
     @posts = @user.bookmarked_posts
     render_posts
   end
 
   def my_thanks
+    @current_page = params[:page] || 1
     @responses = @user.thanked_responses
     render_responses
   end
 
   def my_post_upvotes
+    @current_page = params[:page] || 1
     @posts = @user.votes.up.for_type(Post)
     render_posts
   end
 
   def my_response_upvotes
+    @current_page = params[:page] || 1
     @responses = @user.votes.up.for_type(Response)
     render_responses
   end
@@ -60,12 +66,26 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
 
   def render_posts
-    json = @posts.map{|p| PostJson.new(p, @user, :full).call }
+    json = PostsJson.new(
+      @user,
+      @posts,
+      @current_page,
+      @posts.page(@current_page).total_pages,
+      @posts.count,
+      :full
+    )
     render json: json.as_json
   end
 
   def render_responses
-    json = @responses.map{|r| ResponseJson.new(r, @user, :full).call }
+    json = ResponsesJson.new(
+      @user,
+      @responses,
+      @current_page,
+      @responses.page(@current_page).total_pages,
+      @responses.count,
+      :full
+    )
     render json: json.as_json
   end
 end

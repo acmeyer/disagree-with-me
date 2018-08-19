@@ -3,6 +3,7 @@ class Api::V1::ResponsesController < Api::V1::ApiController
   before_action :set_user_as_current_user
 
   def index
+    @current_page = params[:page] || 1
     @responses = @post.responses
     render_responses
   end
@@ -31,7 +32,14 @@ class Api::V1::ResponsesController < Api::V1::ApiController
   end
 
   def render_responses
-    json = @responses.map{|r| ResponseJson.new(r, @user, :full).call }
+    json = ResponsesJson.new(
+      @user,
+      @responses,
+      @current_page,
+      @responses.page(@current_page).total_pages,
+      @responses.count,
+      :full
+    )
     render json: json.as_json
   end
 
