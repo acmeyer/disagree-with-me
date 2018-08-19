@@ -16,8 +16,7 @@ class Api::V1::ApiController < ApplicationController
 
   protected
   def record_not_found(e)
-    msg = /Couldn't find (.*) with 'id'=(.*)/.match(e.message)
-    render json: { error: msg.nil? ? e.message : "#{msg[1]} #{msg[2]} not found" }, status: 404
+    render json: { error: t('api.errors.not_found', default: 'Not Found.') }, status: 404
   end
 
   def record_invalid(e)
@@ -25,7 +24,7 @@ class Api::V1::ApiController < ApplicationController
   end
 
   def forbidden(e)
-    render json: { error: "Forbidden." }, status: 403
+    render json: { error: t('api.errors.forbidden', default: 'Forbidden.') }, status: 403
   end
 
   def authenticate_user_from_token!
@@ -42,7 +41,7 @@ class Api::V1::ApiController < ApplicationController
       end
     rescue => e
       STDERR.puts("API authorization failed: #{e}")
-      render json: {error: 'Unauthorized'}, status: 401
+      render json: {error: t('api.errors.unauthorized', default: 'Unauthorized.')}, status: 401
     end
   end
 

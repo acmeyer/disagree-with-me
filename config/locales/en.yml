@@ -2,3 +2,7 @@ en:
   api:
     auth:
       invalid_email_or_password: "Invalid email or password."
+    errors:
+      forbidden: "Forbidden."
+      unauthorized: "Unauthorized."
+      not_found: "Not Found."
