@@ -24,6 +24,8 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  get "me", to: "app#user"
   
-  root to: "home#index"
+  root to: "app#index"
 end

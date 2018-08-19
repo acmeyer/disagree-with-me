@@ -47,7 +47,7 @@ gem 'bootstrap', '~> 4.1.3'
 gem 'haml'
 gem "autoprefixer-rails"
 gem 'normalize-rails'
-# gem 'webpacker', '~> 3.5'
+gem 'webpacker', '~> 3.5'
 
 
 # Development Libraries
