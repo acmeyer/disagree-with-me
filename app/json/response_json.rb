@@ -31,8 +31,8 @@ class ResponseJson
       content: response.content,
       upvotes_count: response.cached_votes_up,
       author_thanked: response.author_thanked,
-      created_at: response.created_at,
-      updated_at: response.updated_at,
+      created_at: (response.created_at.to_f * 1000).to_i,
+      updated_at: (response.updated_at.to_f * 1000).to_i,
     }
   end
 
@@ -44,8 +44,8 @@ class ResponseJson
       content: response.content,
       upvotes_count: response.cached_votes_up,
       author_thanked: response.author_thanked,
-      created_at: response.created_at,
-      updated_at: response.updated_at,
+      created_at: (response.created_at.to_f * 1000).to_i,
+      updated_at: (response.updated_at.to_f * 1000).to_i,
     }
     response_json = response_json.merge(response_user_json(response, user)) if user
     return response_json

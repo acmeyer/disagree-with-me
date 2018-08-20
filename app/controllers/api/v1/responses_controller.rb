@@ -5,7 +5,8 @@ class Api::V1::ResponsesController < Api::V1::ApiController
 
   def index
     @current_page = params[:page] || 1
-    @responses = @post.responses
+    filtered_responses = filter_responses(@post.responses, params)
+    @responses = filtered_responses
     render_responses
   end
 
@@ -53,6 +54,21 @@ class Api::V1::ResponsesController < Api::V1::ApiController
 
   def get_response
     @response = @post.responses.find(params[:id])
+  end
+
+  def filter_responses(responses, params)
+    if params[:thanked_only] == "true"
+      responses = responses.thanked
+    elsif params[:not_thanked_only] == "true"
+      responses = responses.not_thanked
+    end
+    if !params[:sort].blank?
+      responses.order(sort)
+    else
+      responses.order(created_at: :desc)
+    end
+
+    return responses
   end
 
   def render_responses

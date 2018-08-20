@@ -31,8 +31,8 @@ class PostJson
       responses_count: post.responses_count,
       upvotes_count: post.cached_votes_up,
       tags: post.tag_list,
-      created_at: post.created_at,
-      updated_at: post.updated_at,
+      created_at: (post.created_at.to_f * 1000).to_i,
+      updated_at: (post.updated_at.to_f * 1000).to_i,
     }
   end
 
@@ -44,8 +44,8 @@ class PostJson
       responses_count: post.responses_count,
       upvotes_count: post.cached_votes_up,
       tags: post.tag_list,
-      created_at: post.created_at,
-      updated_at: post.updated_at,
+      created_at: (post.created_at.to_f * 1000).to_i,
+      updated_at: (post.updated_at.to_f * 1000).to_i,
     }
     post_json = post_json.merge(post_user_json(post, user)) if user
     return post_json

@@ -4,7 +4,8 @@ class Api::V1::PostsController < Api::V1::ApiController
 
   def index
     @current_page = params[:page] || 1
-    @posts = Post.all
+    filtered_posts = filter_posts(Post.all, params)
+    @posts = filtered_posts
     render_posts
   end
 
@@ -46,6 +47,20 @@ class Api::V1::PostsController < Api::V1::ApiController
   private
   def get_post
     @post = Post.find(params[:id])
+  end
+
+  def filter_posts(posts, params)
+    if params[:latest] == "true"
+      posts = posts.order(created_at: :desc)
+    elsif params[:popular] == "true"
+      posts = posts.order(cached_weighted_score: :desc).order(responses_count: :desc)
+    elsif params[:sort]
+      posts.order(sort)
+    else
+      posts.order(created_at: :desc)
+    end
+
+    return posts
   end
 
   def render_posts
