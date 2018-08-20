@@ -21,6 +21,12 @@ class Post < ApplicationRecord
     attributesToIndex [:content, :tags]
   end
 
+  def top_response
+    Rails.cache.fetch("posts/#{self.cache_key}/top_response") do
+      self.responses.thanked.order(cached_weighted_score: :desc).order(created_at: :desc).first
+    end
+  end
+
   private
   def update_tags
     # auto-add tags using Google's Natural Language API
