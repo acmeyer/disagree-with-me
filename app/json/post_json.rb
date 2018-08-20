@@ -30,6 +30,7 @@ class PostJson
       content: post.content,
       responses_count: post.responses_count,
       upvotes_count: post.cached_votes_up,
+      tags: post.tag_list,
       created_at: post.created_at,
       updated_at: post.updated_at,
     }
@@ -42,6 +43,7 @@ class PostJson
       content: post.content,
       responses_count: post.responses_count,
       upvotes_count: post.cached_votes_up,
+      tags: post.tag_list,
       created_at: post.created_at,
       updated_at: post.updated_at,
     }
