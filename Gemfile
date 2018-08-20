@@ -31,6 +31,8 @@ gem 'acts_as_votable', '~> 0.11.1'
 gem 'oj'
 gem 'kaminari'
 gem 'pundit'
+gem 'google-cloud-language'
+gem 'acts-as-taggable-on', '~> 6.0'
 
 # Frontend Libraries
 #=============================
