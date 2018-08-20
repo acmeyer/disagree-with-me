@@ -27,6 +27,40 @@ class User < ApplicationRecord
     self.responses.pluck(:post_id).include?(post_id)
   end
 
+  def bookmarked_post?(post_id)
+    self.bookmarks.pluck(:post_id).include?(post_id)
+  end
+
+  def toggle_upvote!(resource)
+    if self.voted_up_for?(resource)
+      resource.unliked_by self
+    else
+      self.likes resource
+    end
+  end
+
+  def toggle_bookmark!(post)
+    bookmark = self.bookmarks.find_by_post_id(post.id)
+    if bookmark.blank?
+      self.bookmarks.create!(post_id: post.id)
+    else
+      bookmark.destroy!
+    end
+  end
+
+  def thank!(response)
+    post = response.post
+    if !response.author_thanked
+      if post.user_id == self.id
+        self.thanks.create!(response_id: response.id)
+      else
+        raise StandardError, I18n.t('models.errors.only_post_author', default: 'Only the post author can do this!')
+      end
+    else
+      raise StandardError, I18n.t('models.errors.response_already_thanked', default: 'Response already thanked.')
+    end
+  end
+
   def active_for_authentication?
     super && !disabled
   end

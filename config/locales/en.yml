@@ -6,3 +6,7 @@ en:
       forbidden: "Forbidden."
       unauthorized: "Unauthorized."
       not_found: "Not Found."
+  models:
+    errors:
+      only_post_author: "Only the post author can do this!"
+      response_already_thanked: "Response already thanked."

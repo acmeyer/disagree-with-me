@@ -57,6 +57,7 @@ class PostJson
       is_author: user.id == post.user_id,
       upvoted: user.voted_up_for?(post),
       responded_to: user.responded_to_post?(post.id),
+      bookmarked: user.bookmarked_post?(post.id),
     }
   end
 end

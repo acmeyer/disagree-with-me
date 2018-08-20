@@ -1,5 +1,6 @@
 class Api::V1::PostsController < Api::V1::ApiController
   before_action :set_user_as_current_user
+  before_action :get_post, only: [:show, :toggle_upvote, :toggle_bookmark]
 
   def index
     @current_page = params[:page] || 1
@@ -8,7 +9,6 @@ class Api::V1::PostsController < Api::V1::ApiController
   end
 
   def show
-    @post = Post.find(params[:id])
     render_post
   end
 
@@ -25,7 +25,29 @@ class Api::V1::PostsController < Api::V1::ApiController
     end
   end
 
+  def toggle_upvote
+    begin
+      @user.toggle_upvote!(@post)
+      render_post
+    rescue => e
+      render_error_message(e.message)
+    end
+  end
+
+  def toggle_bookmark
+    begin
+      @user.toggle_bookmark!(@post)
+      render_post
+    rescue => e
+      render_error_message(e.message)
+    end
+  end
+
   private
+  def get_post
+    @post = Post.find(params[:id])
+  end
+
   def render_posts
     json = PostsJson.new(
       @user,

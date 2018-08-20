@@ -18,4 +18,12 @@ class PostPolicy
     true
   end
 
+  def toggle_upvote?
+    true
+  end
+
+  def toggle_bookmark?
+    true
+  end
+
 end

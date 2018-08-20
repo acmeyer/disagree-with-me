@@ -1,6 +1,7 @@
 class Api::V1::ResponsesController < Api::V1::ApiController
-  before_action :get_post
   before_action :set_user_as_current_user
+  before_action :get_post
+  before_action :get_response, only: [:show, :toggle_upvote, :thank]
 
   def index
     @current_page = params[:page] || 1
@@ -9,7 +10,6 @@ class Api::V1::ResponsesController < Api::V1::ApiController
   end
 
   def show
-    @response = @post.responses.find(params[:id])
     render_response
   end
 
@@ -26,9 +26,33 @@ class Api::V1::ResponsesController < Api::V1::ApiController
     end
   end
 
+  def toggle_upvote
+    begin
+      @user.toggle_upvote!(@response)
+      render_response
+    rescue => e
+      render_error_message(e.message)
+    end
+  end
+
+  def thank
+    authorize @response
+    begin
+      @user.thank!(@response)
+      @response.reload
+      render_response
+    rescue => e
+      render_error_message(e.message)
+    end
+  end
+
   private
   def get_post
     @post = Post.find(params[:post_id])
+  end
+
+  def get_response
+    @response = @post.responses.find(params[:id])
   end
 
   def render_responses

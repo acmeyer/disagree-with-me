@@ -18,4 +18,12 @@ class ResponsePolicy
     true
   end
 
+  def toggle_upvote?
+    true
+  end
+
+  def thank?
+    response.post.user_id == user.id
+  end
+
 end

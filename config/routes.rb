@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  # Auth routes
   devise_for :users#, controllers: { sessions: 'users/sessions' }
   
+  # API routes
   constraints subdomain: 'api' do
     scope module: :api, defaults: {format: :json} do
       namespace :v1 do
@@ -19,13 +21,22 @@ Rails.application.routes.draw do
         get 'users/my_response_upvotes', to: 'users#my_response_upvotes'
 
         resources :posts, only: [:index, :show, :create] do
-          resources :responses, only: [:index, :show, :create]
+          resources :responses, only: [:index, :show, :create] do
+            member do
+              post 'toggle_upvote'
+              post 'thank'
+            end
+          end
+          member do
+            post 'toggle_upvote'
+            post 'toggle_bookmark'
+          end
         end
       end
     end
   end
 
-  get "me", to: "app#user"
-  
-  root to: "app#index"
+  # Web App routes
+  get "me", to: "web_app#user"
+  root to: "web_app#index"
 end
