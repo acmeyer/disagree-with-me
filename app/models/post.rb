@@ -8,6 +8,17 @@ class Post < ApplicationRecord
 
   after_save :update_tags, if: Proc.new { |post| post.saved_change_to_content? }
 
+  include AlgoliaSearch
+  algoliasearch do
+    attribute :content
+
+    add_attribute :tags do
+      self.tag_list.join(" ")
+    end
+
+    attributesToIndex [:content, :tags]
+  end
+
   private
   def update_tags
     # auto-add tags using Google's Natural Language API

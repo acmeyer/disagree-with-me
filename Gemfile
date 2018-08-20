@@ -33,6 +33,7 @@ gem 'kaminari'
 gem 'pundit'
 gem 'google-cloud-language'
 gem 'acts-as-taggable-on', '~> 6.0'
+gem "algoliasearch-rails"
 
 # Frontend Libraries
 #=============================
