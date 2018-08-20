@@ -4,7 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, 
          :recoverable, :rememberable, :trackable, :validatable
 
+  acts_as_paranoid
   acts_as_voter
+
   has_many :auth_tokens
   has_many :posts, dependent: :destroy
   has_many :responses, dependent: :destroy
@@ -24,6 +26,14 @@ class User < ApplicationRecord
   def responded_to_post?(post_id)
     self.responses.pluck(:post_id).include?(post_id)
   end
+
+  def active_for_authentication?
+    super && !disabled
+  end
+
+  def inactive_message   
+  	!disabled ? super : :disabled_account  
+  end 
 
   private
   def set_default_role
