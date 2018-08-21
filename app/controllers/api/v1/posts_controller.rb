@@ -1,4 +1,5 @@
-class Api::V1::PostsController < Api::V1::ApiController
+class Api::V1::PostsController < Api::V1::ApiController 
+  before_action :authenticate_user_from_token!, :set_current_user, only: [:create, :toggle_bookmark, :toggle_upvote]
   before_action :set_user_as_current_user
   before_action :get_post, only: [:show, :toggle_upvote, :toggle_bookmark]
 

@@ -5,7 +5,6 @@ class Api::V1::ApiController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   before_action :get_ip_address, :get_user_agent
-  before_action :authenticate_user_from_token!, :set_current_user
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid

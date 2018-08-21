@@ -11,3 +11,9 @@
 // Components
 @import 'components/navbar';
 @import 'components/forms';
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1000px;
+  }
+}
