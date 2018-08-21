@@ -1,6 +1,7 @@
 // Bootstrap variables
 
 // Import Frameworks
+@import 'util/normalize';
 @import 'bootstrap';
 // Utilities
 @import 'util/colors';
@@ -8,4 +9,5 @@
 @import 'util/typography';
 @import 'util/navigation';
 // Components
+@import 'components/navbar';
 @import 'components/forms';

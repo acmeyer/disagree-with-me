@@ -41,6 +41,8 @@ Rails.application.routes.draw do
   end
 
   # Web App routes
-  get "me", to: "web_app#user"
+  get "activity", to: "web_app#index"
+  get "search", to: "web_app#index"
+  get "me(/:route)", to: "web_app#index"
   root to: "web_app#index"
 end
