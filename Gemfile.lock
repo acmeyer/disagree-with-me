@@ -201,7 +201,6 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
-    normalize-rails (4.1.1)
     oj (3.6.4)
     orm_adapter (0.5.0)
     os (1.0.0)
@@ -214,6 +213,7 @@ GEM
     rack (2.0.5)
     rack-contrib (2.0.1)
       rack (~> 2.0)
+    rack-cors (1.0.2)
     rack-proxy (0.6.4)
       rack
     rack-test (1.1.0)
@@ -346,11 +346,11 @@ DEPENDENCIES
   letter_opener
   listen (>= 3.0.5, < 3.2)
   meta_request
-  normalize-rails
   oj
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
   pundit
+  rack-cors
   rails (~> 5.2.1)
   react-rails
   sass-rails (~> 5.0)

@@ -4,7 +4,7 @@ import {
   Route,
 } from 'react-router-dom';
 import NavBar from './common/NavBar';
-import HomeView from './main/HomeView';
+import HomeView from './home/HomeView';
 import UserView from './user/UserView';
 import SearchView from './search/SearchView';
 import ActivityView from './activity/ActivityView';

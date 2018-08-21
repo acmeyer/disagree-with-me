@@ -11,7 +11,7 @@ class NavBar extends React.Component {
           <Link to="/" className="navbar-brand">
             Disagree with Me
           </Link>
-          <ul class="navbar-nav ml-auto">
+          <ul className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link to="/search" className="nav-link">
                 <i className="fas fa-search" />
