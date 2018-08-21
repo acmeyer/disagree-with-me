@@ -9,3 +9,19 @@
 @import 'util/navigation';
 // Components
 @import 'components/forms';
+
+html, body {
+  height: 100%;
+}
+
+.auth {
+  .main {
+    h1 a:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.authform {
+  max-width: 450px;
+}

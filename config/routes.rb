@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  # Auth routes
-  devise_for :users#, controllers: { sessions: 'users/sessions' }
+  # Devise routes
+  devise_for :users, skip: [:registrations], controllers: {
+    passwords: 'users/passwords',
+    sessions: 'users/sessions'
+  }
+
   
   # API routes
   constraints subdomain: 'api' do
