@@ -5,6 +5,7 @@ import {
 } from '../../actions';
 import PageHeader from '../common/PageHeader';
 import PageSubmenu from '../common/PageSubmenu';
+import PageList from '../common/PageList';
 
 class HomeView extends React.Component {
   componentDidMount() {
@@ -46,6 +47,7 @@ class HomeView extends React.Component {
       <div className="page-wrap">
         <PageSubmenu links={this.submenuLinks()} />
         <PageHeader title={currentPageTitle} />
+        <PageList />
       </div>
     );
   }
