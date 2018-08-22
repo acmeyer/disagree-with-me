@@ -1,10 +1,11 @@
 import React from 'react';
+import PageHeader from '../common/PageHeader';
 
 class SearchView extends React.Component {
   render() {
     return (
-      <div className="container">
-        <h1 className="display-4">Search</h1>        
+      <div className="page-wrap">
+        <PageHeader title="Search" />
       </div>
     );
   }

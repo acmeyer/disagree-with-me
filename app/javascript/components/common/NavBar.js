@@ -6,8 +6,8 @@ import {
 class NavBar extends React.Component {
   render() {
     return (
-      <nav className="navbar navbar-light navbar-expand">
-        <div className="container justify-content-between">
+      <nav className="navbar navbar-dark bg-dark navbar-expand">
+        <div className="container justify-content-center">
           <Link to="/" className="navbar-brand">
             Disagree with Me
           </Link>
@@ -28,7 +28,7 @@ class NavBar extends React.Component {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/me" className="nav-link">
+              <Link to="/me/posts" className="nav-link">
                 <i className="far fa-user-circle" />
               </Link>
             </li>

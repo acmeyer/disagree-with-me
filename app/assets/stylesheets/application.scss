@@ -1,16 +1,23 @@
-// Bootstrap variables
-
 // Import Frameworks
 @import 'util/normalize';
 @import 'bootstrap';
 // Utilities
+@import 'util/typography';
 @import 'util/colors';
 @import 'util/mixins';
-@import 'util/typography';
 @import 'util/navigation';
 // Components
 @import 'components/navbar';
 @import 'components/forms';
+
+.top-bg {
+  position: absolute;
+  height: 33%;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
 
 @media (min-width: 1200px) {
   .container {

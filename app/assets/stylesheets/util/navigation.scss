@@ -1,4 +1,17 @@
-.nav-underline .nav-link.active, .nav-underline .show > .nav-link {
-  color: $primary;
-  border-bottom: 1px solid $primary;
+.page-submenu {
+  .nav-link {
+    color: white;
+    &.active {
+      border-bottom: 1px solid white;
+    }
+  }
+}
+
+.navbar-brand {
+  font-weight: 300;
+
+  @media (min-width: 768px) {
+    position: absolute;
+    margin: 0;
+  }
 }

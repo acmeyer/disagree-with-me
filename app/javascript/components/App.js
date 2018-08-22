@@ -13,12 +13,15 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <div>
+        <div className="app-wrap">
+          <div className="top-bg bg-dark"></div>
           <NavBar />
           <Route exact path="/" component={HomeView} />
+          <Route path="/latest" component={HomeView} />
+          <Route path="/popular" component={HomeView} />
           <Route path="/search" component={SearchView} />
           <Route path="/activity" component={ActivityView} />
-          <Route path="/me" component={UserView} />
+          <Route path="/me/:list" component={UserView} />
         </div>
       </Router>
     );

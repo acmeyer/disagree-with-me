@@ -1,10 +1,11 @@
 import React from 'react';
+import PageHeader from '../common/PageHeader';
 
 class ActivityView extends React.Component {
   render() {
     return (
-      <div className="container">
-        <h1 className="display-4">Activity</h1>        
+      <div className="page-wrap">
+        <PageHeader title="Activity" />
       </div>
     );
   }
