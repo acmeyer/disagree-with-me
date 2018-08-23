@@ -43,6 +43,8 @@ Rails.application.routes.draw do
   # Web App routes
   get "activity", to: "web_app#index"
   get "search", to: "web_app#index"
+  get "latest", to: "web_app#index"
+  get "popular", to: "web_app#index"
   get "me(/:route)", to: "web_app#index"
   root to: "web_app#index"
 end

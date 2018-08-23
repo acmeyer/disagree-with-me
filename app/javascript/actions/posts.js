@@ -17,10 +17,16 @@ function receivePosts(json) {
   };
 }
 
-export function fetchPosts() {
+export function fetchPosts(page = 1, options={}) {
   return (dispatch, getState) => {
     // const apiToken = getState().user.apiToken;
-    const url = `${serverDomain}posts`;
+    let url = `${serverDomain}posts?page=${page}`;
+
+    if (options.latest) {
+      url = url + '&latest=true';
+    } else if (options.popular) {
+      url = url + '&popular=true';
+    }
 
     dispatch(requestPosts());
     return axios.get(url).then((response) => {

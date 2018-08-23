@@ -6,11 +6,20 @@ import {
 import PageHeader from '../common/PageHeader';
 import PageSubmenu from '../common/PageSubmenu';
 import PageList from '../common/PageList';
+import LoadingView from '../common/LoadingView';
+import PostCell from '../common/PostCell';
 
 class HomeView extends React.Component {
   componentDidMount() {
     // Fetch posts
-    this.props.fetchPosts();
+    const currentUrl = this.props.match.url;
+    if (currentUrl === '/') {
+      this.props.fetchPosts();
+    } else if (currentUrl === '/latest') {
+      this.props.fetchPosts(1, {latest: true});
+    } else if (currentUrl === '/popular') {
+      this.props.fetchPosts(1, {popular: true});
+    }
   }
 
   submenuLinks = () => {
@@ -34,8 +43,12 @@ class HomeView extends React.Component {
     ]
   }
 
+  renderPost = (post) => {
+    return <PostCell key={post.id} post={post} />;
+  }
+
   render() {
-    let currentPageTitle;
+    let currentPageTitle, content;
     if (this.props.match.url === '/popular') {
       currentPageTitle = "Popular";
     } else if (this.props.match.url === '/latest') {
@@ -43,11 +56,20 @@ class HomeView extends React.Component {
     } else {
       currentPageTitle = "Trending";
     }
+
+    if (this.props.isLoading) {
+      content = <LoadingView />
+    } else {
+      content = this.props.posts.map(this.renderPost);
+    }
+
     return (
       <div className="page-wrap">
         <PageSubmenu links={this.submenuLinks()} />
         <PageHeader title={currentPageTitle} />
-        <PageList />
+        <PageList>
+          {content}
+        </PageList>
       </div>
     );
   }
@@ -55,13 +77,15 @@ class HomeView extends React.Component {
 
 function actions(dispatch) {
   return {
-    fetchPosts: () => { dispatch(fetchPosts()) },
+    fetchPosts: (page, options) => { dispatch(fetchPosts(page, options)) },
   };
 }
 
 function select(store) {
   return {
+    isLoading: store.posts.loading,
     user: store.user,
+    posts: store.posts.list,
   };
 }
 
