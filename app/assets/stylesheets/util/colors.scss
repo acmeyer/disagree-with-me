@@ -1,17 +1,19 @@
-$black: '#333333';
-$blue: '#0197F6';
-$darkBlack: '#222222';
-$offWhite: '#EFEFEF';
-$lightGray: '#CCCCCC';
-$lighterGray: '#DDDDDD';
-$lightestGray: '#F7F7F7';
-$gray: '#999999';
-$darkGray: '#4A4A4A';
-$darkerGray: '#555555';
-$red: '#FF0000';
-$lightRed: '#FCE8E8';
-$white: '#FFFFFF';
+$black: #333333;
+$blue: #0197F6;
+$darkBlack: #222222;
+$offWhite: #EFEFEF;
+$lightGray: #CCCCCC;
+$lighterGray: #DDDDDD;
+$lightestGray: #F7F7F7;
+$gray: #999999;
+$darkGray: #4A4A4A;
+$darkerGray: #555555;
+$red: #FF0000;
+$lightRed: #FCE8E8;
+$white: #FFFFFF;
 $primary: $darkGray;
+$cellBorder: #EEEEEE;
+$cellHighlight: $offWhite;
 
 .bg-dark {
   background-color: $darkGray !important;

@@ -1,3 +1,14 @@
 .page-list {
   max-width: 700px !important;
+  .cell {
+    cursor: pointer;
+    &:hover {
+      background-color: $cellHighlight;
+    }
+    .cell-actions {
+      .action {
+        font-size: 18px;
+      }
+    }
+  }
 }

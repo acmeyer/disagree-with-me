@@ -20,7 +20,7 @@ class NavBar extends React.Component {
             </li>
             <li className="nav-item">
               <Link to="/me/bookmarks" className={`nav-link ${page === '/me/bookmarks' ? 'active' : ''}`}>
-                <i className="far fa-bookmark" />
+                <i className="fas fa-bookmark" />
               </Link>
             </li>
             <li className="nav-item">
@@ -30,7 +30,7 @@ class NavBar extends React.Component {
             </li>
             <li className="nav-item">
               <Link to="/me/posts" className={`nav-link ${page === '/me' ? 'active' : ''}`}>
-                <i className="far fa-user-circle" />
+                <i className="fas fa-user-circle" />
               </Link>
             </li>
           </ul>
