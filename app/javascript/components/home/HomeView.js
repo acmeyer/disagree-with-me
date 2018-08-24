@@ -1,13 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-  fetchPosts,
-} from '../../actions';
 import PageHeader from '../common/PageHeader';
 import PageSubmenu from '../common/PageSubmenu';
 import PageList from '../common/PageList';
 import LoadingView from '../common/LoadingView';
 import PostCell from '../common/PostCell';
+
+import {
+  fetchPosts,
+} from '../../actions';
 
 class HomeView extends React.Component {
   componentDidMount() {

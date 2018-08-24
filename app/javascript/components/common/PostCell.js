@@ -25,20 +25,28 @@ class PostCell extends React.Component {
     alert('Show sharing options');
   }
 
+  showMoreOptions = (e) => {
+    e.stopPropagation();
+    alert('Show more options');
+  }
+
   showActionsMenu = () => {
     return (
       <div className="cell-actions flex-row d-flex mt-3">
-        <div className="action pr-3" onClick={this.toggleUpvote}>
+        <div className="action pr-4" onClick={this.toggleUpvote}>
           <i className="fas fa-arrow-up" />
         </div>
-        <div className="action pr-3" onClick={this.showPostComments}>
+        <div className="action pr-4" onClick={this.showPostComments}>
           <i className="far fa-comment" />
         </div>
-        <div className="action pr-3" onClick={this.toggleBookmark}>
+        <div className="action pr-4" onClick={this.toggleBookmark}>
           <i className="far fa-bookmark" />
         </div>
-        <div className="action pr-3" onClick={this.showSharingOptions}>
+        <div className="action pr-4" onClick={this.showSharingOptions}>
           <i className="far fa-share-square" />
+        </div>
+        <div  className="action" onClick={this.showMoreOptions}>
+          <i className="fas fa-ellipsis-h" />
         </div>
       </div>
     )

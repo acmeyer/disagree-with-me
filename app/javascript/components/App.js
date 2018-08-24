@@ -4,18 +4,31 @@ import {
   Route,
 } from 'react-router-dom';
 import NavBar from './common/NavBar';
+import LoginModal from './common/LoginModal';
 import HomeView from './home/HomeView';
 import UserView from './user/UserView';
 import SearchView from './search/SearchView';
 import ActivityView from './activity/ActivityView';
+import {connect} from 'react-redux';
+
+import {
+  fetchUser,
+} from '../actions';
 
 class App extends React.Component {
+  componentWillMount() {
+    if (this.props.user.loggedIn) {
+      this.props.fetchUser();
+    }
+  }
+
   render() {
     return (
       <Router>
         <div className="app-wrap">
           <div className="top-bg bg-dark"></div>
           <NavBar />
+          <LoginModal />
           <Route exact path="/" component={HomeView} />
           <Route path="/latest" component={HomeView} />
           <Route path="/popular" component={HomeView} />
@@ -28,4 +41,16 @@ class App extends React.Component {
   }
 }
 
-export default App;
+function actions(dispatch) {
+  return {
+    fetchUser: () => { dispatch(fetchUser()) },
+  };
+}
+
+function select(store) {
+  return {
+    user: store.user,
+  };
+}
+
+export default connect(select, actions)(App);

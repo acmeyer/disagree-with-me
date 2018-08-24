@@ -4,6 +4,11 @@
     vertical-align: middle;
     padding: 0 4px;
   }
+  .nav-link {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .navbar-expand > .container {
