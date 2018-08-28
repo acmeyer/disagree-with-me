@@ -11,7 +11,7 @@ import {
 } from '../../actions';
 
 class HomeView extends React.Component {
-  componentDidMount() {
+  componentWillMount() {
     // Fetch posts
     const currentUrl = this.props.match.url;
     if (currentUrl === '/') {
