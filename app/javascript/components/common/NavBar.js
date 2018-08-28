@@ -16,7 +16,12 @@ class NavBar extends React.Component {
     let page, navLinks;
     if (this.props.user.loggedIn) {
       navLinks = (
-        <span>
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <Link to="/search" className={`nav-link ${page === '/search' ? 'active' : ''}`}>
+              <i className="fas fa-search" />
+            </Link>
+          </li>
           <li className="nav-item">
             <Link to="/me/bookmarks" className={`nav-link ${page === '/me/bookmarks' ? 'active' : ''}`}>
               <i className="fas fa-bookmark" />
@@ -32,16 +37,23 @@ class NavBar extends React.Component {
               <i className="fas fa-user-circle" />
             </Link>
           </li>
-        </span>
+        </ul>
       );
     } else {
       navLinks = (
-        <li className="nav-item">
-          <div className={'nav-link'} onClick={this.showLogin}>
-            Login
-          </div>
-        </li>
-      )
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <Link to="/search" className={`nav-link ${page === '/search' ? 'active' : ''}`}>
+              <i className="fas fa-search" />
+            </Link>
+          </li>
+          <li className="nav-item">
+            <div className={'nav-link'} onClick={this.showLogin}>
+              Login
+            </div>
+          </li>
+        </ul>
+      );
     }
 
     return (
@@ -50,14 +62,7 @@ class NavBar extends React.Component {
           <Link to="/" className="navbar-brand">
             Disagree with Me
           </Link>
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link to="/search" className={`nav-link ${page === '/search' ? 'active' : ''}`}>
-                <i className="fas fa-search" />
-              </Link>
-            </li>
-            {navLinks}
-          </ul>
+          {navLinks}
         </div>
       </nav>
     );

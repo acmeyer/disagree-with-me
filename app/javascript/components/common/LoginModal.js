@@ -3,6 +3,7 @@ import AppModal from './AppModal';
 import {connect} from 'react-redux';
 
 import {
+  loginWithEmail,
   hideLoginModal,
 } from '../../actions';
 
@@ -11,20 +12,49 @@ class LoginModal extends React.Component {
     super(props);
 
     this.state = {
+      loading: false,
       email: '',
       password: '',
     }
   }
 
   close = () => {
-    this.setState({email: '', password: ''});
-    this.props.hideModal();
+    this.setState({loading: false, email: '', password: ''});
+    this.props.dispatch(hideLoginModal());
+  }
+
+  login = () => {
+    if (this.state.email === '') {
+      alert('Email is required');
+      return;
+    }
+    if (this.state.password === '') {
+      alert('Password is required');
+      return;
+    }
+    this.setState({loading: true});
+    this.props.dispatch(loginWithEmail(this.state.email, this.state.password)).then(() => {
+      this.close();
+    }).catch(error => {
+      this.setState({loading: false});
+      alert(error);
+    });
   }
 
   render() {
     let {visible} = this.props;
+    let loginButton;
+    if (this.state.loading) {
+      loginButton = (
+        <button className="btn btn-primary btn-block" disabled>
+          Logging in...
+        </button>
+      );
+    } else {
+      loginButton = <button onClick={() => this.login()} className="btn btn-primary btn-block">Login</button>;
+    }
     return (
-      <AppModal isOpen={visible} close={this.close} label={'Login'}>
+      <AppModal shouldCloseOnOverlayClick={true} isOpen={visible} close={this.close} label={'Login'}>
         <div className="login-modal react-modal">
           <div className="dismiss-modal" onClick={this.close}><i className="fas fa-times" /></div>
           <h1 className="display-4 text-center">Login</h1>
@@ -53,17 +83,11 @@ class LoginModal extends React.Component {
               value={this.state.password}
             />
           </div>
-          <button type="submit" className="btn btn-primary btn-block">Login</button>
+          {loginButton}
         </div>
       </AppModal>
     );
   }
-}
-
-function actions(dispatch) {
-  return {
-    hideModal: () => { dispatch(hideLoginModal()) },
-  };
 }
 
 function select(store) {
@@ -72,4 +96,4 @@ function select(store) {
   };
 }
 
-export default connect(select, actions)(LoginModal);
+export default connect(select)(LoginModal);

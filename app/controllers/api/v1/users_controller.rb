@@ -1,5 +1,5 @@
 class Api::V1::UsersController < Api::V1::ApiController
-  before_action :authenticate_user_from_token!, :set_current_user
+  before_action :authenticate_user_from_token!
   before_action :set_user_as_current_user
 
   def me

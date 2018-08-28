@@ -1,5 +1,5 @@
 class Api::V1::ResponsesController < Api::V1::ApiController
-  before_action :authenticate_user_from_token!, :set_current_user, only: [:create, :thank, :toggle_upvote]
+  before_action :authenticate_user_from_token!, only: [:create, :thank, :toggle_upvote]
   before_action :set_user_as_current_user
   before_action :get_post
   before_action :get_response, only: [:show, :toggle_upvote, :thank]

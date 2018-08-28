@@ -19,7 +19,15 @@ function receivePosts(json) {
 
 export function fetchPosts(page = 1, options={}) {
   return (dispatch, getState) => {
-    // const apiToken = getState().user.apiToken;
+    let headers = {headers: {}};
+    const userEmail = getState().user.email;
+    const apiToken = getState().user.apiToken;
+    if (apiToken) {
+      headers.headers = {
+        'Authorization': apiToken,
+        'User-Email': userEmail,
+      };
+    }
     let url = `${serverDomain}posts?page=${page}`;
 
     if (options.latest) {
@@ -29,7 +37,7 @@ export function fetchPosts(page = 1, options={}) {
     }
 
     dispatch(requestPosts());
-    return axios.get(url).then((response) => {
+    return axios.get(url, headers).then((response) => {
       dispatch(receivePosts(response.data));
     }).catch(error => console.log(error));
   }
