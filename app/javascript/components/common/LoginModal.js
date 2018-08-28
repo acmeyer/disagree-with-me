@@ -7,25 +7,53 @@ import {
 } from '../../actions';
 
 class LoginModal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: '',
+      password: '',
+    }
+  }
+
+  close = () => {
+    this.setState({email: '', password: ''});
+    this.props.hideModal();
+  }
 
   render() {
-    let {visible, close} = this.props;
+    let {visible} = this.props;
     return (
-      <AppModal isOpen={visible} close={close} label={'Login'}>
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Login</h5>
-            <button type="button" className="close" onClick={close} aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+      <AppModal isOpen={visible} close={this.close} label={'Login'}>
+        <div className="login-modal react-modal">
+          <div className="dismiss-modal" onClick={this.close}><i className="fas fa-times" /></div>
+          <h1 className="display-4 text-center">Login</h1>
+          <div>
+            <p className="lead text-center">Login to Disagree with Me to create, respond, upvote, and save posts.</p>
           </div>
-          <div className="modal-body">
-            <p>Modal body text goes here.</p>
+          <hr />
+          <div className="form-group">
+            <input 
+              type="email" 
+              className="form-control" 
+              id="email-address" 
+              aria-describedby="emailHelp" 
+              placeholder="Email"
+              onChange={(e) => this.setState({email: e.target.value})}
+              value={this.state.email}
+            />
           </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" onClick={close}>Close</button>
-            <button type="button" className="btn btn-primary">Save changes</button>
+          <div className="form-group">
+            <input 
+              type="password" 
+              className="form-control" 
+              id="password" 
+              placeholder="Password" 
+              onChange={(e) => this.setState({password: e.target.value})}
+              value={this.state.password}
+            />
           </div>
+          <button type="submit" className="btn btn-primary btn-block">Login</button>
         </div>
       </AppModal>
     );
@@ -34,7 +62,7 @@ class LoginModal extends React.Component {
 
 function actions(dispatch) {
   return {
-    close: () => { dispatch(hideLoginModal()) },
+    hideModal: () => { dispatch(hideLoginModal()) },
   };
 }
 

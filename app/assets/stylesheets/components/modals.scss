@@ -1,0 +1,84 @@
+// block double-scrolling
+body.ReactModal__Body--open { overflow: hidden; }
+
+.ReactModal__Overlay {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 20000 !important;
+  background-color: rgba(0, 0, 0, 0.45) !important;
+  padding: 30px;
+  overflow: auto;
+  text-align: center;
+  transition: opacity 200ms ease-in-out;
+  opacity: 0;
+  &--after-open {
+    opacity: 1;
+  }
+
+  &--before-close {
+    opacity: 0;
+  }
+}
+
+.ReactModal__Content {
+  visibility: visible;
+  background-color: transparent;
+  outline: none !important;
+  transition: all 200ms ease-in-out;
+  opacity: 0;
+
+  &--after-open {
+    opacity: 1;
+  }
+
+  &--before-close {
+    opacity: 0;
+  }
+}
+
+.react-modal__overlay {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 20000 !important;
+  background-color: rgba(0, 0, 0, 0.45) !important;
+  overflow: auto;
+  text-align: center;
+}
+.react-modal__content {
+  visibility: hidden;
+  outline: none !important;
+}
+.react-modal {
+  padding: 16px;
+  background: $lightestGray;
+  color: $black;
+  border: solid 1px $borderGray;
+  text-align: left;
+  margin: 20px auto;
+  max-width: 95%;
+  position: relative !important;
+  border-radius: 3px;
+  visibility: visible;
+  .dismiss-modal {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
+    color: $lightGray;
+    cursor: pointer;
+  }
+  &.login-modal {
+    flex: 1;
+    max-width: 450px;
+
+    h1 {
+      font-size: 2rem;
+    }
+  }
+}
