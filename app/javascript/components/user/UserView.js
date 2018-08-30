@@ -1,11 +1,11 @@
 import React from 'react';
-import PageHeader from '../common/PageHeader';
 import PageSubmenu from '../common/PageSubmenu';
 import LoadingView from '../common/LoadingView';
 import PageList from '../common/PageList';
 import PostCell from '../common/PostCell';
 import ResponseCell from '../common/ResponseCell';
 import {connect} from 'react-redux';
+import { Classes, H5, InputGroup, NonIdealState, Switch } from "@blueprintjs/core";
 
 import {
   fetchUserList,
@@ -61,13 +61,27 @@ class UserView extends React.Component {
     ]
   }
 
+  renderUserList = () => {
+    let {data} = this.props;
+    if (data.length > 0) {
+      return data.map(this.renderCell);
+    } else {
+      return (
+        <NonIdealState
+          icon="issue"
+          title="Nothing Found"
+        />
+      )
+    }
+  }
+
   render() {
     let content;
 
     if (this.props.isLoading) {
       content = <LoadingView />
     } else {
-      content = this.props.data.map(this.renderCell);
+      content = this.renderUserList();
     }
 
     return (
