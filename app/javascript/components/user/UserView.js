@@ -4,25 +4,17 @@ import PageSubmenu from '../common/PageSubmenu';
 import LoadingView from '../common/LoadingView';
 import PageList from '../common/PageList';
 import PostCell from '../common/PostCell';
-// import ResponseCell from '../common/ResponseCell';
+import ResponseCell from '../common/ResponseCell';
 import {connect} from 'react-redux';
 
 import {
-  fetchUserBookmarks,
-  fetchUserPosts,
-  fetchUserResponses,
+  fetchUserList,
 } from '../../actions';
 
 class UserView extends React.Component {
   componentWillMount() {
     let {list} = this.props.match.params;
-    if (list === 'bookmarks') {
-      this.props.fetchUserBookmarks();
-    } else if (list === 'posts') {
-      this.props.fetchUserPosts();
-    } else if (list === 'responses') {
-      this.props.fetchUserResponses();
-    }
+    this.props.fetchUserList(list);
   }
 
   renderCell = (obj) => {
@@ -51,19 +43,26 @@ class UserView extends React.Component {
         href: '/me/responses',
         title: 'Responses'
       },
+      {
+        active: list === 'thanks',
+        href: '/me/thanks',
+        title: 'Thanks'
+      },
+      {
+        active: list === 'post-upvotes',
+        href: '/me/post-upvotes',
+        title: 'Post Upvotes'
+      },
+      {
+        active: list === 'response-upvotes',
+        href: '/me/response-upvotes',
+        title: 'Response Upvotes'
+      },
     ]
   }
 
   render() {
-    let {list} = this.props.match.params;
-    let currentPageTitle, content;
-    if (list === 'bookmarks') {
-      currentPageTitle = "Bookmarks";
-    } else if (list === 'posts') {
-      currentPageTitle = "Your Posts";
-    } else if (list === 'responses') {
-      currentPageTitle = "Your Responses";
-    }
+    let content;
 
     if (this.props.isLoading) {
       content = <LoadingView />
@@ -73,11 +72,18 @@ class UserView extends React.Component {
 
     return (
       <div className="page-wrap">
-        <PageSubmenu links={this.submenuLinks()} />
-        <PageHeader title={currentPageTitle} />
-        <PageList>
-          {content}
-        </PageList>
+        <div className="container">
+          <div className="row">
+            <div className="col-12 col-md-4 col-lg-3">
+              <PageSubmenu links={this.submenuLinks()} />
+            </div>
+            <div className="col-12 col-md-8 col-lg-9">
+              <PageList>
+                {content}
+              </PageList>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -85,9 +91,7 @@ class UserView extends React.Component {
 
 function actions(dispatch) {
   return {
-    fetchUserBookmarks: (page) => { dispatch(fetchUserBookmarks(page)) },
-    fetchUserPosts: (page) => { dispatch(fetchUserPosts(page)) },
-    fetchUserResponses: (page) => { dispatch(fetchUserResponses(page)) },
+    fetchUserList: (list, page) => { dispatch(fetchUserList(list, page)) },
   };
 }
 

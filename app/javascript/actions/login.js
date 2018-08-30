@@ -23,7 +23,7 @@ function loggedIn(user) {
 
 export function loginWithEmail(email, password) {
   return (dispatch, getState) => {
-    let url = `${serverDomain}auth/signin`;
+    let url = `${serverDomain}/auth/signin`;
 
     return axios.post(url, {email, password}).then((response) => {
       return dispatch(loggedIn(response.data));

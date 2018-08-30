@@ -2,6 +2,7 @@
   "name": "disagree-with-me",
   "private": true,
   "dependencies": {
+    "@blueprintjs/core": "^3.5.0",
     "@rails/webpacker": "3.5",
     "axios": "^0.18.0",
     "babel-preset-react": "^6.24.1",

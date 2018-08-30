@@ -1,10 +1,10 @@
 
-const initial = {
+const initialState = {
   loggedIn: false,
   loading: false,
 };
 
-export function userReducer(state = initial, action) {
+export function userReducer(state = initialState, action) {
   if (action.type === 'RECEIVED_USER') {
     return {
       ...state, 
@@ -18,6 +18,9 @@ export function userReducer(state = initial, action) {
       loggedIn: true,
       ...action.user,
     }
+  }
+  if (action.type === 'LOGGED_OUT') {
+    return initialState;
   }
 
   return state;

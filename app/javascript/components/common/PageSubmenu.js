@@ -7,7 +7,7 @@ class PageHeader extends React.Component {
   render() {
     return (
       <div className="container">
-        <ul className="page-submenu nav justify-content-center">
+        <ul className="page-submenu nav flex-column mt-3">
           {this.props.links.map(link => {
             return (
               <li key={link.href} className="nav-item">

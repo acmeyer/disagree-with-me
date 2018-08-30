@@ -47,7 +47,7 @@ class Api::V1::ApiController < ApplicationController
   def set_current_user
     token = request.headers['Authorization']
     valid_token = AuthToken.not_expired.where(token: token).first
-    self.current_user = valid_token.user
+    self.current_user = valid_token.try(:user)
   end
 
   def set_user_as_current_user

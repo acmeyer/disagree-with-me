@@ -26,7 +26,6 @@ class App extends React.Component {
     return (
       <Router>
         <div className="app-wrap">
-          <div className="top-bg bg-dark"></div>
           <NavBar />
           <LoginModal />
           <Route exact path="/" component={HomeView} />
@@ -34,7 +33,7 @@ class App extends React.Component {
           <Route path="/popular" component={HomeView} />
           <Route path="/search" component={SearchView} />
           <Route path="/activity" component={ActivityView} />
-          <Route path="/me/:list" component={UserView} />
+          <Route path="/me/:list" render={(props) => <UserView key={props.match.params.list} {...props} />} />
         </div>
       </Router>
     );

@@ -1,15 +1,55 @@
 import React from 'react';
 import {
   Link,
+  withRouter
 } from 'react-router-dom';
-import {connect} from 'react-redux';
+import { 
+  Menu, 
+  MenuDivider, 
+  MenuItem, 
+  Popover, 
+  Position,
+  Alert,
+  Classes,
+  Button,
+} from "@blueprintjs/core";
+
 import {
   showLoginModal,
+  logOut,
 } from '../../actions';
+import {connect} from 'react-redux';
 
 class NavBar extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      confirmLogOutVisible: false,
+    }
+  }
+
   showLogin = (e) => {
     this.props.showLoginModal();
+  }
+
+  logOut = () => {
+    this.setState({confirmLogOutVisible: false});
+    this.props.logOut();
+  }
+
+  userMenu = () => {
+    return (
+      <Menu>
+        <MenuItem text="Posts" onClick={() => this.props.history.push('/me/posts')} />
+        <MenuItem text="Responses" onClick={() => this.props.history.push('/me/responses')} />
+        <MenuItem text="Thanks" onClick={() => this.props.history.push('/me/thanks')} />
+        <MenuItem text="Post Upvotes" onClick={() => this.props.history.push('/me/post-upvotes')} />
+        <MenuItem text="Response Upvotes" onClick={() => this.props.history.push('/me/response-upvotes')} />
+        <MenuDivider />
+        <MenuItem text="Log Out" onClick={() => this.setState({confirmLogOutVisible: true})} />
+      </Menu>
+    )
   }
 
   render() {
@@ -33,9 +73,11 @@ class NavBar extends React.Component {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/me/posts" className={`nav-link ${page === '/me' ? 'active' : ''}`}>
-              <i className="fas fa-user-circle" />
-            </Link>
+            <Popover content={this.userMenu()} position={Position.CENTER_BOTTOM}>
+              <a className={`nav-link ${page === '/me' ? 'active' : ''}`}>
+                <i className="fas fa-user-circle" />
+              </a>
+            </Popover>
           </li>
         </ul>
       );
@@ -58,11 +100,21 @@ class NavBar extends React.Component {
 
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand">
-        <div className="container justify-content-center">
+        <div className="container">
           <Link to="/" className="navbar-brand">
             Disagree with Me
           </Link>
           {navLinks}
+          <Alert
+            isOpen={this.state.confirmLogOutVisible}
+            cancelButtonText="Cancel"
+            confirmButtonText="Log Out"
+            intent="danger"
+            onCancel={() => this.setState({confirmLogOutVisible: false})}
+            onConfirm={this.logOut}
+          >
+            <p>Are you sure you want to log out of Disagree with Me?</p>
+          </Alert>
         </div>
       </nav>
     );
@@ -71,6 +123,7 @@ class NavBar extends React.Component {
 
 function actions(dispatch) {
   return {
+    logOut: () => { dispatch(logOut()) },
     showLoginModal: () => { dispatch(showLoginModal()) },
   };
 }
@@ -82,4 +135,4 @@ function select(store) {
   };
 }
 
-export default connect(select, actions)(NavBar);
+export default withRouter(connect(select, actions)(NavBar));

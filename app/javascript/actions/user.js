@@ -18,7 +18,7 @@ export function fetchUser() {
   return (dispatch, getState) => {
     const userEmail = getState().user.email;
     const apiToken = getState().user.apiToken;
-    let url = `${serverDomain}users/me`;
+    let url = `${serverDomain}/users/me`;
 
     const headers = {
       headers: {'Authorization': apiToken, 'User-Email': userEmail}
@@ -38,20 +38,35 @@ function requestUserList() {
 }
 
 function receiveUserList(json) {
+  let data = json.posts ? json.posts : json.responses;
   return {
     type: 'RECEIVE_USER_LIST',
-    data: json.posts,
+    data,
     page: json.page,
     totalPages: json.total_pages,
     totalEntries: json.total_entries,
   };
 }
 
-export function fetchUserBookmarks() {
+export function fetchUserList(list = 'posts', page = 1) {
   return (dispatch, getState) => {
     const userEmail = getState().user.email;
     const apiToken = getState().user.apiToken;
-    let url = `${serverDomain}users/my_bookmarks`;
+    let listPath;
+    if (list === 'bookmarks') {
+      listPath = "my_bookmarks";
+    } else if (list === 'posts') {
+      listPath = "my_posts";
+    } else if (list === 'responses') {
+      listPath = "my_responses";
+    } else if (list === 'thanks') {
+      listPath = "my_thanks";
+    } else if (list === 'post-upvotes') {
+      listPath = "my_post_upvotes";
+    } else if (list === 'response-upvotes') {
+      listPath = "my_response_upvotes";
+    }
+    let url = `${serverDomain}/users/${listPath}`;
 
     const headers = {
       headers: {'Authorization': apiToken, 'User-Email': userEmail}
@@ -64,36 +79,8 @@ export function fetchUserBookmarks() {
   }
 }
 
-export function fetchUserPosts() {
-  return (dispatch, getState) => {
-    const userEmail = getState().user.email;
-    const apiToken = getState().user.apiToken;
-    let url = `${serverDomain}users/my_posts`;
-
-    const headers = {
-      headers: {'Authorization': apiToken, 'User-Email': userEmail}
-    };
-
-    dispatch(requestUserList());
-    return axios.get(url, headers).then((response) => {
-      dispatch(receiveUserList(response.data));
-    }).catch(error => console.log(error));
-  }
-}
-
-export function fetchUserResponses() {
-  return (dispatch, getState) => {
-    const userEmail = getState().user.email;
-    const apiToken = getState().user.apiToken;
-    let url = `${serverDomain}users/my_responses`;
-
-    const headers = {
-      headers: {'Authorization': apiToken, 'User-Email': userEmail}
-    };
-
-    dispatch(requestUserList());
-    return axios.get(url, headers).then((response) => {
-      dispatch(receiveUserList(response.data));
-    }).catch(error => console.log(error));
-  }
+export function logOut() {
+  return {
+    type: 'LOGGED_OUT',
+  };
 }

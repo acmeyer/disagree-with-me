@@ -66,11 +66,18 @@ class HomeView extends React.Component {
 
     return (
       <div className="page-wrap">
-        <PageSubmenu links={this.submenuLinks()} />
-        <PageHeader title={currentPageTitle} />
-        <PageList>
-          {content}
-        </PageList>
+        <div className="container">
+          <div className="row">
+            <div className="col-12 col-md-4 col-lg-3">
+              <PageSubmenu links={this.submenuLinks()} />
+            </div>
+            <div className="col-12 col-md-8 col-lg-9">
+              <PageList>
+                {content}
+              </PageList>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

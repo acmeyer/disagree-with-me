@@ -1,17 +1,10 @@
 .page-submenu {
   .nav-link {
-    color: white;
+    color: $black;
     &.active {
-      border-bottom: 1px solid white;
+      background-color: white;
+      border-radius: 0.25rem;
+      border: 1px solid rgba(0, 0, 0, 0.125);
     }
-  }
-}
-
-.navbar-brand {
-  font-weight: 300;
-
-  @media (min-width: 768px) {
-    position: absolute;
-    margin: 0;
   }
 }

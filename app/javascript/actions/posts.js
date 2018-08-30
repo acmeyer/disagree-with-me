@@ -28,7 +28,7 @@ export function fetchPosts(page = 1, options={}) {
         'User-Email': userEmail,
       };
     }
-    let url = `${serverDomain}posts?page=${page}`;
+    let url = `${serverDomain}/posts?page=${page}`;
 
     if (options.latest) {
       url = url + '&latest=true';

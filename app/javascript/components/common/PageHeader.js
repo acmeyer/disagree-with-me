@@ -5,7 +5,7 @@ class PageHeader extends React.Component {
     return (
       <div className="page-header mt-3">
         <div className="container">
-          <h1 className="display-4 text-white m-0">{this.props.title}</h1>        
+          <h3 className="m-0">{this.props.title}</h3>        
         </div>
       </div>
     );

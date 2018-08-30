@@ -53,14 +53,14 @@ class Api::V1::UsersController < Api::V1::ApiController
   def my_post_upvotes
     authorize @user
     @current_page = params[:page] || 1
-    @posts = @user.votes.up.for_type(Post)
+    @posts = @user.get_up_voted(Post)
     render_posts
   end
 
   def my_response_upvotes
     authorize @user
     @current_page = params[:page] || 1
-    @responses = @user.votes.up.for_type(Response)
+    @responses = @user.get_up_voted(Response)
     render_responses
   end
 

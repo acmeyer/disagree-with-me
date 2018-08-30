@@ -2,6 +2,7 @@ import React from 'react';
 import AppModal from './AppModal';
 import {connect} from 'react-redux';
 
+import { Button } from "@blueprintjs/core";
 import {
   loginWithEmail,
   hideLoginModal,
@@ -43,16 +44,6 @@ class LoginModal extends React.Component {
 
   render() {
     let {visible} = this.props;
-    let loginButton;
-    if (this.state.loading) {
-      loginButton = (
-        <button className="btn btn-primary btn-block" disabled>
-          Logging in...
-        </button>
-      );
-    } else {
-      loginButton = <button onClick={() => this.login()} className="btn btn-primary btn-block">Login</button>;
-    }
     return (
       <AppModal shouldCloseOnOverlayClick={true} isOpen={visible} close={this.close} label={'Login'}>
         <div className="login-modal react-modal">
@@ -83,7 +74,7 @@ class LoginModal extends React.Component {
               value={this.state.password}
             />
           </div>
-          {loginButton}
+          <Button disabled={this.state.loading} loading={this.state.loading} onClick={() => this.login()} fill intent="primary" large>Login</Button>
         </div>
       </AppModal>
     );
