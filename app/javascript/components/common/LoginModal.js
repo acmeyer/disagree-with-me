@@ -1,12 +1,13 @@
 import React from 'react';
 import AppModal from './AppModal';
-import {connect} from 'react-redux';
-
+import { AppToaster }  from './AppToaster';
 import { Button } from "@blueprintjs/core";
+
 import {
   loginWithEmail,
   hideLoginModal,
 } from '../../actions';
+import {connect} from 'react-redux';
 
 class LoginModal extends React.Component {
   constructor(props) {
@@ -26,11 +27,11 @@ class LoginModal extends React.Component {
 
   login = () => {
     if (this.state.email === '') {
-      alert('Email is required');
+      AppToaster.show({ message: 'Email is required', intent: "danger", icon: "error" });
       return;
     }
     if (this.state.password === '') {
-      alert('Password is required');
+      AppToaster.show({ message: 'Password is required', intent: "danger", icon: "error" });
       return;
     }
     this.setState({loading: true});
@@ -38,7 +39,7 @@ class LoginModal extends React.Component {
       this.close();
     }).catch(error => {
       this.setState({loading: false});
-      alert(error);
+      AppToaster.show({ message: error, intent: "danger", icon: "error" });
     });
   }
 
