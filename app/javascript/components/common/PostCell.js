@@ -1,6 +1,13 @@
 import React from 'react';
 import AppReadMore from './AppReadMore';
 import moment from  'moment';
+import { 
+  Menu, 
+  MenuItem, 
+  Popover, 
+  Position,
+  Tooltip,
+} from "@blueprintjs/core";
 
 class PostCell extends React.Component {
   showPost = (e) => {
@@ -24,12 +31,28 @@ class PostCell extends React.Component {
 
   showSharingOptions = (e) => {
     e.stopPropagation();
-    alert('Show sharing options');
   }
 
   showMoreOptions = (e) => {
     e.stopPropagation();
-    alert('Show more options');
+  }
+
+  renderShareMenu = () => {
+    return (
+      <Menu>
+        <MenuItem text="Twitter" />
+        <MenuItem text="Facebook" />
+        <MenuItem text="Email" />
+      </Menu>
+    );
+  }
+
+  renderMoreOptionsMenu = () => {
+    return (
+      <Menu>
+        <MenuItem text="Report This Post" />
+      </Menu>
+    );
   }
 
   renderTopResponse = () => {
@@ -42,7 +65,7 @@ class PostCell extends React.Component {
             Top Response:
           </div>
           <div className="body mt-2">
-            <AppReadMore length={100} text={top_response.content} />
+            <AppReadMore length={150} text={top_response.content} />
             <div className="small time-ago text-muted">{moment(top_response.created_at).fromNow()}</div>
           </div>
         </div>
@@ -56,22 +79,36 @@ class PostCell extends React.Component {
     let {post} = this.props;
     return (
       <div className="cell-actions flex-row d-flex mt-3">
-        <div className="action pr-4" onClick={this.toggleUpvote}>
-          <span className={`action-icon ${post.upvoted ? 'active' : null}`}><i className={`fas fa-arrow-up`} /></span>
-          <span className={`action-count ${post.upvoted ? 'active' : null}`}>{post.upvotes_count > 0 && post.upvotes_count}</span>
-        </div>
+          <div className="action pr-4" onClick={this.toggleUpvote}>
+            <Tooltip content="Upvote" position="top">
+              <span className={`action-icon ${post.upvoted ? 'active' : null}`}><i className={`fas fa-arrow-up`} /></span>
+            </Tooltip>
+            <span className={`action-count ${post.upvoted ? 'active' : null}`}>{post.upvotes_count > 0 && post.upvotes_count}</span>
+          </div>
         <div className="action pr-4" onClick={this.showPostComments}>
-          <span className={`action-icon ${post.responded_to ? 'active' : null}`}><i className={`${post.responded_to ? 'fas' : 'far'} fa-comment`} /></span>
+          <Tooltip content="Respond" position="top">
+            <span className={`action-icon ${post.responded_to ? 'active' : null}`}><i className={`${post.responded_to ? 'fas' : 'far'} fa-comment`} /></span>
+          </Tooltip>
           <span className={`action-count ${post.responded_to ? 'active' : null}`}>{post.responses_count > 0 && post.responses_count}</span>
         </div>
         <div className="action pr-4" onClick={this.toggleBookmark}>
-          <span className={`action-icon ${post.bookmarked ? 'active' : null}`}><i className={`${post.bookmarked ? 'fas' : 'far'} fa-bookmark`} /></span>
+          <Tooltip content="Bookmark" position="top">
+            <span className={`action-icon ${post.bookmarked ? 'active' : null}`}><i className={`${post.bookmarked ? 'fas' : 'far'} fa-bookmark`} /></span>
+          </Tooltip>
         </div>
         <div className="action pr-4" onClick={this.showSharingOptions}>
-          <span className={`action-icon`}><i className="far fa-share-square" /></span>
+          <Popover content={this.renderShareMenu()} position={Position.RIGHT_CENTER}>
+            <Tooltip content="Share" position="top">
+              <span className={`action-icon`}><i className="far fa-share-square" /></span>
+            </Tooltip>
+          </Popover>
         </div>
         <div  className="action" onClick={this.showMoreOptions}>
-          <span className={`action-icon`}><i className="fas fa-ellipsis-h" /></span>
+          <Popover content={this.renderMoreOptionsMenu()} position={Position.RIGHT_CENTER}>
+            <Tooltip content="More" position="top">
+              <span className={`action-icon`}><i className="fas fa-ellipsis-h" /></span>
+            </Tooltip>
+          </Popover>
         </div>
       </div>
     )
@@ -81,7 +118,7 @@ class PostCell extends React.Component {
     return (
       <div className="card cell post-cell mb-2" onClick={this.showPost}>
         <div className="p-3">
-          <AppReadMore length={150} text={this.props.post.content} />
+          <AppReadMore length={300} text={this.props.post.content} />
           <div className="small time-ago text-muted">{moment(this.props.post.created_at).fromNow()}</div>
           {this.renderActionMenu()}
         </div>

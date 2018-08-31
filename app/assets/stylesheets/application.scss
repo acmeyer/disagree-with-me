@@ -21,6 +21,10 @@
   flex-direction: column;
 }
 
+.bp3-tooltip .bp3-popover-content {
+  font-size: 13px !important;
+}
+
 @media (min-width: 1200px) {
   .container {
     max-width: 1000px;
