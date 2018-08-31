@@ -1,6 +1,7 @@
 import React from 'react';
 import AppReadMore from './AppReadMore';
 import moment from  'moment';
+import {connect} from 'react-redux';
 import { 
   Menu, 
   MenuItem, 
@@ -8,6 +9,9 @@ import {
   Position,
   Tooltip,
 } from "@blueprintjs/core";
+import {
+  showLoginModal,
+} from '../../actions';
 
 class PostCell extends React.Component {
   showPost = (e) => {
@@ -16,17 +20,29 @@ class PostCell extends React.Component {
 
   toggleUpvote = (e) => {
     e.stopPropagation();
-    alert('Toggle Post Upvote');
+    if (this.props.user.loggedIn) {
+      alert('Toggle Post Upvote');
+    } else {
+      this.props.showLoginModal();
+    }
   }
 
   toggleBookmark = (e) => {
     e.stopPropagation();
-    alert('Toggle Post Bookmark');
+    if (this.props.user.loggedIn) {
+      alert('Toggle Bookmark');
+    } else {
+      this.props.showLoginModal();
+    }
   }
 
   showPostComments = (e) => {
     e.stopPropagation();
-    alert('Show Post\'s Comments!');
+    if (this.props.user.loggedIn) {
+      alert('Show responses');
+    } else {
+      this.props.showLoginModal();
+    }
   }
 
   showSharingOptions = (e) => {
@@ -128,4 +144,10 @@ class PostCell extends React.Component {
   }
 }
 
-export default PostCell;
+function actions(dispatch) {
+  return {
+    showLoginModal: () => { dispatch(showLoginModal()) },
+  };
+}
+
+export default connect(null, actions)(PostCell);

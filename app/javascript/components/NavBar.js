@@ -10,6 +10,7 @@ import {
   Popover, 
   Position,
   Alert,
+  Button,
 } from "@blueprintjs/core";
 
 import {
@@ -29,6 +30,14 @@ class NavBar extends React.Component {
 
   showLogin = (e) => {
     this.props.showLoginModal();
+  }
+
+  handleCreate = () => {
+    if (this.props.user.loggedIn) {
+      alert('Show create page');
+    } else {
+      this.showLogin();
+    }
   }
 
   logOut = () => {
@@ -51,15 +60,26 @@ class NavBar extends React.Component {
   }
 
   render() {
-    let page, navLinks;
+    let page, navLinks, createButton;
+    let searchLink = (
+      <li className="nav-item">
+        <Link to="/search" className={`nav-link ${page === '/search' ? 'active' : ''}`}>
+          <i className="fas fa-search" />
+        </Link>
+      </li>
+    );
+    createButton = (
+      <li className="nav-item add-new-button">
+        <div className="btn btn-light" onClick={this.handleCreate}>
+          <i className="far fa-edit" />{' '}
+          Create
+        </div>
+      </li>
+    );
     if (this.props.user.loggedIn) {
       navLinks = (
         <ul className="navbar-nav ml-auto">
-          <li className="nav-item">
-            <Link to="/search" className={`nav-link ${page === '/search' ? 'active' : ''}`}>
-              <i className="fas fa-search" />
-            </Link>
-          </li>
+          {searchLink}
           <li className="nav-item">
             <Link to="/me/bookmarks" className={`nav-link ${page === '/me/bookmarks' ? 'active' : ''}`}>
               <i className="fas fa-bookmark" />
@@ -77,21 +97,19 @@ class NavBar extends React.Component {
               </a>
             </Popover>
           </li>
+          {createButton}
         </ul>
       );
     } else {
       navLinks = (
         <ul className="navbar-nav ml-auto">
-          <li className="nav-item">
-            <Link to="/search" className={`nav-link ${page === '/search' ? 'active' : ''}`}>
-              <i className="fas fa-search" />
-            </Link>
-          </li>
+          {searchLink}
           <li className="nav-item">
             <div className={'nav-link'} onClick={this.showLogin}>
               Login
             </div>
           </li>
+          {createButton}
         </ul>
       );
     }

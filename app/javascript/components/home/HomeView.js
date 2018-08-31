@@ -50,7 +50,14 @@ class HomeView extends React.Component {
   }
 
   renderPost = (post) => {
-    return <PostCell key={post.id} user={this.props.user} post={post} showTopResponse />;
+    return (
+      <PostCell 
+        key={post.id} 
+        user={this.props.user} 
+        post={post} 
+        showTopResponse 
+      />
+    );
   }
 
   render() {
