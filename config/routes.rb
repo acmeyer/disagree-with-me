@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   # Devise routes
-  devise_for :users, skip: [:registrations], controllers: {
-    passwords: 'users/passwords',
-    sessions: 'users/sessions'
-  }
+  # devise_for :users, skip: [:registrations], controllers: {
+  #   passwords: 'users/passwords',
+  #   sessions: 'users/sessions'
+  # }
 
   
   # API routes
@@ -42,6 +42,7 @@ Rails.application.routes.draw do
 
   # Web App routes
   get "activity", to: "web_app#index"
+  get "login", to: "web_app#index"
   get "search", to: "web_app#index"
   get "latest", to: "web_app#index"
   get "popular", to: "web_app#index"

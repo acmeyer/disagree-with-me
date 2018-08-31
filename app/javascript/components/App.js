@@ -2,6 +2,7 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
+  Redirect,
 } from 'react-router-dom';
 import NavBar from './common/NavBar';
 import LoginModal from './common/LoginModal';
@@ -29,11 +30,32 @@ class App extends React.Component {
           <NavBar />
           <LoginModal />
           <Route exact path="/" component={HomeView} />
+          <Route path="/login" component={HomeView} />
           <Route path="/latest" component={HomeView} />
           <Route path="/popular" component={HomeView} />
           <Route path="/search" component={SearchView} />
-          <Route path="/activity" component={ActivityView} />
-          <Route path="/me/:list" render={(props) => <UserView key={props.match.params.list} {...props} />} />
+          <Route path="/activity" render={props => {
+            return this.props.user.loggedIn ? <ActivityView /> : (
+              <Redirect
+                to={{
+                  pathname: "/login",
+                  state: { from: props.location }
+                }}
+              />
+            )
+          }} />
+          <Route path="/me/:list" render={(props) => {
+            return this.props.user.loggedIn ? (
+              <UserView key={props.match.params.list} {...props} />
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/login",
+                  state: { from: props.location }
+                }}
+              />
+            )
+          }} />
         </div>
       </Router>
     );

@@ -56,12 +56,14 @@ class LoginModal extends React.Component {
           <hr />
           <div className="form-group">
             <input 
+              autoFocus={true}
               type="email" 
               className="form-control" 
               id="email-address" 
               aria-describedby="emailHelp" 
               placeholder="Email"
               onChange={(e) => this.setState({email: e.target.value})}
+              onKeyDown={(e) => e.keyCode === 13 ? this.login() : null}
               value={this.state.email}
             />
           </div>
@@ -72,10 +74,21 @@ class LoginModal extends React.Component {
               id="password" 
               placeholder="Password" 
               onChange={(e) => this.setState({password: e.target.value})}
+              onKeyDown={(e) => e.keyCode === 13 ? this.login() : null}
               value={this.state.password}
             />
           </div>
-          <Button disabled={this.state.loading} loading={this.state.loading} onClick={() => this.login()} fill intent="primary" large>Login</Button>
+          <Button 
+            disabled={this.state.loading} 
+            loading={this.state.loading} 
+            onClick={() => this.login()} 
+            onKeyDown={(e) => e.keyCode === 13 ? this.login() : null} 
+            fill 
+            intent="primary" 
+            large
+          >
+            Login
+          </Button>
         </div>
       </AppModal>
     );

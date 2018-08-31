@@ -1,12 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import PageHeader from '../common/PageHeader';
+import {Redirect} from 'react-router-dom';
 import PageSubmenu from '../common/PageSubmenu';
 import PageList from '../common/PageList';
 import LoadingView from '../common/LoadingView';
 import PostCell from '../common/PostCell';
 
 import {
+  showLoginModal,
   fetchPosts,
 } from '../../actions';
 
@@ -14,12 +15,17 @@ class HomeView extends React.Component {
   componentWillMount() {
     // Fetch posts
     const currentUrl = this.props.match.url;
-    if (currentUrl === '/') {
-      this.props.fetchPosts();
-    } else if (currentUrl === '/latest') {
+    if (currentUrl === '/latest') {
       this.props.fetchPosts(1, {latest: true});
     } else if (currentUrl === '/popular') {
       this.props.fetchPosts(1, {popular: true});
+    } else {
+      this.props.fetchPosts(1);
+    }
+
+    // Show login if coming to login page and not logged in yet
+    if (currentUrl === '/login' && !this.props.user.loggedIn) {
+      this.props.showLoginModal();
     }
   }
 
@@ -27,7 +33,7 @@ class HomeView extends React.Component {
     const currentUrl = this.props.match.url;
     return [
       {
-        active: currentUrl === '/',
+        active: currentUrl === '/' || currentUrl === '/login',
         href: '/',
         title: 'Trending'
       },
@@ -78,6 +84,7 @@ class HomeView extends React.Component {
 
 function actions(dispatch) {
   return {
+    showLoginModal: () => { dispatch(showLoginModal()) },
     fetchPosts: (page, options) => { dispatch(fetchPosts(page, options)) },
   };
 }
