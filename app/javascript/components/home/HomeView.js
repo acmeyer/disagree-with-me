@@ -45,18 +45,11 @@ class HomeView extends React.Component {
   }
 
   renderPost = (post) => {
-    return <PostCell key={post.id} post={post} />;
+    return <PostCell key={post.id} user={this.props.user} post={post} />;
   }
 
   render() {
-    let currentPageTitle, content;
-    if (this.props.match.url === '/popular') {
-      currentPageTitle = "Popular";
-    } else if (this.props.match.url === '/latest') {
-      currentPageTitle = "Latest";
-    } else {
-      currentPageTitle = "Trending";
-    }
+    let content;
 
     if (this.props.isLoading) {
       content = <LoadingView />

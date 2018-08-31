@@ -5,7 +5,7 @@ import PageList from '../common/PageList';
 import PostCell from '../common/PostCell';
 import ResponseCell from '../common/ResponseCell';
 import {connect} from 'react-redux';
-import { Classes, H5, InputGroup, NonIdealState, Switch } from "@blueprintjs/core";
+import { NonIdealState } from "@blueprintjs/core";
 
 import {
   fetchUserList,
@@ -31,32 +31,32 @@ class UserView extends React.Component {
       {
         active: list === 'bookmarks',
         href: '/me/bookmarks',
-        title: 'Bookmarks'
+        title: 'My Bookmarks'
       },
       {
         active: list === 'posts',
         href: '/me/posts',
-        title: 'Posts'
+        title: 'My Posts'
       },
       {
         active: list === 'responses',
         href: '/me/responses',
-        title: 'Responses'
+        title: 'My Responses'
       },
       {
         active: list === 'thanks',
         href: '/me/thanks',
-        title: 'Thanks'
+        title: 'My Thanks'
       },
       {
         active: list === 'post-upvotes',
         href: '/me/post-upvotes',
-        title: 'Post Upvotes'
+        title: 'My Post Upvotes'
       },
       {
         active: list === 'response-upvotes',
         href: '/me/response-upvotes',
-        title: 'Response Upvotes'
+        title: 'My Response Upvotes'
       },
     ]
   }
@@ -66,10 +66,37 @@ class UserView extends React.Component {
     if (data.length > 0) {
       return data.map(this.renderCell);
     } else {
+      let {list} = this.props.match.params;
+      let message, description;
+      if (list === 'bookmarks') {
+        message = 'No bookmarks found!'
+        description = 'When you bookmark a post, it will show here.'
+      }
+      if (list === 'posts') {
+        message = 'No posts found!'
+        description = 'When you create a post, it will show here.'
+      }
+      if (list === 'responses') {
+        message = 'No responses found!'
+        description = 'When you respond to a post, it will show here.'
+      }
+      if (list === 'thanks') {
+        message = 'No thanks found!'
+        description = 'When you thank a response, it will show here.'
+      }
+      if (list === 'post-upvotes') {
+        message = 'No post upvotes found!'
+        description = 'When you upvote a post, it will show here.'
+      }
+      if (list === 'response-upvotes') {
+        message = 'No response upvotes found!'
+        description = 'When you upvote a response, it will show here.'
+      }
       return (
         <NonIdealState
           icon="issue"
-          title="Nothing Found"
+          title={message}
+          description={description}
         />
       )
     }

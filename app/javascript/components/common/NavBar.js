@@ -10,8 +10,6 @@ import {
   Popover, 
   Position,
   Alert,
-  Classes,
-  Button,
 } from "@blueprintjs/core";
 
 import {
@@ -41,11 +39,11 @@ class NavBar extends React.Component {
   userMenu = () => {
     return (
       <Menu>
-        <MenuItem text="Posts" onClick={() => this.props.history.push('/me/posts')} />
-        <MenuItem text="Responses" onClick={() => this.props.history.push('/me/responses')} />
-        <MenuItem text="Thanks" onClick={() => this.props.history.push('/me/thanks')} />
-        <MenuItem text="Post Upvotes" onClick={() => this.props.history.push('/me/post-upvotes')} />
-        <MenuItem text="Response Upvotes" onClick={() => this.props.history.push('/me/response-upvotes')} />
+        <MenuItem text="My Posts" onClick={() => this.props.history.push('/me/posts')} />
+        <MenuItem text="My Responses" onClick={() => this.props.history.push('/me/responses')} />
+        <MenuItem text="My Thanks" onClick={() => this.props.history.push('/me/thanks')} />
+        <MenuItem text="My Post Upvotes" onClick={() => this.props.history.push('/me/post-upvotes')} />
+        <MenuItem text="My Response Upvotes" onClick={() => this.props.history.push('/me/response-upvotes')} />
         <MenuDivider />
         <MenuItem text="Log Out" onClick={() => this.setState({confirmLogOutVisible: true})} />
       </Menu>
