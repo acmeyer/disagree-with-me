@@ -19,9 +19,9 @@ class UserView extends React.Component {
 
   renderCell = (obj) => {
     if (obj.post_id) {
-      return <ResponseCell key={obj.id} response={obj} />;
+      return <ResponseCell key={obj.id} user={this.props.user} response={obj} />;
     } else {
-      return <PostCell key={obj.id} post={obj} />;
+      return <PostCell key={obj.id} user={this.props.user} post={obj} />;
     }
   }
 
@@ -140,6 +140,7 @@ function select(store) {
   return {
     isLoading: store.userList.loading,
     data: store.userList.list,
+    user: store.user,
   };
 }
 

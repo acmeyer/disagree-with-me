@@ -11,6 +11,8 @@ import {
 } from "@blueprintjs/core";
 import {
   showLoginModal,
+  togglePostUpvote,
+  togglePostBookmark,
 } from '../../actions';
 
 class PostCell extends React.Component {
@@ -21,7 +23,7 @@ class PostCell extends React.Component {
   toggleUpvote = (e) => {
     e.stopPropagation();
     if (this.props.user.loggedIn) {
-      alert('Toggle Post Upvote');
+      this.props.togglePostUpvote(this.props.post);
     } else {
       this.props.showLoginModal();
     }
@@ -30,7 +32,7 @@ class PostCell extends React.Component {
   toggleBookmark = (e) => {
     e.stopPropagation();
     if (this.props.user.loggedIn) {
-      alert('Toggle Bookmark');
+      this.props.togglePostBookmark(this.props.post);
     } else {
       this.props.showLoginModal();
     }
@@ -147,6 +149,8 @@ class PostCell extends React.Component {
 function actions(dispatch) {
   return {
     showLoginModal: () => { dispatch(showLoginModal()) },
+    togglePostUpvote: (post) => { dispatch(togglePostUpvote(post)) },
+    togglePostBookmark: (post) => { dispatch(togglePostBookmark(post)) },
   };
 }
 

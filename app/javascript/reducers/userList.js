@@ -1,3 +1,6 @@
+import {
+  replaceById,
+} from '../util/helpers';
 
 const initial = {
   loading: false,
@@ -17,6 +20,12 @@ export function userListReducer(state = initial, action) {
       loading: false,
       list: action.data,
     };
+  }
+  if (action.type === 'RECEIVE_POST' || action.type === 'TOGGLE_POST_UPVOTE' || action.type === 'TOGGLE_POST_BOOKMARK') {
+    return {
+      ...state,
+      list: replaceById(state.list, action.post),
+    }
   }
 
   return state;
