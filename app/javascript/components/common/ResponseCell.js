@@ -1,4 +1,5 @@
 import React from 'react';
+import AppReadMore from './AppReadMore';
 
 class ResponseCell extends React.Component {
   showPost = (e) => {
@@ -31,7 +32,7 @@ class ResponseCell extends React.Component {
   render() {
     return (
       <div className="card cell response-cell p-3 mb-2" onClick={this.showPost}>
-        {this.props.response.content}
+        <AppReadMore length={150} text={this.props.response.content} />
         {this.showActionsMenu()}
       </div>
       );

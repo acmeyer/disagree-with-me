@@ -4,7 +4,8 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
-import NavBar from './common/NavBar';
+import NavBar from './NavBar';
+import Footer from './Footer';
 import LoginModal from './common/LoginModal';
 import HomeView from './home/HomeView';
 import UserView from './user/UserView';
@@ -56,6 +57,7 @@ class App extends React.Component {
               />
             )
           }} />
+          <Footer />
         </div>
       </Router>
     );

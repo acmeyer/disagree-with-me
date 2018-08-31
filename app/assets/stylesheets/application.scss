@@ -15,13 +15,10 @@
 @import 'components/toasters';
 @import 'components/posts';
 
-.top-bg {
-  position: absolute;
-  height: 300px;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: -1;
+.app-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (min-width: 1200px) {

@@ -15,7 +15,7 @@ import {
 import {
   showLoginModal,
   logOut,
-} from '../../actions';
+} from '../actions';
 import {connect} from 'react-redux';
 
 class NavBar extends React.Component {
