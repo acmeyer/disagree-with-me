@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
 import PageSubmenu from '../common/PageSubmenu';
 import PageList from '../common/PageList';
 import LoadingView from '../common/LoadingView';
@@ -51,7 +50,7 @@ class HomeView extends React.Component {
   }
 
   renderPost = (post) => {
-    return <PostCell key={post.id} user={this.props.user} post={post} />;
+    return <PostCell key={post.id} user={this.props.user} post={post} showTopResponse />;
   }
 
   render() {

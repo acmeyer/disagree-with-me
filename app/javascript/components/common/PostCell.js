@@ -1,4 +1,5 @@
 import React from 'react';
+import AppReadMore from './AppReadMore';
 
 class PostCell extends React.Component {
   showPost = (e) => {
@@ -30,7 +31,26 @@ class PostCell extends React.Component {
     alert('Show more options');
   }
 
-  showActionsMenu = () => {
+  renderTopResponse = () => {
+    let {top_response} = this.props.post;
+    if (this.props.showTopResponse && top_response) {
+      return (
+        <div className="top-response p-3 bg-light">
+          <div className="heading">
+            <i className="far fa-star mr-1" />
+            Top Response:
+          </div>
+          <div className="body mt-2">
+            <AppReadMore length={100} text={top_response.content} />
+          </div>
+        </div>
+      )
+    } else {
+      return;
+    }
+  }
+
+  renderActionMenu = () => {
     return (
       <div className="cell-actions flex-row d-flex mt-3">
         <div className="action pr-4" onClick={this.toggleUpvote}>
@@ -54,9 +74,12 @@ class PostCell extends React.Component {
 
   render() {
     return (
-      <div className="card cell post-cell p-3 mb-2" onClick={this.showPost}>
-        {this.props.post.content}
-        {this.showActionsMenu()}
+      <div className="card cell post-cell mb-2" onClick={this.showPost}>
+        <div className="p-3">
+          <AppReadMore length={150} text={this.props.post.content} />
+          {this.renderActionMenu()}
+        </div>
+        {this.renderTopResponse()}
       </div>
       );
   }
