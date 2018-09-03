@@ -12,6 +12,7 @@ module DisagreeWithMe
     config.load_defaults 5.2
 
     config.middleware.use Rack::Deflater
+    config.middleware.use Rack::Attack
 
     if Rails.env.development?
       config.middleware.insert_before 0, Rack::Cors do

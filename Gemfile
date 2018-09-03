@@ -36,7 +36,7 @@ gem 'acts-as-taggable-on', '~> 6.0'
 gem 'algoliasearch-rails'
 gem 'acts_as_paranoid', '~> 0.6.0'
 gem 'rack-cors', require: 'rack/cors'
-# gem 'rack-attack'
+gem 'rack-attack'
 
 # Frontend Libraries
 #=============================
