@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   # Web App routes
   get "activity", to: "web_app#index"
   get "login", to: "web_app#index"
+  get "conversations/:id", to: "web_app#index"
   get "search", to: "web_app#index"
   get "latest", to: "web_app#index"
   get "popular", to: "web_app#index"

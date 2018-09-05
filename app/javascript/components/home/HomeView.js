@@ -26,6 +26,8 @@ class HomeView extends React.Component {
     if (currentUrl === '/login' && !this.props.user.loggedIn) {
       this.props.showLoginModal();
     }
+
+    // Show conversation view if navigating to conversation
   }
 
   submenuLinks = () => {
@@ -67,7 +69,7 @@ class HomeView extends React.Component {
     let content;
 
     if (this.props.isLoading) {
-      content = <LoadingView />
+      content = <LoadingView />;
     } else {
       content = this.props.posts.map(this.renderPost);
     }

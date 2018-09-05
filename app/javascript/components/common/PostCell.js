@@ -11,13 +11,14 @@ import {
 } from "@blueprintjs/core";
 import {
   showLoginModal,
+  showConversation,
   togglePostUpvote,
   togglePostBookmark,
 } from '../../actions';
 
 class PostCell extends React.Component {
   showPost = (e) => {
-    alert('Show this post!');
+    this.props.showConversation(this.props.post);
   }
 
   toggleUpvote = (e) => {
@@ -149,6 +150,7 @@ class PostCell extends React.Component {
 function actions(dispatch) {
   return {
     showLoginModal: () => { dispatch(showLoginModal()) },
+    showConversation: (post) => { dispatch(showConversation(post)) },
     togglePostUpvote: (post) => { dispatch(togglePostUpvote(post)) },
     togglePostBookmark: (post) => { dispatch(togglePostBookmark(post)) },
   };

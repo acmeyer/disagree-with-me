@@ -133,24 +133,3 @@ export function createPost(content) {
     }).catch(error => console.log(error));
   }
 }
-
-
-// export function showPost(post) 
-//   return (dispatch, getState) => {
-//     let headers = {headers: {}};
-//     const userEmail = getState().user.email;
-//     const apiToken = getState().user.apiToken;
-//     if (apiToken) {
-//       headers.headers = {
-//         'Authorization': apiToken,
-//         'User-Email': userEmail,
-//       };
-//     }
-//     let url = `${serverDomain}/posts?page=${page}`;
-
-//     dispatch(requestPosts());
-//     return axios.get(url, headers).then((response) => {
-//       dispatch(receivePosts(response.data));
-//     }).catch(error => console.log(error));
-//   }
-// }

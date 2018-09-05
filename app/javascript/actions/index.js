@@ -3,6 +3,7 @@ const postActions = require('./posts');
 const responseActions = require('./responses');
 const loginActions = require('./login');
 const composeActions = require('./compose');
+const conversationActions = require('./conversation');
 
 module.exports = {
   ...userActions,
@@ -10,4 +11,5 @@ module.exports = {
   ...responseActions,
   ...loginActions,
   ...composeActions,
+  ...conversationActions,
 };
