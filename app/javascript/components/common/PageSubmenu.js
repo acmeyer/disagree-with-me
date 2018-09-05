@@ -11,7 +11,10 @@ class PageHeader extends React.Component {
           {this.props.links.map(link => {
             return (
               <li key={link.href} className="nav-item">
-                <Link to={link.href} className={`nav-link ${link.active ? 'active' : ''}`}>{link.title}</Link>
+                <Link to={link.href} className={`nav-link ${link.active ? 'active' : ''}`}>
+                  {link.icon && <span className="link-icon"><i className={`fas fa-${link.icon}`} /></span>}
+                  <span className="link-text">{link.title}</span>
+                </Link>
               </li>
             );
           })}

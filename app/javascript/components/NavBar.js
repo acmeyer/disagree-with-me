@@ -15,6 +15,7 @@ import {
 
 import {
   showLoginModal,
+  showComposeView,
   logOut,
 } from '../actions';
 import {connect} from 'react-redux';
@@ -34,7 +35,7 @@ class NavBar extends React.Component {
 
   handleCreate = () => {
     if (this.props.user.loggedIn) {
-      alert('Show create page');
+      this.props.showComposeView();
     } else {
       this.showLogin();
     }
@@ -141,6 +142,7 @@ function actions(dispatch) {
   return {
     logOut: () => { dispatch(logOut()) },
     showLoginModal: () => { dispatch(showLoginModal()) },
+    showComposeView: () => { dispatch(showComposeView()) },
   };
 }
 

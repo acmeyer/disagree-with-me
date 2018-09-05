@@ -7,6 +7,7 @@ import {
 import NavBar from './NavBar';
 import Footer from './Footer';
 import LoginModal from './common/LoginModal';
+import ComposePostModal from './common/ComposePostModal';
 import HomeView from './home/HomeView';
 import UserView from './user/UserView';
 import SearchView from './search/SearchView';
@@ -30,6 +31,7 @@ class App extends React.Component {
         <div className="app-wrap">
           <NavBar />
           <LoginModal />
+          <ComposePostModal />
           <Route exact path="/" component={HomeView} />
           <Route path="/login" component={HomeView} />
           <Route path="/latest" component={HomeView} />

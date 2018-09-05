@@ -34,17 +34,20 @@ class HomeView extends React.Component {
       {
         active: currentUrl === '/' || currentUrl === '/login',
         href: '/',
-        title: 'Trending'
+        title: 'Trending',
+        icon: 'chart-line'
       },
       {
         active: currentUrl === '/latest',
         href: '/latest',
-        title: 'Latest'
+        title: 'Latest',
+        icon: 'clock'
       },
       {
         active: currentUrl === '/popular',
         href: '/popular',
-        title: 'Popular'
+        title: 'Popular',
+        icon: 'star'
       },
     ]
   }

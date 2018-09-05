@@ -32,7 +32,7 @@ function configureStore() {
   const persistConfig = {
     key: 'reduxPersist/v1/dwm/' + environment + '/',
     storage,
-    blacklist: ['loginModal'],
+    blacklist: ['loginModal', 'composePostModal'],
   };
   const persistedReducer = persistReducer(persistConfig, reducers);
   const store = createStore(persistedReducer, {}, enhancer);

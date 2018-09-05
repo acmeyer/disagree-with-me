@@ -115,6 +115,26 @@ export function togglePostBookmark(post) {
   }
 }
 
+export function createPost(content) {
+  return (dispatch, getState) => {
+    let headers = {headers: {}};
+    const userEmail = getState().user.email;
+    const apiToken = getState().user.apiToken;
+    if (apiToken) {
+      headers.headers = {
+        'Authorization': apiToken,
+        'User-Email': userEmail,
+      };
+    }
+    let url = `${serverDomain}/posts`;
+
+    return axios.post(url, {content}, headers).then((response) => {
+      dispatch(receivePost(response.data));
+    }).catch(error => console.log(error));
+  }
+}
+
+
 // export function showPost(post) 
 //   return (dispatch, getState) => {
 //     let headers = {headers: {}};

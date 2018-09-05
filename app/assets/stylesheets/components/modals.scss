@@ -81,4 +81,14 @@ body.ReactModal__Body--open { overflow: hidden; }
       font-size: 2rem;
     }
   }
+
+  &.compose-post-modal {
+    flex: 1;
+    max-width: 600px;
+  }
+}
+
+// make sure confirmation modals can lay on top
+.bp3-overlay {
+  z-index: 20001;
 }
