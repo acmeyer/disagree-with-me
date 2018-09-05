@@ -7,7 +7,6 @@ body.ReactModal__Body--open { overflow: hidden; }
   left: 0px;
   right: 0px;
   bottom: 0px;
-  z-index: 20000 !important;
   background-color: rgba(0, 0, 0, 0.45) !important;
   padding: 30px;
   overflow: auto;
@@ -55,9 +54,8 @@ body.ReactModal__Body--open { overflow: hidden; }
   outline: none !important;
 }
 .react-modal {
-  padding: 16px;
-  background: $lightestGray;
   color: $black;
+  background: $lightestGray;
   border: solid 1px $borderGray;
   text-align: left;
   margin: 20px auto;
@@ -75,8 +73,8 @@ body.ReactModal__Body--open { overflow: hidden; }
   }
   &.login-modal {
     flex: 1;
+    padding: 16px;
     max-width: 450px;
-
     h1 {
       font-size: 2rem;
     }
@@ -84,16 +82,48 @@ body.ReactModal__Body--open { overflow: hidden; }
 
   &.compose-post-modal {
     flex: 1;
+    padding: 16px;
     max-width: 600px;
   }
 
   &.conversation-modal {
     flex: 1;
     max-width: 600px;
+    background: white;
+    .conversation-wrap {
+      .post-wrap {
+        padding: 30px 30px 15px 30px;
+        .post-text {
+          font-size: 18px;
+        }
+      }
+      .responses-wrap {
+        padding: 30px;
+        .responses-title {
+          text-transform: uppercase;
+        }
+      }
+      .respond-to-wrap {
+        background: $lightestGray;
+        padding: 15px 30px;
+        border-top: 1px solid $cellBorder;
+        border-bottom: 1px solid $cellBorder;
+      }
+    }
   }
 }
 
 // make sure confirmation modals can lay on top
 .bp3-overlay {
   z-index: 20001;
+}
+
+// reduce space between icon and title in nonideal state
+.bp3-non-ideal-state {
+  .bp3-non-ideal-state-visual {
+    margin-bottom: 0;
+  }
+  .bp3-heading {
+    margin-bottom: 10px;
+  }
 }

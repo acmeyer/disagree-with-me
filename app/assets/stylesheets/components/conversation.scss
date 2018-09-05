@@ -1,0 +1,18 @@
+#post-actions {
+  .action {
+    min-width: 80px;
+    .action-icon {
+      font-size: 16px;
+    }
+    .action-count {
+      font-size: 14px;
+      margin-left: 6px;
+    }
+    .action-icon.active, .action-count.active {
+      color: $blue;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

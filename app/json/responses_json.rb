@@ -10,7 +10,7 @@ class ResponsesJson
 
   def as_json
     {
-      more_results: @current_page.present? && @total_pages.present? && (@current_page < @total_pages),
+      more_results: @current_page.present? && @total_pages.present? && (@current_page.to_i < @total_pages),
       page: @current_page,
       total_pages: @total_pages,
       total_entries: @total_entries,

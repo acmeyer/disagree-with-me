@@ -69,7 +69,7 @@ class ComposePostModal extends React.Component {
       <AppModal shouldCloseOnOverlayClick={true} isOpen={visible} close={this.close} label={'Compose'}>
         <div className="compose-post-modal react-modal">
           <div className="dismiss-modal" onClick={this.close}><i className="fas fa-times" /></div>
-          <h5 className="text-center">Create Post</h5>
+          <h5 className="text-center mb-3">Create Post</h5>
           <div>
             <div className="form-group">
               <textarea 
