@@ -14,14 +14,14 @@ export function postsReducer(state = initial, action) {
       loading: true,
     }
   }
-  if (action.type === 'RECEIVE_POSTS') {
+  if (action.type === 'RECEIVED_POSTS') {
     return {
       ...state, 
       loading: false,
       list: action.posts,
     };
   }
-  if (action.type === 'RECEIVE_POST' || action.type === 'TOGGLE_POST_UPVOTE' || action.type === 'TOGGLE_POST_BOOKMARK') {
+  if (action.type === 'RECEIVED_POST' || action.type === 'TOGGLE_POST_UPVOTE' || action.type === 'TOGGLE_POST_BOOKMARK') {
     return {
       ...state,
       list: replaceById(state.list, action.post),

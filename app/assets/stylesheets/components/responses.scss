@@ -1,0 +1,10 @@
+.response-cell {
+  cursor: pointer;
+  &:hover {
+    background-color: $cellHighlight !important;
+  }
+  
+  .read-more-link {
+    color: $blue !important;
+  }
+}

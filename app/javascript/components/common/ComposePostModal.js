@@ -90,7 +90,6 @@ class ComposePostModal extends React.Component {
             disabled={!this.postIsValid()} 
             loading={this.state.loading} 
             onClick={() => this.create()} 
-            onKeyDown={(e) => e.keyCode === 13 ? this.login() : null} 
             fill 
             intent="primary" 
             large

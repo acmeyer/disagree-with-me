@@ -2,6 +2,8 @@ import React from 'react';
 import AppModal from './AppModal';
 import LoadingView from './LoadingView';
 import PostActions from './PostActions';
+import ResponseActions from './ResponseActions';
+import ResponseInput from './ResponseInput';
 import moment from 'moment';
 import { NonIdealState } from "@blueprintjs/core";
 import {
@@ -15,6 +17,7 @@ class ConversationView extends React.Component {
 
     this.state = {
       loading: false,
+      responseInFocus: false,
     }
   }
 
@@ -25,8 +28,10 @@ class ConversationView extends React.Component {
 
   renderResponse = (response) => {
     return (
-      <div key={response.id} className="response">
+      <div key={response.id} className="response py-3">
         {response.content}
+        <div className="small time-ago text-muted">{moment(response.created_at).fromNow()}</div>
+        <ResponseActions response={response} />
       </div>
     )
   }
@@ -53,24 +58,6 @@ class ConversationView extends React.Component {
     );
   }
 
-  renderRespondTo = () => {
-    return (
-      <div className="respond-to-wrap">
-        <textarea 
-          className="form-control" 
-          id="respond-to-content" 
-          rows="2"
-          placeholder="Share your feedback"
-          onChange={(e) => this.updateResponseContent(e.target.value)}
-          value={this.state.responseContent}
-        />
-        <div className={`d-flex justify-content-end mt-1 remaining-characters-count small ${this.state.responseRemainingCharacters < 21 ? 'text-danger' : 'text-muted' }`}>
-          {this.state.responseRemainingCharacters} characters left
-        </div>
-      </div>
-    )
-  }
-
   render() {
     let {visible, loading, post} = this.props;
     let content;
@@ -82,9 +69,16 @@ class ConversationView extends React.Component {
           <div className="post-wrap">
             <div className="post-text">{post.content}</div>
             <div className="small time-ago text-muted">{moment(post.created_at).fromNow()}</div>
-            <PostActions post={post} />
+            <PostActions 
+              post={post} 
+              handleShowComments={() => this.setState({responseInFocus: true})}
+            />
           </div>
-          {this.renderRespondTo()}
+          <ResponseInput 
+            post={post}
+            inFocus={this.state.responseInFocus} 
+            handleFocusChanged={(value) => this.setState({responseInFocus: value})} 
+          />
           {this.renderResponses()}
         </div>
       )

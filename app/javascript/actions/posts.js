@@ -9,7 +9,7 @@ function requestPosts() {
 
 function receivePosts(json) {
   return {
-    type: 'RECEIVE_POSTS',
+    type: 'RECEIVED_POSTS',
     posts: json.posts,
     page: json.page,
     totalPages: json.total_pages,
@@ -19,7 +19,7 @@ function receivePosts(json) {
 
 function receivePost(json) {
   return {
-    type: 'RECEIVE_POST',
+    type: 'RECEIVED_POST',
     post: json,
   };
 }

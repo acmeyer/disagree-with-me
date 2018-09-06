@@ -1,8 +1,13 @@
+import {
+  replaceIfObj,
+  appendOrReplaceById,
+} from '../util/helpers';
 
 const initial = {
   isVisible: false,
   loading: false,
   post: null,
+  focusResponse: false,
   responses: {
     loading: false,
     list: [],
@@ -40,20 +45,36 @@ export function conversationReducer(state = initial, action) {
       }
     }
   }
-  if (action.type === 'RECEIVE_CONVERSATION_POST') {
+  if (action.type === 'RECEIVED_CONVERSATION_POST') {
     return {
       ...state,
       loading: false,
       post: action.post,
     }
   }
-  if (action.type === 'RECEIVE_CONVERSATION_RESPONSES') {
+  if (action.type === 'RECEIVED_CONVERSATION_RESPONSES') {
     return {
       ...state,
       responses: {
         ...state.responses,
         loading: false,
         list: action.responses,
+      }
+    }
+  }
+  if (action.type === 'RECEIVED_POST' || action.type === 'TOGGLE_POST_UPVOTE' || action.type === 'TOGGLE_POST_BOOKMARK') {
+    return {
+      ...state,
+      post: replaceIfObj(state.post, action.post),
+    }
+  }
+  if (action.type === 'RECEIVED_RESPONSE' || action.type === 'TOGGLE_RESPONSE_UPVOTE' || action.type === 'THANKED_RESPONSE') {
+    return {
+      ...state,
+      responses: {
+        ...state.responses,
+        loading: false,
+        list: appendOrReplaceById(state.responses.list, action.response),
       }
     }
   }

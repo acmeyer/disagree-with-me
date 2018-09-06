@@ -9,7 +9,6 @@ import {
 } from "@blueprintjs/core";
 import {
   showLoginModal,
-  showConversation,
   togglePostUpvote,
   togglePostBookmark,
 } from '../../actions';
@@ -29,15 +28,6 @@ class PostActions extends React.Component {
     e.stopPropagation();
     if (this.props.user.loggedIn) {
       this.props.togglePostBookmark(this.props.post);
-    } else {
-      this.props.showLoginModal();
-    }
-  }
-
-  showPostComments = (e) => {
-    e.stopPropagation();
-    if (this.props.user.loggedIn) {
-      this.props.showConversation(this.props.post);
     } else {
       this.props.showLoginModal();
     }
@@ -72,14 +62,14 @@ class PostActions extends React.Component {
   render() {
     let {post} = this.props;
     return (
-      <div id="post-actions" className="flex-row d-flex mt-3">
+      <div className="cell-actions flex-row d-flex mt-3">
           <div className="action pr-4" onClick={this.toggleUpvote}>
             <Tooltip content="Upvote" position="top">
               <span className={`action-icon ${post.upvoted ? 'active' : null}`}><i className={`fas fa-arrow-up`} /></span>
             </Tooltip>
             <span className={`action-count ${post.upvoted ? 'active' : null}`}>{post.upvotes_count > 0 && post.upvotes_count}</span>
           </div>
-        <div className="action pr-4" onClick={this.showPostComments}>
+        <div className="action pr-4" onClick={this.props.handleShowComments}>
           <Tooltip content="Respond" position="top">
             <span className={`action-icon ${post.responded_to ? 'active' : null}`}><i className={`${post.responded_to ? 'fas' : 'far'} fa-comment`} /></span>
           </Tooltip>
@@ -112,7 +102,6 @@ class PostActions extends React.Component {
 function actions(dispatch) {
   return {
     showLoginModal: () => { dispatch(showLoginModal()) },
-    showConversation: (post) => { dispatch(showConversation(post)) },
     togglePostUpvote: (post) => { dispatch(togglePostUpvote(post)) },
     togglePostBookmark: (post) => { dispatch(togglePostBookmark(post)) },
   };

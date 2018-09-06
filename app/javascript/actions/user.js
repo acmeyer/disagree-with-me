@@ -9,7 +9,7 @@ function requestUser() {
 
 function receiveUser(json) {
   return {
-    type: 'RECEIVE_USER',
+    type: 'RECEIVED_USER',
     user: json,
   };
 }
@@ -40,7 +40,7 @@ function requestUserList() {
 function receiveUserList(json) {
   let data = json.posts ? json.posts : json.responses;
   return {
-    type: 'RECEIVE_USER_LIST',
+    type: 'RECEIVED_USER_LIST',
     data,
     page: json.page,
     totalPages: json.total_pages,

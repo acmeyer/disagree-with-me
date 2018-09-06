@@ -6,11 +6,21 @@ import {connect} from 'react-redux';
 
 import {
   showConversation,
+  showLoginModal,
 } from '../../actions';
 
 class PostCell extends React.Component {
   showPost = (e) => {
-    this.props.showConversation(this.props.post);
+    this.props.showConversation(this.props.post.id);
+  }
+
+  showPostComments = (e) => {
+    e.stopPropagation();
+    if (this.props.user.loggedIn) {
+      this.props.showConversation(this.props.post.id);
+    } else {
+      this.props.showLoginModal();
+    }
   }
 
   renderTopResponse = () => {
@@ -39,7 +49,10 @@ class PostCell extends React.Component {
         <div className="p-3">
           <AppReadMore length={300} text={this.props.post.content} />
           <div className="small time-ago text-muted">{moment(this.props.post.created_at).fromNow()}</div>
-          <PostActions post={this.props.post} />
+          <PostActions 
+            post={this.props.post} 
+            handleShowComments={this.showPostComments}
+          />
         </div>
         {this.renderTopResponse()}
       </div>
@@ -49,7 +62,8 @@ class PostCell extends React.Component {
 
 function actions(dispatch) {
   return {
-    showConversation: (post) => { dispatch(showConversation(post)) },
+    showLoginModal: () => { dispatch(showLoginModal()) },
+    showConversation: (postId) => { dispatch(showConversation(postId)) },
   };
 }
 

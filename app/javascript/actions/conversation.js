@@ -9,7 +9,7 @@ function requestConversationPost() {
 
 function receiveConversationPost(json) {
   return {
-    type: 'RECEIVE_CONVERSATION_POST',
+    type: 'RECEIVED_CONVERSATION_POST',
     post: json,
   }
 }
@@ -22,7 +22,7 @@ function requestConversationResponses() {
 
 function receiveConversationResponses(json) {
   return {
-    type: 'RECEIVE_CONVERSATION_RESPONSES',
+    type: 'RECEIVED_CONVERSATION_RESPONSES',
     responses: json.responses,
     page: json.page,
     totalPages: json.total_pages,
@@ -42,7 +42,7 @@ export function hideConversationModal() {
   };
 }
 
-export function fetchConversationPost(post) {
+export function fetchConversationPost(postId) {
   return (dispatch, getState) => {
     let headers = {headers: {}};
     const userEmail = getState().user.email;
@@ -53,7 +53,7 @@ export function fetchConversationPost(post) {
         'User-Email': userEmail,
       };
     }
-    let url = `${serverDomain}/posts/${post.id}`;
+    let url = `${serverDomain}/posts/${postId}`;
 
     dispatch(requestConversationPost());
     return axios.get(url, headers).then((response) => {
@@ -62,7 +62,7 @@ export function fetchConversationPost(post) {
   }
 }
 
-export function fetchConversationResponses(post, page = 1) {
+export function fetchConversationResponses(postId, page = 1) {
   return (dispatch, getState) => {
     let headers = {headers: {}};
     const userEmail = getState().user.email;
@@ -73,7 +73,7 @@ export function fetchConversationResponses(post, page = 1) {
         'User-Email': userEmail,
       };
     }
-    let url = `${serverDomain}/posts/${post.id}/responses?page=${page}`;
+    let url = `${serverDomain}/posts/${postId}/responses?page=${page}`;
 
     dispatch(requestConversationResponses());
     return axios.get(url, headers).then((response) => {
@@ -82,10 +82,10 @@ export function fetchConversationResponses(post, page = 1) {
   }
 }
 
-export function showConversation(post) {
+export function showConversation(postId) {
   return (dispatch) => {
-    dispatch(fetchConversationPost(post));
-    dispatch(fetchConversationResponses(post));
+    dispatch(fetchConversationPost(postId));
+    dispatch(fetchConversationResponses(postId));
     dispatch(showConversationModal());
   }
 }
