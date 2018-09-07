@@ -10,6 +10,7 @@ import {
   showLoginModal,
   toggleResponseUpvote,
   thankResponse,
+  showReportModal,
 } from '../../actions';
 
 class ResponseActions extends React.Component {
@@ -36,10 +37,19 @@ class ResponseActions extends React.Component {
     e.stopPropagation();
   }
 
+
+  handleShowReport = () => {
+    if (this.props.user.loggedIn) {
+      this.props.showReport(this.props.response, 'response');
+    } else {
+      this.props.showLoginModal();
+    }
+  }
+
   renderMoreOptionsMenu = () => {
     return (
       <Menu>
-        <MenuItem text="Report This Response" />
+        <MenuItem text="Report This Response" onClick={this.handleShowReport} />
       </Menu>
     );
   }
@@ -123,6 +133,7 @@ function actions(dispatch) {
     showLoginModal: () => { dispatch(showLoginModal()) },
     toggleResponseUpvote: (response) => { dispatch(toggleResponseUpvote(response)) },
     thankResponse: (response) => { dispatch(thankResponse(response)) },
+    showReport: (response, type) => { dispatch(showReportModal(response, type)) },
   };
 }
 

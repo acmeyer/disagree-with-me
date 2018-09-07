@@ -5,6 +5,7 @@ import { loginModalReducer } from './loginModal';
 import { userListReducer } from './userList';
 import { composePostModalReducer } from './composePostModal';
 import { conversationReducer } from './conversation';
+import { reportModalReducer } from './reportModal';
 
 export default combineReducers({
   user: userReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   userList: userListReducer,
   composePostModal: composePostModalReducer,
   conversation: conversationReducer,
+  reportModal: reportModalReducer,
 });

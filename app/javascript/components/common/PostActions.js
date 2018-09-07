@@ -11,6 +11,7 @@ import {
   showLoginModal,
   togglePostUpvote,
   togglePostBookmark,
+  showReportModal,
 } from '../../actions';
 import {
   domain,
@@ -77,10 +78,18 @@ class PostActions extends React.Component {
     );
   }
 
+  handleShowReport = () => {
+    if (this.props.user.loggedIn) {
+      this.props.showReport(this.props.post, 'post');
+    } else {
+      this.props.showLoginModal();
+    }
+  }
+
   renderMoreOptionsMenu = () => {
     return (
       <Menu>
-        <MenuItem text="Report This Post" />
+        <MenuItem text="Report This Post" onClick={() => this.handleShowReport()} />
       </Menu>
     );
   }
@@ -130,6 +139,7 @@ function actions(dispatch) {
     showLoginModal: () => { dispatch(showLoginModal()) },
     togglePostUpvote: (post) => { dispatch(togglePostUpvote(post)) },
     togglePostBookmark: (post) => { dispatch(togglePostBookmark(post)) },
+    showReport: (post, type) => { dispatch(showReportModal(post, type)) },
   };
 }
 
