@@ -70,7 +70,7 @@ class ResponseActions extends React.Component {
           >
             <div>
               <span className={`action-icon ${response.author_thanked ? 'active' : null}`}><i className={`fas fa-check`} /></span>
-              <span className={`action-count ${response.author_thanked ? 'active' : null} ml-2 small`}>{thank_text}</span>
+              <span className={`action-text ${response.author_thanked ? 'active' : null} ml-2 small`}>{thank_text}</span>
             </div>
           </Popover>
         </div>
@@ -87,7 +87,7 @@ class ResponseActions extends React.Component {
           >
             <div>
               <span className={`action-icon ${response.author_thanked ? 'active' : null}`}><i className={`fas fa-check`} /></span>
-              <span className={`action-count ${response.author_thanked ? 'active' : null} ml-2 small`}>{thank_text}</span>
+              <span className={`action-text ${response.author_thanked ? 'active' : null} ml-2 small`}>{thank_text}</span>
             </div>
           </Popover>
         </div>

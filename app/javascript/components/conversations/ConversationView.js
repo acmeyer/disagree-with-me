@@ -13,6 +13,7 @@ import {
   Tooltip,
 } from "@blueprintjs/core";
 import {
+  showLoginModal,
   showConversation,
   changeResponsesFilter,
 } from '../../actions';
@@ -31,6 +32,14 @@ class ConversationView extends React.Component {
   componentWillMount() {
     let {postId} = this.props.match.params;
     this.props.dispatch(showConversation(postId));
+  }
+
+  showConversationComments = () => {
+    if (this.props.user.loggedIn) {
+      this.setState({responseInFocus: true});
+    } else {
+      this.props.dispatch(showLoginModal());
+    }
   }
 
   renderResponse = (response) => {
@@ -134,7 +143,7 @@ class ConversationView extends React.Component {
             <div className="small time-ago text-muted">{moment(post.created_at).fromNow()}</div>
             <PostActions 
               post={post} 
-              handleShowComments={() => this.setState({responseInFocus: true})}
+              handleShowComments={this.showConversationComments}
             />
           </div>
           {respondTo}
