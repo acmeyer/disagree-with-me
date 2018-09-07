@@ -8,8 +8,8 @@ import NavBar from './NavBar';
 import Footer from './Footer';
 import LoginModal from './common/LoginModal';
 import ComposePostModal from './common/ComposePostModal';
-import ConversationView from './common/ConversationView';
 import HomeView from './home/HomeView';
+import ConversationView from './conversations/ConversationView';
 import UserView from './user/UserView';
 import SearchView from './search/SearchView';
 import ActivityView from './activity/ActivityView';
@@ -33,12 +33,11 @@ class App extends React.Component {
           <NavBar />
           <LoginModal />
           <ComposePostModal />
-          <ConversationView />
           <Route exact path="/" component={HomeView} />
           <Route path="/login" component={HomeView} />
           <Route path="/latest" component={HomeView} />
           <Route path="/popular" component={HomeView} />
-          {/* <Route path="/conversations/:id" component={HomeView} /> */}
+          <Route path="/conversations/:postId" component={ConversationView} />
           <Route path="/search" component={SearchView} />
           <Route path="/activity" render={props => {
             return this.props.user.loggedIn ? <ActivityView /> : (

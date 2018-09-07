@@ -1,23 +1,25 @@
 import React from 'react';
 import AppReadMore from './AppReadMore';
 import PostActions from './PostActions';
+import {
+  withRouter
+} from 'react-router-dom';
 import moment from  'moment';
 import {connect} from 'react-redux';
 
 import {
-  showConversation,
   showLoginModal,
 } from '../../actions';
 
 class PostCell extends React.Component {
   showPost = (e) => {
-    this.props.showConversation(this.props.post.id);
+    this.props.history.push(`/conversations/${this.props.post.id}`);
   }
 
   showPostComments = (e) => {
     e.stopPropagation();
     if (this.props.user.loggedIn) {
-      this.props.showConversation(this.props.post.id);
+      this.props.history.push(`/conversations/${this.props.post.id}`);
     } else {
       this.props.showLoginModal();
     }
@@ -63,8 +65,7 @@ class PostCell extends React.Component {
 function actions(dispatch) {
   return {
     showLoginModal: () => { dispatch(showLoginModal()) },
-    showConversation: (postId) => { dispatch(showConversation(postId)) },
   };
 }
 
-export default connect(null, actions)(PostCell);
+export default withRouter(connect(null, actions)(PostCell));

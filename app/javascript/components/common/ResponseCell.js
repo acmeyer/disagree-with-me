@@ -1,17 +1,19 @@
 import React from 'react';
 import AppReadMore from './AppReadMore';
 import ResponseActions from './ResponseActions';
+import {
+  withRouter
+} from 'react-router-dom';
 import moment from  'moment';
 import {connect} from 'react-redux';
 
 import {
-  showConversation,
   showLoginModal,
 } from '../../actions';
 
 class ResponseCell extends React.Component {
   showPost = (e) => {
-    this.props.showConversation(this.props.response.post_id);
+    this.props.history.push(`/conversations/${this.props.response.post_id}`);
   }
 
   render() {
@@ -28,8 +30,7 @@ class ResponseCell extends React.Component {
 function actions(dispatch) {
   return {
     showLoginModal: () => { dispatch(showLoginModal()) },
-    showConversation: (postId) => { dispatch(showConversation(postId)) },
   };
 }
 
-export default connect(null, actions)(ResponseCell);
+export default withRouter(connect(null, actions)(ResponseCell));

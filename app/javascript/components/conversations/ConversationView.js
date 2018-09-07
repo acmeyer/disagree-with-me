@@ -1,9 +1,8 @@
 import React from 'react';
-import AppModal from './AppModal';
-import LoadingView from './LoadingView';
-import PostActions from './PostActions';
-import ResponseActions from './ResponseActions';
-import ResponseInput from './ResponseInput';
+import LoadingView from '../common/LoadingView';
+import PostActions from '../common/PostActions';
+import ResponseActions from '../common/ResponseActions';
+import ResponseInput from '../common/ResponseInput';
 import moment from 'moment';
 import { 
   Menu, 
@@ -14,7 +13,7 @@ import {
   Tooltip,
 } from "@blueprintjs/core";
 import {
-  hideConversationModal,
+  showConversation,
   changeResponsesFilter,
 } from '../../actions';
 import {connect} from 'react-redux';
@@ -29,9 +28,9 @@ class ConversationView extends React.Component {
     }
   }
 
-  hide = () => {
-    this.setState({loading: false});
-    this.props.dispatch(hideConversationModal());
+  componentWillMount() {
+    let {postId} = this.props.match.params;
+    this.props.dispatch(showConversation(postId));
   }
 
   renderResponse = (response) => {
@@ -114,11 +113,20 @@ class ConversationView extends React.Component {
   }
 
   render() {
-    let {visible, loading, post} = this.props;
-    let content;
+    let {loading, post} = this.props;
+    let content, respondTo;
     if (loading) {
       content = <LoadingView />;
     } else if (post) {
+      if (this.props.user.loggedIn) {
+        respondTo = (
+          <ResponseInput
+            post={post}
+            inFocus={this.state.responseInFocus} 
+            handleFocusChanged={(value) => this.setState({responseInFocus: value})} 
+          />
+        )
+      }
       content = (
         <div className="conversation-wrap">
           <div className="post-wrap">
@@ -129,31 +137,25 @@ class ConversationView extends React.Component {
               handleShowComments={() => this.setState({responseInFocus: true})}
             />
           </div>
-          <ResponseInput 
-            post={post}
-            inFocus={this.state.responseInFocus} 
-            handleFocusChanged={(value) => this.setState({responseInFocus: value})} 
-          />
+          {respondTo}
           {this.renderResponses()}
         </div>
       )
     }
 
     return (
-      <AppModal shouldCloseOnOverlayClick={true} isOpen={visible} close={this.hide} label={'Conversation'}>
-        <div className="conversation-modal react-modal">
-          <div className="dismiss-modal" onClick={this.hide}><i className="fas fa-times" /></div>
-          <div>
-            {content}
-          </div>
+      <div className="container">
+        <div className="conversation-view card mt-4">
+          {content}
         </div>
-      </AppModal>
+      </div>
     );
   }
 }
 
 function select(store) {
   return {
+    user: store.user,
     loading: store.conversation.loading,
     visible: store.conversation.isVisible,
     post: store.conversation.post,

@@ -75,6 +75,7 @@ body.ReactModal__Body--open { overflow: hidden; }
     flex: 1;
     padding: 16px;
     max-width: 450px;
+    z-index: 200001;
     h1 {
       font-size: 2rem;
     }
@@ -84,41 +85,6 @@ body.ReactModal__Body--open { overflow: hidden; }
     flex: 1;
     padding: 16px;
     max-width: 600px;
-  }
-
-  &.conversation-modal {
-    flex: 1;
-    max-width: 600px;
-    background: white;
-    .conversation-wrap {
-      .post-wrap {
-        padding: 30px 30px 15px 30px;
-        .post-text {
-          font-size: 18px;
-        }
-      }
-      .responses-wrap {
-        padding: 15px 30px 30px 30px;
-        .responses-filter-heading {
-          cursor: pointer;
-        }
-        .response {
-          border-bottom: 1px solid $borderGray;
-          &:last-child {
-            border-bottom: none;
-          }
-        }
-        .bp3-non-ideal-state {
-          margin-top: 15px;
-        }
-      }
-      .respond-to-wrap {
-        background: $lightestGray;
-        padding: 15px 30px;
-        border-top: 1px solid $cellBorder;
-        border-bottom: 1px solid $cellBorder;
-      }
-    }
   }
 }
 

@@ -1,19 +1,34 @@
-.cell-actions {
-  .action {
-    min-width: 80px;
-    color: #6c757d;
-    .action-icon {
-      font-size: 16px;
+.conversation-view {
+  max-width: 750px;
+  margin: 0 auto;
+  .conversation-wrap {
+    .post-wrap {
+      padding: 30px 30px 15px 30px;
+      border-bottom: 1px solid $lighterGray;
+      .post-text {
+        font-size: 18px;
+      }
     }
-    .action-count {
-      font-size: 14px;
-      margin-left: 6px;
+    .responses-wrap {
+      padding: 15px 30px 30px 30px;
+      margin-top: 15px;
+      .responses-filter-heading {
+        cursor: pointer;
+      }
+      .response {
+        border-bottom: 1px solid $lighterGray;
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+      .bp3-non-ideal-state {
+        margin-top: 15px;
+      }
     }
-    .action-icon.active, .action-count.active {
-      color: $blue;
-    }
-    &:hover {
-      cursor: pointer;
+    .respond-to-wrap {
+      background: $lightestGray;
+      padding: 15px 30px;
+      border-bottom: 1px solid $lighterGray;
     }
   }
 }

@@ -37,17 +37,17 @@ function updateFilters(thanked_only) {
   }
 }
 
-export function showConversationModal() {
-  return {
-    type: 'SHOW_CONVERSATION_MODAL',
-  };
-}
+// export function showConversationModal() {
+//   return {
+//     type: 'SHOW_CONVERSATION_MODAL',
+//   };
+// }
 
-export function hideConversationModal() {
-  return {
-    type: 'HIDE_CONVERSATION_MODAL',
-  };
-}
+// export function hideConversationModal() {
+//   return {
+//     type: 'HIDE_CONVERSATION_MODAL',
+//   };
+// }
 
 export function fetchConversationPost(postId) {
   return (dispatch, getState) => {
@@ -94,7 +94,6 @@ export function showConversation(postId) {
   return (dispatch) => {
     dispatch(fetchConversationPost(postId));
     dispatch(fetchConversationResponses(postId));
-    dispatch(showConversationModal());
   }
 }
 

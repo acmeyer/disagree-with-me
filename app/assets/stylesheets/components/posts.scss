@@ -24,3 +24,23 @@
     color: $blue !important;
   }
 }
+
+.cell-actions {
+  .action {
+    min-width: 80px;
+    color: #6c757d;
+    .action-icon {
+      font-size: 16px;
+    }
+    .action-count {
+      font-size: 14px;
+      margin-left: 6px;
+    }
+    .action-icon.active, .action-count.active {
+      color: $blue;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
