@@ -30,6 +30,13 @@ function receiveConversationResponses(json) {
   };
 }
 
+function updateFilters(thanked_only) {
+  return {
+    type: 'UPDATE_RESPONSES_FILTER',
+    thanked_only,
+  }
+}
+
 export function showConversationModal() {
   return {
     type: 'SHOW_CONVERSATION_MODAL',
@@ -67,13 +74,14 @@ export function fetchConversationResponses(postId, page = 1) {
     let headers = {headers: {}};
     const userEmail = getState().user.email;
     const apiToken = getState().user.apiToken;
+    const filters = getState().conversation.responses.filters;
     if (apiToken) {
       headers.headers = {
         'Authorization': apiToken,
         'User-Email': userEmail,
       };
     }
-    let url = `${serverDomain}/posts/${postId}/responses?page=${page}`;
+    let url = `${serverDomain}/posts/${postId}/responses?page=${page}&thanked_only=${filters.thanked_only}`;
 
     dispatch(requestConversationResponses());
     return axios.get(url, headers).then((response) => {
@@ -87,5 +95,12 @@ export function showConversation(postId) {
     dispatch(fetchConversationPost(postId));
     dispatch(fetchConversationResponses(postId));
     dispatch(showConversationModal());
+  }
+}
+
+export function changeResponsesFilter(thanked_only, postId) {
+  return (dispatch) => {
+    dispatch(updateFilters(thanked_only)); 
+    dispatch(fetchConversationResponses(postId));
   }
 }

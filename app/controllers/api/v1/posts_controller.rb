@@ -56,9 +56,9 @@ class Api::V1::PostsController < Api::V1::ApiController
     elsif params[:popular] == "true"
       posts = posts.order(cached_weighted_score: :desc).order(responses_count: :desc)
     elsif params[:sort]
-      posts.order(sort)
+      posts = posts.order(params[:sort])
     else
-      posts.order(created_at: :desc)
+      posts = posts.order(created_at: :desc)
     end
 
     return posts

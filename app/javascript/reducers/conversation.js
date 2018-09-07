@@ -11,6 +11,9 @@ const initial = {
   responses: {
     loading: false,
     list: [],
+    filters: {
+      thanked_only: true,
+    },
     page: null,
     totalPages: null,
     totalEntries: null,
@@ -19,10 +22,7 @@ const initial = {
 
 export function conversationReducer(state = initial, action) {
   if (action.type === 'HIDE_CONVERSATION_MODAL') {
-    return {
-      ...state,
-      isVisible: false,
-    }
+    return initial;
   }
   if (action.type === 'SHOW_CONVERSATION_MODAL') {
     return {
@@ -75,6 +75,18 @@ export function conversationReducer(state = initial, action) {
         ...state.responses,
         loading: false,
         list: appendOrReplaceById(state.responses.list, action.response),
+      }
+    }
+  }
+  if (action.type === 'UPDATE_RESPONSES_FILTER') {
+    return {
+      ...state,
+      responses: {
+        ...state.responses,
+        filters: {
+          ...state.responses.filters,
+          thanked_only: action.thanked_only,
+        }
       }
     }
   }

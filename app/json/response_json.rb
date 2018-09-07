@@ -55,6 +55,7 @@ class ResponseJson
     return nil if user.nil?
     {
       is_author: user.id == response.user_id,
+      is_post_author: user.id == response.post.user_id,
       upvoted: user.voted_up_for?(response),
     }
   end

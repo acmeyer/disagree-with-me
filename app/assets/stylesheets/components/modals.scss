@@ -98,9 +98,18 @@ body.ReactModal__Body--open { overflow: hidden; }
         }
       }
       .responses-wrap {
-        padding: 30px;
-        .responses-title {
-          text-transform: uppercase;
+        padding: 15px 30px 30px 30px;
+        .responses-filter-heading {
+          cursor: pointer;
+        }
+        .response {
+          border-bottom: 1px solid $borderGray;
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+        .bp3-non-ideal-state {
+          margin-top: 15px;
         }
       }
       .respond-to-wrap {
@@ -126,4 +135,8 @@ body.ReactModal__Body--open { overflow: hidden; }
   .bp3-heading {
     margin-bottom: 10px;
   }
+}
+
+.bp3-popover-content {
+  max-width: 300px;
 }

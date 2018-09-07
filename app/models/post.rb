@@ -23,7 +23,7 @@ class Post < ApplicationRecord
 
   def top_response
     Rails.cache.fetch("posts/#{self.cache_key}/top_response") do
-      self.responses.thanked.order(cached_weighted_score: :desc).order(created_at: :desc).first
+      self.responses.thanked.order(cached_weighted_score: :desc).order(:created_at).first
     end
   end
 

@@ -64,9 +64,9 @@ class Api::V1::ResponsesController < Api::V1::ApiController
       responses = responses.not_thanked
     end
     if !params[:sort].blank?
-      responses.order(sort)
+      responses = responses.order(params[:sort])
     else
-      responses.order(created_at: :desc)
+      responses = responses.order(cached_weighted_score: :desc).order(:created_at)
     end
 
     return responses
