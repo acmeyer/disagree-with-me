@@ -41,6 +41,7 @@ function receiveUserList(json) {
   let data = json.posts ? json.posts : json.responses;
   return {
     type: 'RECEIVED_USER_LIST',
+    list_type: json.posts ? 'posts' : 'responses',
     data,
     page: json.page,
     totalPages: json.total_pages,

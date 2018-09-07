@@ -7,11 +7,11 @@ export function replaceById(originalCollection, newItem) {
 }
 
 export function replaceIfObj(originalObj, newObj) {
-  if (originalObj.id === newObj.id) {
+  if (originalObj && (originalObj.id === newObj.id)) {
     return newObj;
-  } else {
-    return originalObj
-  }
+  } 
+
+  return originalObj;
 }
 
 export function toogleObjectById(collection, obj) {

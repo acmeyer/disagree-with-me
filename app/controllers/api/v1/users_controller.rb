@@ -25,42 +25,42 @@ class Api::V1::UsersController < Api::V1::ApiController
   def my_posts
     authorize @user
     @current_page = params[:page] || 1
-    @posts = @user.posts
+    @posts = @user.posts.order(created_at: :desc)
     render_posts
   end
 
   def my_responses
     authorize @user
     @current_page = params[:page] || 1
-    @responses = @user.responses
+    @responses = @user.responses.order(created_at: :desc)
     render_responses
   end
 
   def my_bookmarks
     authorize @user
     @current_page = params[:page] || 1
-    @posts = @user.bookmarked_posts
+    @posts = @user.bookmarked_posts.order(created_at: :desc)
     render_posts
   end
 
   def my_thanks
     authorize @user
     @current_page = params[:page] || 1
-    @responses = @user.thanked_responses
+    @responses = @user.thanked_responses.order(created_at: :desc)
     render_responses
   end
 
   def my_post_upvotes
     authorize @user
     @current_page = params[:page] || 1
-    @posts = @user.get_up_voted(Post)
+    @posts = @user.get_up_voted(Post).order(created_at: :desc)
     render_posts
   end
 
   def my_response_upvotes
     authorize @user
     @current_page = params[:page] || 1
-    @responses = @user.get_up_voted(Response)
+    @responses = @user.get_up_voted(Response).order(created_at: :desc)
     render_responses
   end
 
