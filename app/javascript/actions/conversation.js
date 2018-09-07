@@ -37,18 +37,6 @@ function updateFilters(thanked_only) {
   }
 }
 
-// export function showConversationModal() {
-//   return {
-//     type: 'SHOW_CONVERSATION_MODAL',
-//   };
-// }
-
-// export function hideConversationModal() {
-//   return {
-//     type: 'HIDE_CONVERSATION_MODAL',
-//   };
-// }
-
 export function fetchConversationPost(postId) {
   return (dispatch, getState) => {
     let headers = {headers: {}};
@@ -92,6 +80,7 @@ export function fetchConversationResponses(postId, page = 1) {
 
 export function showConversation(postId) {
   return (dispatch) => {
+    dispatch(updateFilters(true));
     dispatch(fetchConversationPost(postId));
     dispatch(fetchConversationResponses(postId));
   }

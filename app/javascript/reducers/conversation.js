@@ -4,10 +4,8 @@ import {
 } from '../util/helpers';
 
 const initial = {
-  isVisible: false,
   loading: false,
   post: null,
-  focusResponse: false,
   responses: {
     loading: false,
     list: [],
@@ -21,15 +19,6 @@ const initial = {
 };
 
 export function conversationReducer(state = initial, action) {
-  if (action.type === 'HIDE_CONVERSATION_MODAL') {
-    return initial;
-  }
-  if (action.type === 'SHOW_CONVERSATION_MODAL') {
-    return {
-      ...state, 
-      isVisible: true,
-    };
-  }
   if (action.type === 'REQUEST_CONVERSATION_POST') {
     return {
       ...state,
