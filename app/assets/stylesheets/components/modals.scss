@@ -86,6 +86,12 @@ body.ReactModal__Body--open { overflow: hidden; }
     padding: 16px;
     max-width: 600px;
   }
+
+  &.report-modal {
+    flex: 1;
+    padding: 16px;
+    max-width: 600px;
+  }
 }
 
 // make sure confirmation modals can lay on top

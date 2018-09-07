@@ -30,9 +30,9 @@ class PostCell extends React.Component {
     if (this.props.showTopResponse && top_response) {
       return (
         <div className="top-response p-3 bg-light">
-          <div className="heading">
+          <div className="heading text-uppercase small">
             <i className="far fa-star mr-1" />
-            Top Response:
+            Top Response
           </div>
           <div className="body mt-2">
             <AppReadMore length={150} text={top_response.content} />

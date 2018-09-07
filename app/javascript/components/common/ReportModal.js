@@ -2,6 +2,7 @@ import React from 'react';
 import AppModal from './AppModal';
 import { AppToaster }  from './AppToaster';
 import { Button } from "@blueprintjs/core";
+import Select from 'react-select';
 
 import {
   hideReportModal,
@@ -26,11 +27,11 @@ class LoginModal extends React.Component {
 
   report = () => {
     if (this.state.selectedReason === '') {
-      AppToaster.show({ message: 'Reason for reporting is required', intent: "danger", icon: "error" });
+      AppToaster.show({ message: 'A reason for reporting is required', intent: "danger", icon: "error" });
       return;
     }
     this.setState({loading: true});
-    this.props.dispatch(reportContent(this.props.data, this.state.selectedReason)).then(() => {
+    this.props.dispatch(reportContent(this.props.data, this.state.selectedReason.value)).then(() => {
       this.close();
       AppToaster.show({ message: 'Report sent! Thanks for making our community safer.', intent: "success", icon: "tick"});
     }).catch(error => {
@@ -41,17 +42,27 @@ class LoginModal extends React.Component {
 
   render() {
     let {visible, reporting_type} = this.props;
+    const reporting_options = [
+      { value: 'off-topic', label: 'Off-Topic' },
+      { value: 'inappropriate', label: 'Inappropriate' },
+      { value: 'abusive', label: 'Abusive' },
+      { value: 'other', label: 'Other' },
+    ]
     return (
       <AppModal shouldCloseOnOverlayClick={true} isOpen={visible} close={this.close} label={'Report'}>
         <div className="report-modal react-modal">
           <div className="dismiss-modal" onClick={this.close}><i className="fas fa-times" /></div>
-          <h1 className="display-4 text-center">Report {reporting_type}</h1>
+          <h5 className="text-center mb-3">Report {reporting_type}</h5>
           <div>
-            <p className="lead text-center">Why are you reporting this {reporting_type}?</p>
+            <p className="lead">Why are you reporting this {reporting_type}?</p>
           </div>
-          <hr />
           <div className="form-group">
-            Select reason
+            <Select 
+              placeholder="Select Reason" 
+              options={reporting_options} 
+              value={this.state.selectedReason} 
+              onChange={(value) => this.setState({selectedReason: value})}
+            />
           </div>
           <Button 
             disabled={this.state.loading} 
