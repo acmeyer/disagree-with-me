@@ -17,11 +17,12 @@ class LoginModal extends React.Component {
     this.state = {
       loading: false,
       selectedReason: '',
+      description: '',
     }
   }
 
   close = () => {
-    this.setState({loading: false, selectedReason: ''});
+    this.setState({loading: false, selectedReason: '', description: ''});
     this.props.dispatch(hideReportModal());
   }
 
@@ -30,10 +31,14 @@ class LoginModal extends React.Component {
       AppToaster.show({ message: 'A reason for reporting is required', intent: "danger", icon: "error" });
       return;
     }
+    if (this.state.selectedReason.value === 'other') {
+      AppToaster.show({ message: 'A description is required when the \'Other\' option is selected', intent: "danger", icon: "error"})
+      return;
+    }
     this.setState({loading: true});
-    this.props.dispatch(reportContent(this.props.data, this.state.selectedReason.value)).then(() => {
+    this.props.dispatch(reportContent(this.props.data, this.state.selectedReason.value, this.state.description)).then(() => {
       this.close();
-      AppToaster.show({ message: 'Report sent! Thanks for making our community safer.', intent: "success", icon: "tick"});
+      AppToaster.show({ message: 'Report sent! Thanks for helping improve the community.', intent: "success", icon: "tick"});
     }).catch(error => {
       this.setState({loading: false});
       AppToaster.show({ message: error, intent: "danger", icon: "error" });
@@ -62,6 +67,16 @@ class LoginModal extends React.Component {
               options={reporting_options} 
               value={this.state.selectedReason} 
               onChange={(value) => this.setState({selectedReason: value})}
+            />
+          </div>
+          <div className="form-group">
+            <textarea 
+              className="form-control" 
+              id="report-description" 
+              rows="4"
+              placeholder="Add a description of your report..."
+              onChange={(e) => this.setState({description: e.target.value})}
+              value={this.state.description}
             />
           </div>
           <Button 

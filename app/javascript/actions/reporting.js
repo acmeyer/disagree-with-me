@@ -15,7 +15,7 @@ export function showReportModal(data, type) {
   };
 }
 
-export function reportContent(data, reason) {
+export function reportContent(data, reason, description) {
   return (dispatch, getState) => {
     const userEmail = getState().user.email;
     const apiToken = getState().user.apiToken;
@@ -26,8 +26,14 @@ export function reportContent(data, reason) {
       }
     };
     const url = `${serverDomain}/reports`;
+    const report_data = {
+      object_id: data.id, 
+      reason,
+      description,
+      type: data.post_id ? 'response' : 'post'
+    }
 
-    return axios.post(url, {data, reason}, headers).then(() => {
+    return axios.post(url, report_data, headers).then(() => {
       // success!
     }).catch(error => console.log(error));
   }

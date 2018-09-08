@@ -4,6 +4,7 @@ class Response < ApplicationRecord
 
   belongs_to :post, counter_cache: true, touch: true
   belongs_to :author, class_name: "User", foreign_key: :user_id
+  has_many :reports, as: :reportable, dependent: :destroy
 
   validates :content, presence: true
   validates :post, presence: true

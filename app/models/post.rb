@@ -5,6 +5,7 @@ class Post < ApplicationRecord
 
   belongs_to :author, class_name: "User", foreign_key: :user_id
   has_many :responses, dependent: :destroy
+  has_many :reports, as: :reportable, dependent: :destroy
 
   validates :content, presence: true
 

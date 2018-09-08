@@ -36,6 +36,8 @@ Rails.application.routes.draw do
             post 'toggle_bookmark'
           end
         end
+
+        resources :reports, only: [:create]
       end
     end
   end

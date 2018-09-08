@@ -6,13 +6,14 @@ class User < ApplicationRecord
   acts_as_paranoid
   acts_as_voter
 
-  has_many :auth_tokens
+  has_many :auth_tokens, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :responses, dependent: :destroy
   has_many :thanks, dependent: :destroy
   has_many :thanked_responses, through: :thanks, source: :response
   has_many :bookmarks, dependent: :destroy
   has_many :bookmarked_posts, through: :bookmarks, source: :post
+  has_many :reports
 
   after_save :expire_tokens, if: Proc.new { |user| user.saved_change_to_encrypted_password? }
   after_initialize :set_default_role, :if => :new_record?

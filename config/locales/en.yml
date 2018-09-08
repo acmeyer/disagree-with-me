@@ -6,6 +6,8 @@ en:
       forbidden: "Forbidden."
       unauthorized: "Unauthorized."
       not_found: "Not Found."
+    messages:
+      success: "Success."
   models:
     errors:
       only_post_author: "Only the post author can do this!"
