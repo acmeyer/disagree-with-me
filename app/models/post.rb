@@ -12,7 +12,7 @@ class Post < ApplicationRecord
   after_save :update_tags, if: Proc.new { |post| post.saved_change_to_content? }
 
   include AlgoliaSearch
-  algoliasearch do
+  algoliasearch index_name: "Post_#{ENV['ALGOLIA_ENVIRONMENT']}" do
     attribute :content
 
     add_attribute :tags do

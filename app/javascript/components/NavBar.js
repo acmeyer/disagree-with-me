@@ -116,12 +116,25 @@ class NavBar extends React.Component {
     }
 
     return (
-      <nav className="navbar navbar-dark bg-dark navbar-expand">
+      <nav className="navbar navbar-dark bg-dark navbar-expand-md">
         <div className="container">
           <Link to="/" className="navbar-brand">
             Disagree with Me
           </Link>
-          {navLinks}
+          <button 
+            className="navbar-toggler" 
+            type="button" 
+            data-toggle="collapse" 
+            data-target="#navbar-collapse-menu" 
+            aria-controls="navbar-collapse-menu" 
+            aria-expanded="false" 
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbar-collapse-menu">
+            {navLinks}
+          </div>
           <Alert
             isOpen={this.state.confirmLogOutVisible}
             cancelButtonText="Cancel"

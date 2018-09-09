@@ -127,7 +127,8 @@ class ConversationView extends React.Component {
     if (loading) {
       content = <LoadingView />;
     } else if (post) {
-      if (this.props.user.loggedIn) {
+      // user must be logged in and not the post author to respond
+      if (this.props.user.loggedIn && !post.is_author) {
         respondTo = (
           <ResponseInput
             post={post}
@@ -153,9 +154,11 @@ class ConversationView extends React.Component {
     }
 
     return (
-      <div className="container">
-        <div className="conversation-view card mt-4">
-          {content}
+      <div className="page-wrap">
+        <div className="container">
+          <div className="conversation-view card mt-4">
+            {content}
+          </div>
         </div>
       </div>
     );

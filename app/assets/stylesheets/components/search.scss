@@ -1,0 +1,32 @@
+.search-box-wrap {
+  .search-input-wrap {
+    position: relative;
+    input {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+    i.search-icon {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      font-size: 18px;
+    }
+    i.reset-search-icon {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  }
+}
+
+.search-results-wrap {
+  margin-top: 35px;
+}
+
+.powered-by-wrap {
+  img {
+    width: 100px;
+  }
+}
