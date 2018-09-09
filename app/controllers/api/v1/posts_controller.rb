@@ -4,7 +4,11 @@ class Api::V1::PostsController < Api::V1::ApiController
   before_action :get_post, only: [:show, :toggle_upvote, :toggle_bookmark]
 
   def index
-    @current_page = params[:page].to_i || 1
+    if !params[:page].blank?
+      @current_page = params[:page].to_i
+    else
+      @current_page = 1
+    end
     filtered_posts = filter_posts(Post.all, params)
     @posts = filtered_posts
     render_posts

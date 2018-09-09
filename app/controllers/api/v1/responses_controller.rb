@@ -5,7 +5,11 @@ class Api::V1::ResponsesController < Api::V1::ApiController
   before_action :get_response, only: [:show, :toggle_upvote, :thank]
 
   def index
-    @current_page = params[:page] || 1
+    if !params[:page].blank?
+      @current_page = params[:page].to_i
+    else
+      @current_page = 1
+    end
     filtered_responses = filter_responses(@post.responses, params)
     @responses = filtered_responses
     render_responses

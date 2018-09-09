@@ -14,6 +14,9 @@ Rails.application.routes.draw do
         post 'auth/signin', to: 'auth#signin'
         # post 'auth/signup', to: 'auth#signup'
 
+        # Search
+        post 'search', to: 'search#index'
+
         # User routes
         get 'users/me', to: 'users#me'
         put 'users/change_password', to: 'users#change_password'

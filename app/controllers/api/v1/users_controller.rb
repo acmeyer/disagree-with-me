@@ -24,42 +24,66 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def my_posts
     authorize @user
-    @current_page = params[:page] || 1
+    if !params[:page].blank?
+      @current_page = params[:page].to_i
+    else
+      @current_page = 1
+    end
     @posts = @user.posts.order(created_at: :desc)
     render_posts
   end
 
   def my_responses
     authorize @user
-    @current_page = params[:page] || 1
+    if !params[:page].blank?
+      @current_page = params[:page].to_i
+    else
+      @current_page = 1
+    end
     @responses = @user.responses.order(created_at: :desc)
     render_responses
   end
 
   def my_bookmarks
     authorize @user
-    @current_page = params[:page] || 1
+    if !params[:page].blank?
+      @current_page = params[:page].to_i
+    else
+      @current_page = 1
+    end
     @posts = @user.bookmarked_posts.order(created_at: :desc)
     render_posts
   end
 
   def my_thanks
     authorize @user
-    @current_page = params[:page] || 1
+    if !params[:page].blank?
+      @current_page = params[:page].to_i
+    else
+      @current_page = 1
+    end
     @responses = @user.thanked_responses.order(created_at: :desc)
     render_responses
   end
 
   def my_post_upvotes
     authorize @user
-    @current_page = params[:page] || 1
+    if !params[:page].blank?
+      @current_page = params[:page].to_i
+    else
+      @current_page = 1
+    end
     @posts = @user.get_up_voted(Post).order(created_at: :desc)
     render_posts
   end
 
   def my_response_upvotes
     authorize @user
-    @current_page = params[:page] || 1
+    if !params[:page].blank?
+      @current_page = params[:page].to_i
+    else
+      @current_page = 1
+    end
     @responses = @user.get_up_voted(Response).order(created_at: :desc)
     render_responses
   end
