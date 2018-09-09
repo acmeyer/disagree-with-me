@@ -41,6 +41,17 @@ Rails.application.routes.draw do
         end
 
         resources :reports, only: [:create]
+
+        resources :notifications, only: [:index] do
+          collection do
+            post 'mark_all_read'
+          end
+          member do
+            post 'mark_read'
+            post 'mark_unread'
+            post 'delete'
+          end
+        end
       end
     end
   end

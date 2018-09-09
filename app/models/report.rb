@@ -3,8 +3,6 @@ class Report < ApplicationRecord
   belongs_to :reportable, polymorphic: true
 
   validates :reason, presence: true
-  validates :user, presence: true
-  validates :reportable, presence: true
 
   after_initialize :set_default_status, :if => :new_record?
   after_create :send_admin_email

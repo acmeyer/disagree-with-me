@@ -7,7 +7,6 @@ class Response < ApplicationRecord
   has_many :reports, as: :reportable, dependent: :destroy
 
   validates :content, presence: true
-  validates :post, presence: true
 
   scope :thanked, -> { where(author_thanked: true) }
   scope :not_thanked, -> { where(author_thanked: false) }
