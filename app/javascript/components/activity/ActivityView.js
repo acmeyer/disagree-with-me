@@ -1,5 +1,6 @@
 import React from 'react';
 import PageHeader from '../common/PageHeader';
+import {withRouter} from 'react-router-dom';
 
 class ActivityView extends React.Component {
   render() {
@@ -11,4 +12,4 @@ class ActivityView extends React.Component {
   }
 }
 
-export default ActivityView;
+export default withRouter(ActivityView);

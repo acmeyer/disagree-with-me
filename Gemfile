@@ -47,7 +47,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'mini_racer', platforms: :ruby
 gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
-gem 'turbolinks', '~> 5'
+# gem 'turbolinks', '~> 5'
 gem 'font-awesome-sass', '~> 5.2.0'
 gem 'bootstrap', '~> 4.1.3'
 gem 'haml'

@@ -1,13 +1,14 @@
 import React from 'react';
 import SearchResultCell from './SearchResultCell';
-import AppToaster from '../common/AppToaster';
+import {AppToaster} from '../common/AppToaster';
 import LoadingView from '../common/LoadingView';
-import algoliaIcon from 'images/algolia-icon.png';
 import {
   NonIdealState,
 } from '@blueprintjs/core';
 import algoliasearch from 'algoliasearch';
 import algoliasearchHelper from 'algoliasearch-helper';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 import {
   algoliaAppId,
   algoliaSearchKey,
@@ -47,6 +48,10 @@ class SearchView extends React.Component {
     this.setState({searchResults: content.hits, loading: false});
   }
 
+  showConversation = (postId) => {
+    this.props.history.push(`/conversations/${postId}`);
+  }
+
   renderSearchResults = () => {
     let content;
     if (this.state.loading) {
@@ -54,7 +59,7 @@ class SearchView extends React.Component {
     } else {
       if (this.state.searchQuery !== '') {
         if (this.state.searchResults.length > 0) {
-          content = this.state.searchResults.map(hit => <SearchResultCell key={hit.objectID} result={hit} />);
+          content = this.state.searchResults.map(hit => <SearchResultCell key={hit.objectID} result={hit} showConversation={this.showConversation} />);
         } else {
           content = (
             <NonIdealState
@@ -119,8 +124,8 @@ class SearchView extends React.Component {
             {this.renderSearchResults()}
           </div>
           {(this.state.searchQuery !== '' && this.state.searchResults.length > 0) &&
-            <div className="powered-by-wrap text-center mt-5">
-              <img src={algoliaIcon} />
+            <div className="powered-by-wrap text-right mt-5 text-muted text-uppercase small">
+              Powered by <a href="https://www.algolia.com" target="_blank">Algolia</a>
             </div>
           }
         </div>
@@ -129,4 +134,4 @@ class SearchView extends React.Component {
   }
 }
 
-export default SearchView;
+export default withRouter(connect()(SearchView));

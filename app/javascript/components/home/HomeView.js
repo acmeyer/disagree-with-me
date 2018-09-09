@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import PageSubmenu from '../common/PageSubmenu';
 import PageList from '../common/PageList';
 import LoadingView from '../common/LoadingView';
@@ -108,4 +109,4 @@ function select(store) {
   };
 }
 
-export default connect(select, actions)(HomeView);
+export default withRouter(connect(select, actions)(HomeView));

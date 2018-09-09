@@ -15,11 +15,24 @@ class Post < ApplicationRecord
   algoliasearch index_name: "Post_#{ENV['ALGOLIA_ENVIRONMENT']}" do
     attribute :content
 
+    add_attribute :responses_count do
+      self.responses_count
+    end
+    add_attribute :upvotes_count do 
+      self.cached_votes_up
+    end
+    add_attribute :top_response do
+      self.top_response
+    end
+    add_attribute :created_at do 
+      (self.created_at.to_f * 1000).to_i
+    end
+
     add_attribute :tags do
       self.tag_list.join(" ")
     end
 
-    attributesToIndex [:content, :tags]
+    searchableAttributes ['unordered(content)', 'unordered(tags)']
   end
 
   def top_response

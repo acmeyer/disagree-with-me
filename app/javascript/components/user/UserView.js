@@ -5,6 +5,7 @@ import PageList from '../common/PageList';
 import PostCell from '../common/PostCell';
 import ResponseCell from '../common/ResponseCell';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import { NonIdealState } from "@blueprintjs/core";
 
 import {
@@ -144,4 +145,4 @@ function select(store) {
   };
 }
 
-export default connect(select, actions)(UserView);
+export default withRouter(connect(select, actions)(UserView));

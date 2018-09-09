@@ -18,6 +18,7 @@ import {
   changeResponsesFilter,
 } from '../../actions';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 
 class ConversationView extends React.Component {
   constructor(props) {
@@ -177,4 +178,4 @@ function select(store) {
   };
 }
 
-export default connect(select)(ConversationView);
+export default withRouter(connect(select)(ConversationView));

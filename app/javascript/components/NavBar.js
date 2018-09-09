@@ -10,7 +10,6 @@ import {
   Popover, 
   Position,
   Alert,
-  Button,
 } from "@blueprintjs/core";
 
 import {
@@ -27,6 +26,18 @@ class NavBar extends React.Component {
     this.state = {
       confirmLogOutVisible: false,
     }
+  }
+
+  componentWillMount() {
+    this.routeUnlisten = this.props.history.listen((location, action) => {
+      if ($('.navbar-collapse.collapse.show').length) {
+        $('.navbar-toggler').click();
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.routeUnlisten();
   }
 
   showLogin = (e) => {
@@ -66,6 +77,7 @@ class NavBar extends React.Component {
       <li className="nav-item">
         <Link to="/search" className={`nav-link ${page === '/search' ? 'active' : ''}`}>
           <i className="fas fa-search" />
+          <span className="pl-2 d-md-none">Search</span>
         </Link>
       </li>
     );
@@ -84,17 +96,20 @@ class NavBar extends React.Component {
           <li className="nav-item">
             <Link to="/me/bookmarks" className={`nav-link ${page === '/me/bookmarks' ? 'active' : ''}`}>
               <i className="fas fa-bookmark" />
+              <span className="pl-2 d-md-none">Bookmarks</span>
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/activity" className={`nav-link ${page === '/activity' ? 'active' : ''}`}>
               <i className="fas fa-bolt" />
+              <span className="pl-2 d-md-none">Activity</span>
             </Link>
           </li>
           <li className="nav-item">
             <Popover content={this.userMenu()} position={Position.CENTER_BOTTOM}>
               <a className={`nav-link ${page === '/me' ? 'active' : ''}`}>
                 <i className="fas fa-user-circle" />
+                <span className="pl-2 d-md-none">Me</span>
               </a>
             </Popover>
           </li>
