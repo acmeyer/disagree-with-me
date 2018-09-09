@@ -58,7 +58,7 @@ class PostCell extends React.Component {
         </div>
         {this.renderTopResponse()}
       </div>
-      );
+    );
   }
 }
 

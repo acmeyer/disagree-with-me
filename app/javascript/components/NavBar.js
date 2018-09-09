@@ -100,7 +100,7 @@ class NavBar extends React.Component {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/activity" className={`nav-link ${page === '/activity' ? 'active' : ''}`}>
+            <Link to="/activity/unread" className={`nav-link ${page === '/activity' ? 'active' : ''}`}>
               <i className="fas fa-bolt" />
               <span className="pl-2 d-md-none">Activity</span>
             </Link>

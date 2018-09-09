@@ -27,8 +27,6 @@ class HomeView extends React.Component {
     if (currentUrl === '/login' && !this.props.user.loggedIn) {
       this.props.showLoginModal();
     }
-
-    // Show conversation view if navigating to conversation
   }
 
   submenuLinks = () => {

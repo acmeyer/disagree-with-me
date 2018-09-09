@@ -41,8 +41,10 @@ class App extends React.Component {
           <Route path="/popular" component={HomeView} />
           <Route path="/conversations/:postId" component={ConversationView} />
           <Route path="/search" component={SearchView} />
-          <Route path="/activity" render={props => {
-            return this.props.user.loggedIn ? <ActivityView /> : (
+          <Route path="/activity/:list" render={props => {
+            return this.props.user.loggedIn ? (
+              <ActivityView key={props.match.params.list} {...props} />
+            )  : (
               <Redirect
                 to={{
                   pathname: "/login",
