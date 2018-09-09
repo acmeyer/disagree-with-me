@@ -1,51 +1,23 @@
 import React from 'react';
 import SearchResultCell from './SearchResultCell';
-import {AppToaster} from '../common/AppToaster';
 import LoadingView from '../common/LoadingView';
 import {
   NonIdealState,
 } from '@blueprintjs/core';
-import algoliasearch from 'algoliasearch';
-import algoliasearchHelper from 'algoliasearch-helper';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {
-  algoliaAppId,
-  algoliaSearchKey,
-  algoliaEnv,
-} from '../../env';
+  search,
+  clearSearch,
+} from '../../actions';
 
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      loading: false,
       searchQuery: '',
-      searchResults: [],
     };
-
-    this.search_client = algoliasearch(algoliaAppId, algoliaSearchKey);
-    this.search_helper = algoliasearchHelper(this.search_client, `Post_${algoliaEnv}`);
-  }
-
-  componentDidMount() {
-    this.search_helper.on('result', this.returnResults);
-    this.search_helper.on('search', this.handleLoadingResults);
-    this.search_helper.on('error', this.handleError);
-  }
-
-  handleLoadingResults = () => {
-    this.setState({loading: true});
-  }
-
-  handleError = (error) => {
-    this.setState({loading: false});
-    AppToaster.show({ message: error, intent: "danger", icon: "error" });
-  }
-
-  returnResults = (content) => {
-    this.setState({searchResults: content.hits, loading: false});
   }
 
   showConversation = (postId) => {
@@ -54,12 +26,12 @@ class SearchView extends React.Component {
 
   renderSearchResults = () => {
     let content;
-    if (this.state.loading) {
+    if (this.props.loading) {
       content = <LoadingView />;
     } else {
       if (this.state.searchQuery !== '') {
-        if (this.state.searchResults.length > 0) {
-          content = this.state.searchResults.map(hit => <SearchResultCell key={hit.objectID} result={hit} showConversation={this.showConversation} />);
+        if (this.props.results.length > 0) {
+          content = this.props.results.map(post => <SearchResultCell key={post.id} result={post} showConversation={this.showConversation} />);
         } else {
           content = (
             <NonIdealState
@@ -87,11 +59,12 @@ class SearchView extends React.Component {
 
   updateSearch = (value) => {
     this.setState({searchQuery: value});
-    this.search_helper.setQuery(value).search();
+    this.props.dispatch(search(value));
   }
 
   clearSearch = () => {
-    this.setState({searchQuery: '', searchResults: []});
+    this.setState({searchQuery: ''});
+    this.props.dispatch(clearSearch());
     this.input.focus();
   }
 
@@ -123,7 +96,7 @@ class SearchView extends React.Component {
           <div className="search-results-wrap">
             {this.renderSearchResults()}
           </div>
-          {(this.state.searchQuery !== '' && this.state.searchResults.length > 0) &&
+          {(this.state.searchQuery !== '' && this.props.results.length > 0) &&
             <div className="powered-by-wrap text-right mt-5 text-muted text-uppercase small">
               Powered by <a href="https://www.algolia.com" target="_blank">Algolia</a>
             </div>
@@ -134,4 +107,12 @@ class SearchView extends React.Component {
   }
 }
 
-export default withRouter(connect()(SearchView));
+function select(store) {
+  return {
+    user: store.user,
+    loading: store.search.loading,
+    results: store.search.list,
+  };
+}
+
+export default withRouter(connect(select)(SearchView));

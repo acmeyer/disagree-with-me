@@ -6,6 +6,7 @@ import { userListReducer } from './userList';
 import { composePostModalReducer } from './composePostModal';
 import { conversationReducer } from './conversation';
 import { reportModalReducer } from './reportModal';
+import { searchReducer } from './search';
 
 export default combineReducers({
   user: userReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   composePostModal: composePostModalReducer,
   conversation: conversationReducer,
   reportModal: reportModalReducer,
+  search: searchReducer,
 });
