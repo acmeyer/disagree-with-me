@@ -1,0 +1,22 @@
+.notification-cell {
+  &.actionable {
+    cursor: pointer;
+    &:hover {
+      border-color: $gray !important;
+    }
+  }
+
+  &.read {
+    background-color: $cellHighlight;
+  }
+
+  .activity-actions {
+    .action {
+      cursor: pointer;
+      color: #6c757d;
+      .action-icon {
+        font-size: 16px;
+      }
+    }
+  }
+}

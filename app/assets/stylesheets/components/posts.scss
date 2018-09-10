@@ -14,9 +14,9 @@
   }
 
   &:hover {
-    background-color: $cellHighlight !important;
+    border-color: $gray !important;
     .top-response {
-      background-color: $cellHighlight !important;  
+      border-color: $gray !important;  
     }
   }
   

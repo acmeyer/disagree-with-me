@@ -2,41 +2,67 @@ import React from 'react';
 import PageHeader from '../common/PageHeader';
 import PageSubmenu from '../common/PageSubmenu';
 import PageList from '../common/PageList';
+import LoadingView from '../common/LoadingView';
 import ActivityCell from './ActivityCell';
 import {withRouter} from 'react-router-dom';
+import { Button, NonIdealState } from "@blueprintjs/core";
 import {connect} from 'react-redux';
 import {
   fetchNotifications,
+  notificationAction,
+  markAllNotificationsRead,
 } from '../../actions';
 
 class ActivityView extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     let {list} = this.props.match.params;
     this.props.fetchNotifications(1, {list});
   }
 
   submenuLinks = () => {
-    const currentUrl = this.props.match.url;
+    let {list} = this.props.match.params;
     return [
       {
-        active: currentUrl === '/activity/unread' || currentUrl === '/activity',
+        active: list === 'unread',
         href: '/activity/unread',
         title: 'Unread',
-        // icon: 'clock'
       },
       {
-        active: currentUrl === '/activity/read',
+        active: list === 'read',
         href: '/activity/read',
         title: 'Read',
-        // icon: 'star'
       },
       {
-        active: currentUrl === '/activity/all',
+        active: list === 'all',
         href: '/activity/all',
         title: 'All',
-        // icon: 'chart-line'
       },
     ]
+  }
+
+  handleShowNotification = (notification) => {
+    this.handleMarkNotificationRead(notification);
+    if (notification.post) {
+      this.props.history.push(`/conversations/${notification.post.id}`);
+    } else {
+      this.props.history.push(`/conversations/${notification.response.post_id}`);
+    }
+  }
+
+  handleDeleteNotification = (notification) => {
+    this.props.notificationAction(notification, 'delete');
+  }
+
+  handleMarkNotificationRead = (notification) => {
+    this.props.notificationAction(notification, 'mark_read');
+  } 
+
+  handleMarkNotificationUnread = (notification) => {
+    this.props.notificationAction(notification, 'mark_unread');
+  }
+
+  handleMarkAllRead = () => {
+    this.props.markAllNotificationsRead();
   }
 
   renderNotification = (notification) => {
@@ -45,8 +71,22 @@ class ActivityView extends React.Component {
         key={notification.id} 
         user={this.props.user} 
         notification={notification}
+        handleShowNotification={this.handleShowNotification}
+        handleDeleteNotification={this.handleDeleteNotification}
+        handleMarkNotificationRead={this.handleMarkNotificationRead}
+        handleMarkNotificationUnread={this.handleMarkNotificationUnread}
       />
     );
+  }
+
+  renderMarkAllRead = () => {
+    let {list} = this.props.match.params;
+    let {notifications} = this.props;
+    if (list === 'unread' && notifications.length > 0) {
+      return (
+        <Button icon="tick" text="Mark All Read" onClick={this.handleMarkAllRead} />
+      );
+    }
   }
 
   render() {
@@ -55,7 +95,32 @@ class ActivityView extends React.Component {
     if (this.props.isLoading) {
       content = <LoadingView />;
     } else {
-      content = this.props.notifications.map(this.renderNotification);
+      if (this.props.notifications.length > 0) {
+        content = this.props.notifications.map(this.renderNotification);
+      } else {
+        let message, description, icon;
+        let {list} = this.props.match.params;
+        if (list === 'read') {
+          icon = "envelope";
+          message = "No read messages";
+          description = "Your read messages will appear here.";
+        } else if (list === 'unread') {
+          icon = "tick";
+          message = "No unread messages";
+          description = "New unread messages will appear here.";
+        } else {
+          icon = "envelope";
+          message = "No messages";
+          description = "All your messages will appear here.";
+        }
+        content = (
+          <NonIdealState
+            icon={icon}
+            title={message}
+            description={description}
+          />
+        );
+      }
     }
 
     return (
@@ -66,7 +131,7 @@ class ActivityView extends React.Component {
               <PageSubmenu links={this.submenuLinks()} />
             </div>
             <div className="col-12 col-md-8 col-lg-9">
-              <PageHeader title="Activity" />
+              <PageHeader title="Activity" headerAction={this.renderMarkAllRead()} />
               <PageList>
                 {content}
               </PageList>
@@ -81,12 +146,14 @@ class ActivityView extends React.Component {
 function actions(dispatch) {
   return {
     fetchNotifications: (page, options) => { dispatch(fetchNotifications(page, options)) },
+    notificationAction: (notification, action) => { dispatch(notificationAction(notification, action)) },
+    markAllNotificationsRead: (notification) => { dispatch(markAllNotificationsRead(notification)) },
   };
 }
 
 function select(store) {
   return {
-    isLoading: store.posts.loading,
+    isLoading: store.notifications.loading,
     user: store.user,
     notifications: store.notifications.list,
   };

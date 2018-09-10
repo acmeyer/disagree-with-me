@@ -45,13 +45,6 @@ class ConversationView extends React.Component {
 
   renderResponse = (response) => {
     let authorIcon;
-    if (response.is_post_author) {
-      authorIcon = (
-        <Tooltip content="Post Author" position="top">
-          <span className="mr-2 is-author-icon"><i className="fas fa-pen-nib" /></span>
-        </Tooltip>
-      );
-    }
     return (
       <div key={response.id} className="response py-3">
         {authorIcon}

@@ -50,6 +50,7 @@ class Api::V1::NotificationsController < Api::V1::ApiController
 
 
   def mark_all_read
+    @current_page = 1
     begin
       @user.notifications.update_all(status: 'read')
       render_notifications

@@ -90,6 +90,10 @@ class NavBar extends React.Component {
       </li>
     );
     if (this.props.user.loggedIn) {
+      let notification_count;
+      // if (this.props.notifications.length > 0) {
+      //   notification_count = <span className="badge badge-pill badge-danger">{this.props.notifications.length}</span>;
+      // }
       navLinks = (
         <ul className="navbar-nav ml-auto">
           {searchLink}
@@ -101,7 +105,7 @@ class NavBar extends React.Component {
           </li>
           <li className="nav-item">
             <Link to="/activity/unread" className={`nav-link ${page === '/activity' ? 'active' : ''}`}>
-              <i className="fas fa-bolt" />
+              <i className="fas fa-bolt" />{notification_count}
               <span className="pl-2 d-md-none">Activity</span>
             </Link>
           </li>
@@ -178,6 +182,7 @@ function actions(dispatch) {
 function select(store) {
   return {
     user: store.user,
+    notifications: store.notifications.list,
   };
 }
 

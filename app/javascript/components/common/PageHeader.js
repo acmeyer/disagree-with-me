@@ -5,7 +5,11 @@ class PageHeader extends React.Component {
     return (
       <div className="page-header mt-3">
         <div className="container">
-          <h3 className="m-0">{this.props.title}</h3>        
+          <div className="d-flex">
+            <h3 className="m-0 flex-fill">{this.props.title}</h3>
+            {this.props.headerAction}
+          </div>
+          <hr />
         </div>
       </div>
     );

@@ -7,25 +7,46 @@ import {
 } from "@blueprintjs/core";
 
 class ActivityActions extends React.Component {
-  markAsRead = () => {
-    console.log('mark as read');
+  markAsRead = (e) => {
+    e.stopPropagation();
+    this.props.handleMarkRead(this.props.notification);
   }
 
-  delete = () => {
-    console.log('delete');
+  markAsUnread = (e) => {
+    e.stopPropagation();
+    this.props.handleMarkUnread(this.props.notification);
+  }
+
+  delete = (e) => {
+    e.stopPropagation();
+    this.props.handleDelete(this.props.notification);
   }
 
   render() {
-    return (
-      <div className="cell-actions flex-row d-flex mt-3">
-        <div className="action pr-4" onClick={this.markAsRead}>
+    let toggleRead;
+    if (this.props.notification.status === 'unread') {
+      toggleRead = (
+        <div className="action px-3" onClick={(e) => this.markAsRead(e)}>
           <Tooltip content="Mark as Read" position="top">
             <span className={`action-icon`}><i className={`fas fa-check`} /></span>
           </Tooltip>
         </div>
-        <div className="action pr-4" onClick={this.delete}>
+      );
+    } else {
+      toggleRead = (
+        <div className="action px-3" onClick={(e) => this.markAsUnread(e)}>
+          <Tooltip content="Mark as Unread" position="top">
+            <span className={`action-icon`}><i className={`far fa-envelope-open`} /></span>
+          </Tooltip>
+        </div>
+      );
+    }
+    return (
+      <div className="activity-actions border-left d-flex flex-column justify-content-around">
+        {toggleRead}
+        <div className="action px-3" onClick={(e) => this.delete(e)}>
           <Tooltip content="Delete" position="top">
-            <span className={`action-icon`}><i className={`fas fa-trash`} /></span>
+            <span className={`action-icon`}><i className={`far fa-trash-alt`} /></span>
           </Tooltip>
         </div>
       </div>
