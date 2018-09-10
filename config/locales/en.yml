@@ -12,6 +12,9 @@ en:
     errors:
       only_post_author: "Only the post author can do this!"
       response_already_thanked: "Response already thanked."
+  notifications:
+    messages:
+      new_response: "There's a new response to your post: \"%{post_truncated}\"! Check it out and be sure to thank it if you find it helpful."
   views:
     auth:
       titles:

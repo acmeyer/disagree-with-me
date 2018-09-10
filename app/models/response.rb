@@ -8,6 +8,20 @@ class Response < ApplicationRecord
 
   validates :content, presence: true
 
+  after_create :create_notification
+
   scope :thanked, -> { where(author_thanked: true) }
   scope :not_thanked, -> { where(author_thanked: false) }
+
+  private
+  def create_notification
+    # Create a notification to send to post's author
+    self.post.author
+    Notification.create(
+      message: I18n.t('notifications.messages.new_response', post_truncated: self.post.content.truncate(50)),
+      user_id: self.post.author.id,
+      notification_type: 'New Response',
+      notifiable: self,
+    )
+  end
 end
