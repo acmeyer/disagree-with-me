@@ -64,6 +64,8 @@ export function fetchPosts(page = 1, options={}) {
       url = url + '&latest=true';
     } else if (options.popular) {
       url = url + '&popular=true';
+    } else {
+      url = url + '&latest=true';
     }
 
     dispatch(requestPosts());

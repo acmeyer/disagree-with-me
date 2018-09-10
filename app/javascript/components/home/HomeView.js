@@ -32,14 +32,14 @@ class HomeView extends React.Component {
   submenuLinks = () => {
     const currentUrl = this.props.match.url;
     return [
+      // {
+      //   active: currentUrl === '/' || currentUrl === '/login',
+      //   href: '/',
+      //   title: 'Trending',
+      //   icon: 'chart-line'
+      // },
       {
-        active: currentUrl === '/' || currentUrl === '/login',
-        href: '/',
-        title: 'Trending',
-        icon: 'chart-line'
-      },
-      {
-        active: currentUrl === '/latest',
+        active: currentUrl === '/' || currentUrl === '/latest' || currentUrl === '/login',
         href: '/latest',
         title: 'Latest',
         icon: 'clock'
