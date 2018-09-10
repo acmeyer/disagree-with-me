@@ -10,6 +10,7 @@ import { Button } from "@blueprintjs/core";
 import {
   showLoginModal,
   fetchPosts,
+  showComposeView,
 } from '../../actions';
 
 class HomeView extends React.Component {
@@ -52,6 +53,14 @@ class HomeView extends React.Component {
         icon: 'star'
       },
     ]
+  }
+
+  handleCreate = () => {
+    if (this.props.user.loggedIn) {
+      this.props.showComposeView();
+    } else {
+      this.showLogin();
+    }
   }
 
   handleLoadMorePosts = () => {
@@ -105,6 +114,9 @@ class HomeView extends React.Component {
               <PageSubmenu links={this.submenuLinks()} />
             </div>
             <div className="col-12 col-md-8 col-lg-9">
+              <div className="create-post card d-md-none p-3 text-muted mt-3" onClick={this.handleCreate}>
+                What are you seeking feedback on?
+              </div>
               <PageList>
                 {content}
                 {loadMore}
@@ -119,6 +131,7 @@ class HomeView extends React.Component {
 
 function actions(dispatch) {
   return {
+    showComposeView: () => { dispatch(showComposeView()) },
     showLoginModal: () => { dispatch(showLoginModal()) },
     fetchPosts: (page, options) => { dispatch(fetchPosts(page, options)) },
   };

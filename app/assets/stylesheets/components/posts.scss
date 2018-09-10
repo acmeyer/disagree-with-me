@@ -47,3 +47,11 @@
     }
   }
 }
+
+.create-post {
+  &:hover {
+    color: $black !important;
+    border-color: $gray !important;
+    cursor: text;
+  }
+}
