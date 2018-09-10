@@ -58,12 +58,18 @@ export function conversationReducer(state = initial, action) {
     }
   }
   if (action.type === 'RECEIVED_RESPONSE' || action.type === 'TOGGLE_RESPONSE_UPVOTE' || action.type === 'THANKED_RESPONSE') {
+    let updatedList = state.responses.list;
+    if (state.responses.filters.thanked_only) {
+      updatedList = action.response.author_thanked ? appendOrReplaceById(state.responses.list, action.response) : state.responses.list.filter(r => r.id !== action.response.id)
+    } else {
+      updatedList = appendOrReplaceById(state.responses.list, action.response);
+    }
     return {
       ...state,
       responses: {
         ...state.responses,
         loading: false,
-        list: appendOrReplaceById(state.responses.list, action.response),
+        list: updatedList,
       }
     }
   }
