@@ -4,8 +4,13 @@ import {
 
 const initial = {
   loading: false,
+  loadingMore: false,
   list: [],
   type: 'unread',
+  moreResults: false,
+  page: 1,
+  totalPages: null,
+  totalEntries: null,
 };
 
 export function notificationsReducer(state = initial, action) {
@@ -15,12 +20,25 @@ export function notificationsReducer(state = initial, action) {
       loading: true,
     }
   }
+  if (action.type === 'REQUEST_MORE_NOTIFICATIONS') {
+    return {
+      ...state,
+      loadingMore: true,
+    }
+  }
   if (action.type === 'RECEIVED_NOTIFICATIONS') {
+    const updatedList = action.page !== 1 && (state.type === action.list)
+      ? _.concat(state.list, action.notifications)
+      : action.notifications;
     return {
       ...state, 
       loading: false,
-      list: action.notifications,
+      list: updatedList,
       type: action.list,
+      moreResults: action.moreResults,
+      page: action.page,
+      totalPages: action.totalPages,
+      totalEntries: action.totalEntries,
     };
   }
   if (action.type === 'MARK_ALL_NOTIFICATIONS_READ') {

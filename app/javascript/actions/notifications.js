@@ -7,10 +7,17 @@ function requestNotifications() {
   };
 }
 
+function requestMoreNotifications() {
+  return {
+    type: 'REQUEST_MORE_NOTIFICATIONS',
+  };
+}
+
 function receiveNotifications(json, list) {
   return {
     type: 'RECEIVED_NOTIFICATIONS',
     notifications: json.notifications,
+    moreResults: json.more_results,
     page: json.page,
     totalPages: json.total_pages,
     totalEntries: json.total_entries,
@@ -37,7 +44,11 @@ export function fetchNotifications(page = 1, options = {}) {
       url = url + '&unread=true';
     }
 
-    dispatch(requestNotifications());
+    if (page > 1) {
+      dispatch(requestMoreNotifications());
+    } else {
+      dispatch(requestNotifications());
+    }
     return axios.get(url, headers).then((response) => {
       dispatch(receiveNotifications(response.data, options.list));
     }).catch(error => console.log(error));

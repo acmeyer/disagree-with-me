@@ -7,10 +7,17 @@ function requestPosts() {
   };
 }
 
+function requestMorePosts() {
+  return {
+    type: 'REQUEST_MORE_POSTS',
+  };
+}
+
 function receivePosts(json) {
   return {
     type: 'RECEIVED_POSTS',
     posts: json.posts,
+    moreResults: json.more_results,
     page: json.page,
     totalPages: json.total_pages,
     totalEntries: json.total_entries,
@@ -68,7 +75,12 @@ export function fetchPosts(page = 1, options={}) {
       url = url + '&latest=true';
     }
 
-    dispatch(requestPosts());
+    if (page > 1) {
+      dispatch(requestMorePosts());
+    } else {
+      dispatch(requestPosts());
+    }
+
     return axios.get(url, headers).then((response) => {
       dispatch(receivePosts(response.data));
     }).catch(error => console.log(error));

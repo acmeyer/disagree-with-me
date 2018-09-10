@@ -10,7 +10,6 @@ import {
   Popover, 
   NonIdealState,
   Button,
-  Tooltip,
 } from "@blueprintjs/core";
 import {
   showLoginModal,
@@ -79,13 +78,29 @@ class ConversationView extends React.Component {
     );
   }
 
+  handleLoadMoreResponses = () => {
+    const page = this.props.responsesPage + 1;
+    this.props.dispatch(fetchConversationResponses(postId, page));
+  }
+
   renderResponses = () => {
-    let content;
+    let content, loadMore;
     let {responses, responsesLoading} = this.props;
     if (responsesLoading) {
       content = <LoadingView />;
     } else if (responses.length > 0) {
       content = this.props.responses.map(this.renderResponse);
+      if (this.props.moreResponses) {
+        loadMore = (
+          <div className="load-more text-center m-3">
+            <Button 
+              onClick={this.handleLoadMoreResponses}
+              loading={this.props.loadingMoreResponses}
+              text="Load More Responses"
+            />
+          </div>
+        )
+      }
     } else {
       let message, description, action;
       if (this.props.filters.thanked_only) {
@@ -111,6 +126,7 @@ class ConversationView extends React.Component {
       <div className="responses-wrap">
         {this.renderResponseFilter()}
         {content}
+        {loadMore}
       </div>
     );
   }
@@ -168,6 +184,9 @@ function select(store) {
     responses: store.conversation.responses.list,
     filters: store.conversation.responses.filters,
     responsesLoading: store.conversation.responses.loading,
+    moreResponses: store.conversation.responses.moreResults,
+    loadingMoreResponses: store.conversation.responses.loadingMore,
+    responsesPage: store.conversation.responses.page,
   };
 }
 

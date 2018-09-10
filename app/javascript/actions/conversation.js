@@ -20,10 +20,17 @@ function requestConversationResponses() {
   }
 }
 
+function requestMoreConversationResponses() {
+  return {
+    type: 'REQUEST_MORE_CONVERSATION_RESPONSES',
+  }
+}
+
 function receiveConversationResponses(json) {
   return {
     type: 'RECEIVED_CONVERSATION_RESPONSES',
     responses: json.responses,
+    moreResults: json.more_results,
     page: json.page,
     totalPages: json.total_pages,
     totalEntries: json.total_entries,
@@ -71,7 +78,11 @@ export function fetchConversationResponses(postId, page = 1) {
     }
     let url = `${serverDomain}/posts/${postId}/responses?page=${page}&thanked_only=${filters.thanked_only}`;
 
-    dispatch(requestConversationResponses());
+    if (page > 1) {
+      dispatch(requestMoreConversationResponses());
+    } else {
+      dispatch(requestConversationResponses());
+    }
     return axios.get(url, headers).then((response) => {
       dispatch(receiveConversationResponses(response.data));
     }).catch(error => console.log(error));

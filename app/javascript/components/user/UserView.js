@@ -6,7 +6,7 @@ import PostCell from '../common/PostCell';
 import ResponseCell from '../common/ResponseCell';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import { NonIdealState } from "@blueprintjs/core";
+import { NonIdealState, Button } from "@blueprintjs/core";
 
 import {
   fetchUserList,
@@ -103,13 +103,30 @@ class UserView extends React.Component {
     }
   }
 
+  handleLoadMorePosts = () => {
+    const page = this.props.page + 1;
+    let {list} = this.props.match.params;
+    this.props.fetchUserList(list, page);
+  }
+
   render() {
-    let content;
+    let content, loadMore;
 
     if (this.props.isLoading) {
       content = <LoadingView />
     } else {
       content = this.renderUserList();
+      if (this.props.moreResults) {
+        loadMore = (
+          <div className="load-more text-center m-3">
+            <Button 
+              onClick={this.handleLoadMorePosts}
+              loading={this.props.loadingMore}
+              text="Load More"
+            />
+          </div>
+        )
+      }
     }
 
     return (
@@ -122,6 +139,7 @@ class UserView extends React.Component {
             <div className="col-12 col-md-8 col-lg-9">
               <PageList>
                 {content}
+                {loadMore}
               </PageList>
             </div>
           </div>
@@ -141,6 +159,9 @@ function select(store) {
   return {
     isLoading: store.userList.loading,
     data: store.userList.list,
+    moreResults: store.userList.moreResults,
+    page: store.userList.page,
+    loadingMore: store.userList.loadingMore,
     user: store.user,
   };
 }

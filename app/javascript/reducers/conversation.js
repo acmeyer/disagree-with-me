@@ -8,10 +8,12 @@ const initial = {
   post: null,
   responses: {
     loading: false,
+    loadingMore: false,
     list: [],
     filters: {
       thanked_only: true,
     },
+    moreResults: false,
     page: null,
     totalPages: null,
     totalEntries: null,
@@ -34,6 +36,15 @@ export function conversationReducer(state = initial, action) {
       }
     }
   }
+  if (action.type === 'REQUEST_MORE_CONVERSATION_RESPONSES') {
+    return {
+      ...state,
+      responses: {
+        ...state.responses,
+        loadingMore: true,
+      }
+    }
+  }
   if (action.type === 'RECEIVED_CONVERSATION_POST') {
     return {
       ...state,
@@ -42,12 +53,20 @@ export function conversationReducer(state = initial, action) {
     }
   }
   if (action.type === 'RECEIVED_CONVERSATION_RESPONSES') {
+    const updatedList = action.page !== 1
+    ? _.concat(state.responses.list, action.responses)
+    : action.responses;
     return {
       ...state,
       responses: {
         ...state.responses,
         loading: false,
-        list: action.responses,
+        loadingMore: false,
+        list: updatedList,
+        moreResults: action.moreResults,
+        page: action.page,
+        totalPages: action.totalPages,
+        totalEntries: action.totalEntries,
       }
     }
   }

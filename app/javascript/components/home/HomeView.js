@@ -5,6 +5,7 @@ import PageSubmenu from '../common/PageSubmenu';
 import PageList from '../common/PageList';
 import LoadingView from '../common/LoadingView';
 import PostCell from '../common/PostCell';
+import { Button } from "@blueprintjs/core";
 
 import {
   showLoginModal,
@@ -53,6 +54,18 @@ class HomeView extends React.Component {
     ]
   }
 
+  handleLoadMorePosts = () => {
+    const page = this.props.page + 1;
+    const currentUrl = this.props.match.url;
+    if (currentUrl === '/latest') {
+      this.props.fetchPosts(page, {latest: true});
+    } else if (currentUrl === '/popular') {
+      this.props.fetchPosts(page, {popular: true});
+    } else {
+      this.props.fetchPosts(page);
+    }
+  }
+
   renderPost = (post) => {
     return (
       <PostCell 
@@ -65,12 +78,23 @@ class HomeView extends React.Component {
   }
 
   render() {
-    let content;
+    let content, loadMore;
 
     if (this.props.isLoading) {
       content = <LoadingView />;
     } else {
       content = this.props.posts.map(this.renderPost);
+      if (this.props.moreResults) {
+        loadMore = (
+          <div className="load-more text-center m-3">
+            <Button 
+              onClick={this.handleLoadMorePosts}
+              loading={this.props.loadingMore}
+              text="Load More"
+            />
+          </div>
+        )
+      }
     }
 
     return (
@@ -83,6 +107,7 @@ class HomeView extends React.Component {
             <div className="col-12 col-md-8 col-lg-9">
               <PageList>
                 {content}
+                {loadMore}
               </PageList>
             </div>
           </div>
@@ -104,6 +129,9 @@ function select(store) {
     isLoading: store.posts.loading,
     user: store.user,
     posts: store.posts.list,
+    moreResults: store.posts.moreResults,
+    page: store.posts.page,
+    loadingMore: store.posts.loadingMore,
   };
 }
 

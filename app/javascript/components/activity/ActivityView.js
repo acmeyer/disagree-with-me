@@ -89,14 +89,31 @@ class ActivityView extends React.Component {
     }
   }
 
+  handleLoadMoreNotifications = () => {
+    const page = this.props.page + 1;
+    let {list} = this.props.match.params;
+    this.props.fetchNotifications(page, {list});
+  }
+
   render() {
-    let content;
+    let content, loadMore;
 
     if (this.props.isLoading) {
       content = <LoadingView />;
     } else {
       if (this.props.notifications.length > 0) {
         content = this.props.notifications.map(this.renderNotification);
+        if (this.props.moreResults) {
+          loadMore = (
+            <div className="load-more text-center m-3">
+              <Button 
+                onClick={this.handleLoadMoreNotifications}
+                loading={this.props.loadingMore}
+                text="Load More"
+              />
+            </div>
+          )
+        }
       } else {
         let message, description, icon;
         let {list} = this.props.match.params;
@@ -134,6 +151,7 @@ class ActivityView extends React.Component {
               <PageHeader title="Activity" headerAction={this.renderMarkAllRead()} />
               <PageList>
                 {content}
+                {loadMore}
               </PageList>
             </div>
           </div>
@@ -156,6 +174,9 @@ function select(store) {
     isLoading: store.notifications.loading,
     user: store.user,
     notifications: store.notifications.list,
+    moreResults: store.notifications.moreResults,
+    page: store.notifications.page,
+    loadingMore: store.notifications.loadingMore,
   };
 }
 

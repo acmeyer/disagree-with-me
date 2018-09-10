@@ -37,12 +37,19 @@ function requestUserList() {
   };
 }
 
+function requestMoreUserList() {
+  return {
+    type: 'REQUEST_MORE_USER_LIST',
+  };
+}
+
 function receiveUserList(json) {
   let data = json.posts ? json.posts : json.responses;
   return {
     type: 'RECEIVED_USER_LIST',
     list_type: json.posts ? 'posts' : 'responses',
     data,
+    moreResults: json.more_results,
     page: json.page,
     totalPages: json.total_pages,
     totalEntries: json.total_entries,
@@ -67,13 +74,17 @@ export function fetchUserList(list = 'posts', page = 1) {
     } else if (list === 'response-upvotes') {
       listPath = "my_response_upvotes";
     }
-    let url = `${serverDomain}/users/${listPath}`;
+    let url = `${serverDomain}/users/${listPath}?page=${page}`;
 
     const headers = {
       headers: {'Authorization': apiToken, 'User-Email': userEmail}
     };
 
-    dispatch(requestUserList());
+    if (page > 1) {
+      dispatch(requestMoreUserList());
+    } else {
+      dispatch(requestUserList());
+    }
     return axios.get(url, headers).then((response) => {
       dispatch(receiveUserList(response.data));
     }).catch(error => console.log(error));
