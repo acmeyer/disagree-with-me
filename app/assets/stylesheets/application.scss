@@ -29,6 +29,11 @@
   font-size: 13px !important;
 }
 
+.container .container {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 @media (min-width: 1200px) {
   .container {
     max-width: 1000px;
