@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {serverDomain} from '../env';
+import { handleAPIError } from '../util/helpers';
 
 function requestUser() {
   return {
@@ -27,7 +28,7 @@ export function fetchUser() {
     dispatch(requestUser());
     return axios.get(url, headers).then((response) => {
       dispatch(receiveUser(response.data));
-    }).catch(error => console.log(error));
+    }).catch(error => handleAPIError(error));
   }
 }
 
@@ -87,7 +88,7 @@ export function fetchUserList(list = 'posts', page = 1) {
     }
     return axios.get(url, headers).then((response) => {
       dispatch(receiveUserList(response.data));
-    }).catch(error => console.log(error));
+    }).catch(error => handleAPIError(error));
   }
 }
 

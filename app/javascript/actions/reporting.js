@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {serverDomain} from '../env';
+import { handleAPIError } from '../util/helpers';
 
 export function hideReportModal() {
   return {
@@ -35,6 +36,6 @@ export function reportContent(data, reason, description) {
 
     return axios.post(url, report_data, headers).then(() => {
       // success!
-    }).catch(error => console.log(error));
+    }).catch(error => handleAPIError(error));
   }
 }

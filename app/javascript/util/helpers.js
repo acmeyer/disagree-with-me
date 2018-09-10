@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { AppToaster }  from '../components/common/AppToaster';
 
 export function replaceById(originalCollection, newItem) {
   return originalCollection.map((originalItem) => {
@@ -32,4 +33,9 @@ export function appendOrReplaceById(originalCollection, newItem) {
   } else {
     return [...originalCollection, newItem];
   }
+}
+
+export function handleAPIError(error) {
+  const message = _.get(error.response, 'data.error');
+  AppToaster.show({ message: message, intent: "danger", icon: "error" });
 }

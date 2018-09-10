@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {serverDomain} from '../env';
+import { handleAPIError } from '../util/helpers';
 
 function receiveResponse(json) {
   return {
@@ -46,7 +47,7 @@ export function createResponse(content, postId) {
 
     return axios.post(url, {content}, headers).then((response) => {
       dispatch(receiveResponse(response.data));
-    }).catch(error => console.log(error));
+    }).catch(error => handleAPIError(error));
   }
 }
 
@@ -67,7 +68,7 @@ export function toggleResponseUpvote(response) {
 
     return axios.post(url, {}, headers).then((response) => {
       dispatch(receiveResponse(response.data));
-    }).catch(error => console.log(error));
+    }).catch(error => handleAPIError(error));
   }
 }
 
@@ -88,6 +89,6 @@ export function thankResponse(response) {
 
     return axios.post(url, {}, headers).then((response) => {
       dispatch(receiveResponse(response.data));
-    }).catch(error => console.log(error));
+    }).catch(error => handleAPIError(error));
   }
 }

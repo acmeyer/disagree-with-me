@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {serverDomain} from '../env';
+import { handleAPIError }  from '../util/helpers';
 
 function requestSearch() {
   return {
@@ -32,6 +33,6 @@ export function search(query) {
     dispatch(requestSearch());
     return axios.post(url, {query}, headers).then((response) => {
       dispatch(receiveResults(response.data));
-    }).catch(error => console.log(error));
+    }).catch(error => handleAPIError(error));
   }
 }

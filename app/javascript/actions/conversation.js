@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {serverDomain} from '../env';
+import { handleAPIError }  from '../util/helpers';
 
 function requestConversationPost() {
   return {
@@ -60,7 +61,7 @@ export function fetchConversationPost(postId) {
     dispatch(requestConversationPost());
     return axios.get(url, headers).then((response) => {
       dispatch(receiveConversationPost(response.data));
-    }).catch(error => console.log(error));
+    }).catch(error => handleAPIError(error));
   }
 }
 
@@ -85,7 +86,7 @@ export function fetchConversationResponses(postId, page = 1) {
     }
     return axios.get(url, headers).then((response) => {
       dispatch(receiveConversationResponses(response.data));
-    }).catch(error => console.log(error));
+    }).catch(error => handleAPIError(error));
   }
 }
 

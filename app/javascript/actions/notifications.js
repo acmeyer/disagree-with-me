@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {serverDomain} from '../env';
+import { handleAPIError }  from '../util/helpers';
 
 function requestNotifications() {
   return {
@@ -51,7 +52,7 @@ export function fetchNotifications(page = 1, options = {}) {
     }
     return axios.get(url, headers).then((response) => {
       dispatch(receiveNotifications(response.data, options.list));
-    }).catch(error => console.log(error));
+    }).catch(error => handleAPIError(error));
   }
 }
 
@@ -73,7 +74,7 @@ export function notificationAction(notification, action) {
         notification: response.data,
         notification_action: action,
       });
-    }).catch(error => console.log(error));
+    }).catch(error => handleAPIError(error));
   }
 }
 
@@ -93,6 +94,6 @@ export function markAllNotificationsRead() {
       dispatch({
         type: 'MARK_ALL_NOTIFICATIONS_READ',
       });
-    }).catch(error => console.log(error));
+    }).catch(error => handleAPIError(error));
   }
 }
