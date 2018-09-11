@@ -14,12 +14,10 @@ module DisagreeWithMe
     config.middleware.use Rack::Deflater
     config.middleware.use Rack::Attack
 
-    if Rails.env.development?
-      config.middleware.insert_before 0, Rack::Cors do
-        allow do
-          origins '*'
-          resource '*', headers: :any, methods: [:get, :post, :options]
-        end
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins ENV['DOMAIN_NAME']
+        resource '*', headers: :any, methods: [:get, :post, :options]
       end
     end
     # Settings in config/environments/* take precedence over those specified here.
