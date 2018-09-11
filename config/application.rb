@@ -16,7 +16,7 @@ module DisagreeWithMe
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins '*'
+        origins "#{ENV['DOMAIN_NAME']}", "api.#{ENV['DOMAIN_NAME']}" 
         resource '*', headers: :any, methods: [:get, :post, :options]
       end
     end
