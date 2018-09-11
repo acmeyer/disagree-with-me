@@ -18,6 +18,11 @@ class UserView extends React.Component {
     this.props.fetchUserList(list);
   }
 
+  componentDidMount() {
+    let {list} = this.props.match.params;
+    mixpanel.track('Viewed User List Page', {list});
+  }
+
   renderCell = (obj) => {
     if (obj.post_id) {
       return <ResponseCell key={obj.id} user={this.props.user} response={obj} />;
@@ -107,6 +112,7 @@ class UserView extends React.Component {
     const page = this.props.page + 1;
     let {list} = this.props.match.params;
     this.props.fetchUserList(list, page);
+    mixpanel.track('Load More Posts', {page: 'user list', list: list});
   }
 
   render() {

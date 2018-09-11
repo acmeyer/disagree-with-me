@@ -145,6 +145,7 @@ export function createPost(content) {
 
     return axios.post(url, {content}, headers).then((response) => {
       dispatch(receivePost(response.data));
+      return response.data.id;
     }).catch(error => handleAPIError(error));
   }
 }

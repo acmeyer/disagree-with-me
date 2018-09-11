@@ -47,6 +47,7 @@ export function createResponse(content, postId) {
 
     return axios.post(url, {content}, headers).then((response) => {
       dispatch(receiveResponse(response.data));
+      return response.data;
     }).catch(error => handleAPIError(error));
   }
 }

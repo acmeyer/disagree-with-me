@@ -17,6 +17,7 @@ class ActivityView extends React.Component {
   componentDidMount() {
     let {list} = this.props.match.params;
     this.props.fetchNotifications(1, {list});
+    mixpanel.track('Viewed Activity Page', {list});
   }
 
   submenuLinks = () => {
@@ -51,14 +52,17 @@ class ActivityView extends React.Component {
 
   handleDeleteNotification = (notification) => {
     this.props.notificationAction(notification, 'delete');
+    mixpanel.track('Deleted Notification', {notification_id: notification.id});
   }
 
   handleMarkNotificationRead = (notification) => {
     this.props.notificationAction(notification, 'mark_read');
+    mixpanel.track('Marked Notification Read', {notification_id: notification.id});
   } 
 
   handleMarkNotificationUnread = (notification) => {
     this.props.notificationAction(notification, 'mark_unread');
+    mixpanel.track('Marked Notification Unread', {notification_id: notification.id});
   }
 
   handleMarkAllRead = () => {
@@ -93,6 +97,7 @@ class ActivityView extends React.Component {
     const page = this.props.page + 1;
     let {list} = this.props.match.params;
     this.props.fetchNotifications(page, {list});
+    mixpanel.track('Load More Posts', {page: 'activity', list: list});
   }
 
   render() {

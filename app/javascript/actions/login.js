@@ -38,3 +38,9 @@ export function loginWithEmail(email, password) {
     });
   }
 }
+
+export function logOut() {
+  return {
+    type: 'LOGGED_OUT',
+  };
+}

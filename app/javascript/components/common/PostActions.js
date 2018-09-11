@@ -24,8 +24,10 @@ class PostActions extends React.Component {
     e.stopPropagation();
     if (this.props.user.loggedIn) {
       this.props.togglePostUpvote(this.props.post);
+      mixpanel.track('Toggled Post Upvote', {post_id: this.props.post.id});
     } else {
       this.props.showLoginModal();
+      mixpanel.track('Shown Login Modal', {from: 'toggle post upvote', object_id: this.props.post.id});
     }
   }
 
@@ -33,8 +35,10 @@ class PostActions extends React.Component {
     e.stopPropagation();
     if (this.props.user.loggedIn) {
       this.props.togglePostBookmark(this.props.post);
+      mixpanel.track('Toggled Post Bookmark', {post_id: this.props.post.id});
     } else {
       this.props.showLoginModal();
+      mixpanel.track('Shown Login Modal', {from: 'toggle post bookmark', object_id: this.props.post.id});
     }
   }
 
@@ -53,16 +57,19 @@ class PostActions extends React.Component {
         `https://twitter.com/intent/tweet?text=Check+out+this+conversation+on+Disagree+with+Me&url=${shareLink}&hashtags=disagreewithme`,
         '_blank'
       );
+      mixpanel.track('Shared Conversation', {post_id: this.props.post.id, via: 'twitter'});
     } else if (type === 'facebook') {
       window.open(
         `https://www.facebook.com/sharer/sharer.php?u=${shareLink}&t=Check+out+this+conversation+on+Disagree+with+Me`,
         '_blank'
       );
+      mixpanel.track('Shared Conversation', {post_id: this.props.post.id, via: 'facebook'});
     } else if (type === 'email') {
       window.open(
         `mailto:?subject=Check+out+this+conversation+on+Disagree+with+Me&body=${shareLink}`,
         '_blank'
       );
+      mixpanel.track('Shared Conversation', {post_id: this.props.post.id, via: 'email'});
     } else {
       alert('Not a recognized share!');
     }
@@ -83,6 +90,7 @@ class PostActions extends React.Component {
       this.props.showReport(this.props.post, 'post');
     } else {
       this.props.showLoginModal();
+      mixpanel.track('Shown Login Modal', {from: 'report post', object_id: this.props.post.id});
     }
   }
 
@@ -98,24 +106,24 @@ class PostActions extends React.Component {
     let {post} = this.props;
     return (
       <div className="cell-actions flex-row d-flex mt-3">
-        <div className="action pr-4 flex-sm-fill" onClick={this.toggleUpvote}>
+        <div className="action pr-4" onClick={this.toggleUpvote}>
           <Tooltip content="Upvote" position="top">
             <span className={`action-icon ${post.upvoted ? 'active' : null}`}><i className={`fas fa-arrow-up`} /></span>
           </Tooltip>
           <span className={`action-count ${post.upvoted ? 'active' : null}`}>{post.upvotes_count > 0 && post.upvotes_count}</span>
         </div>
-        <div className="action pr-4 flex-sm-fill" onClick={this.props.handleShowComments}>
+        <div className="action pr-4" onClick={this.props.handleShowComments}>
           <Tooltip content="Respond" position="top">
             <span className={`action-icon ${post.responded_to ? 'active' : null}`}><i className={`${post.responded_to ? 'fas' : 'far'} fa-comment`} /></span>
           </Tooltip>
           <span className={`action-count ${post.responded_to ? 'active' : null}`}>{post.responses_count > 0 && post.responses_count}</span>
         </div>
-        <div className="action pr-4 flex-sm-fill" onClick={this.toggleBookmark}>
+        <div className="action pr-4" onClick={this.toggleBookmark}>
           <Tooltip content="Bookmark" position="top">
             <span className={`action-icon ${post.bookmarked ? 'active' : null}`}><i className={`${post.bookmarked ? 'fas' : 'far'} fa-bookmark`} /></span>
           </Tooltip>
         </div>
-        <div className="action pr-4 flex-sm-fill" onClick={this.showSharingOptions}>
+        <div className="action pr-4" onClick={this.showSharingOptions}>
           <Popover content={this.renderShareMenu()} position={Position.RIGHT_CENTER}>
             <Tooltip content="Share" position="top">
               <span className={`action-icon`}><i className="far fa-share-square" /></span>

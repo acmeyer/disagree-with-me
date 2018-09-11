@@ -34,11 +34,18 @@ class ConversationView extends React.Component {
     this.props.dispatch(showConversation(postId));
   }
 
+  componentDidMount() {
+    let {postId} = this.props.match.params;
+    mixpanel.track('Viewed Conversation', {post_id: postId});
+  }
+
   showConversationComments = () => {
+    let {postId} = this.props.match.params;
     if (this.props.user.loggedIn) {
       this.setState({responseInFocus: true});
     } else {
       this.props.dispatch(showLoginModal());
+      mixpanel.track('Shown Login Modal', {from: 'show conversation responses', object_id: postId});
     }
   }
 
@@ -55,6 +62,7 @@ class ConversationView extends React.Component {
   }
 
   handleChangeResponseFilters = (thanked_only) => {
+    mixpanel.track('Changed Response Filter', {thanked_only: thanked_only, post_id: this.props.post.id});
     this.props.dispatch(changeResponsesFilter(thanked_only, this.props.post.id));
   }
 
@@ -79,7 +87,9 @@ class ConversationView extends React.Component {
   }
 
   handleLoadMoreResponses = () => {
+    let postId = this.props.post.id;
     const page = this.props.responsesPage + 1;
+    mixpanel.track('Load More Responses', {post_id: postId});
     this.props.dispatch(fetchConversationResponses(postId, page));
   }
 

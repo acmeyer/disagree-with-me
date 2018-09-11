@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import {createLogger} from 'redux-logger';
 import reducers from '../reducers';
 import promise from './promise';
+import analytics from './analytics';
 import array from './array';
 import {persistStore, persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -20,11 +21,11 @@ let enhancer;
 if (process.env.NODE_ENV !== 'production') {
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   enhancer = composeEnhancers(
-    applyMiddleware(thunk, promise, array, logger)
+    applyMiddleware(thunk, promise, array, analytics, logger)
   );
 } else {
   enhancer = compose(
-    applyMiddleware(thunk, promise, array)
+    applyMiddleware(thunk, promise, array, analytics)
   );
 }
 

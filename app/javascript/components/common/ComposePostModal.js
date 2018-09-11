@@ -53,7 +53,8 @@ class ComposePostModal extends React.Component {
       return;
     }
     this.setState({loading: true});
-    this.props.dispatch(createPost(this.state.content)).then(() => {
+    this.props.dispatch(createPost(this.state.content)).then((postId) => {
+      mixpanel.track('Created Post', {post_id: postId});
       this.hide();
       AppToaster.show({ message: "Post created!", intent: "success", icon: "tick" });
     }).catch(error => {

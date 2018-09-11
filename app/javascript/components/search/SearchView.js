@@ -20,6 +20,10 @@ class SearchView extends React.Component {
     };
   }
 
+  componentDidMount() {
+    mixpanel.track('Viewed Search Page');
+  }
+
   showConversation = (postId) => {
     this.props.history.push(`/conversations/${postId}`);
   }
@@ -60,6 +64,7 @@ class SearchView extends React.Component {
   updateSearch = (value) => {
     this.setState({searchQuery: value});
     this.props.dispatch(search(value));
+    mixpanel.track('Perform Search', {query: value});
   }
 
   clearSearch = () => {

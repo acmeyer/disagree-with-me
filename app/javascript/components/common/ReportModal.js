@@ -37,6 +37,7 @@ class LoginModal extends React.Component {
     }
     this.setState({loading: true});
     this.props.dispatch(reportContent(this.props.data, this.state.selectedReason.value, this.state.description)).then(() => {
+      mixpanel.track('Created Report', {type: this.props.reporting_type, object_id: this.props.data.id, reason: this.state.selectedReason});
       this.close();
       AppToaster.show({ message: 'Report sent! Thanks for helping improve the community.', intent: "success", icon: "tick"});
     }).catch(error => {

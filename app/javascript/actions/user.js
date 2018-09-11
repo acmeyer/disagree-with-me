@@ -91,9 +91,3 @@ export function fetchUserList(list = 'posts', page = 1) {
     }).catch(error => handleAPIError(error));
   }
 }
-
-export function logOut() {
-  return {
-    type: 'LOGGED_OUT',
-  };
-}

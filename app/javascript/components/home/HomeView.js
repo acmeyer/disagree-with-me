@@ -28,7 +28,14 @@ class HomeView extends React.Component {
     // Show login if coming to login page and not logged in yet
     if (currentUrl === '/login' && !this.props.user.loggedIn) {
       this.props.showLoginModal();
+      mixpanel.track('Shown Login Modal', {from: 'home page'});
     }
+  }
+
+  componentDidMount() {
+    const currentUrl = this.props.match.url;
+    const list = currentUrl === '/popular' ? 'popular' : 'latest';
+    mixpanel.track('Viewed Home Page', {list});
   }
 
   submenuLinks = () => {
@@ -73,6 +80,7 @@ class HomeView extends React.Component {
     } else {
       this.props.fetchPosts(page);
     }
+    mixpanel.track('Load More Posts', {page: 'home', list: currentUrl === '/popular' ? 'popular' : 'latest'});
   }
 
   renderPost = (post) => {

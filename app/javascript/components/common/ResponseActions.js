@@ -19,8 +19,10 @@ class ResponseActions extends React.Component {
     e.stopPropagation();
     if (this.props.user.loggedIn) {
       this.props.toggleResponseUpvote(this.props.response);
+      mixpanel.track('Toggled Response Upvote', {response_id: this.props.response.id});
     } else {
       this.props.showLoginModal();
+      mixpanel.track('Shown Login Modal', {from: 'toggle response upvote', object_id: this.props.response.id});
     }
   }
 
@@ -28,8 +30,10 @@ class ResponseActions extends React.Component {
     e.stopPropagation();
     if (this.props.user.loggedIn) {
       this.props.thankResponse(this.props.response);
+      mixpanel.track('Thanked Response', {response_id: this.props.response.id});
     } else {
       this.props.showLoginModal();
+      mixpanel.track('Shown Login Modal', {from: 'thanked response', object_id: this.props.response.id});
     }
   }
 
@@ -43,6 +47,7 @@ class ResponseActions extends React.Component {
       this.props.showReport(this.props.response, 'response');
     } else {
       this.props.showLoginModal();
+      mixpanel.track('Shown Login Modal', {from: 'report response', object_id: this.props.response.id});
     }
   }
 

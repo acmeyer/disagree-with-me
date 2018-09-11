@@ -53,7 +53,8 @@ class ResponseInput extends React.Component {
       return;
     }
     this.setState({loading: true});
-    this.props.dispatch(createResponse(this.state.content, this.props.post.id)).then(() => {
+    this.props.dispatch(createResponse(this.state.content, this.props.post.id)).then((response) => {
+      mixpanel.track('Created Response', {response_id: response.id, reason: this.state.selectedReason});
       this.resetInput();
       AppToaster.show({ message: "Response created!", intent: "success", icon: "tick" });
     }).catch(error => {

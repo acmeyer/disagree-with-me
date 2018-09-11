@@ -21,8 +21,8 @@ class User < ApplicationRecord
 
   enum role: [:user, :admin]
 
-  # after_create :add_to_marketing_email_list
-  # before_destroy :remove_from_email_lists
+  after_create :add_to_marketing_email_list
+  before_destroy :remove_from_email_lists
 
   def responded_to_post?(post_id)
     self.responses.pluck(:post_id).include?(post_id)
@@ -79,27 +79,26 @@ class User < ApplicationRecord
     self.auth_tokens.update_all(expires_at: DateTime.now, updated_at: DateTime.now)
   end
 
-  # def add_to_marketing_email_list
-  #   begin
-  #     mailchimp = Gibbon::Request.new
-  #     mailchimp.lists(ENV['MAILCHIMP_MARKETING_LIST_ID']).members.create(
-  #       body: {
-  #         email_address: self.email,
-  #         merge_fields: {FNAME: self.first_name, LNAME: self.last_name},
-  #         status: "subscribed"
-  #       }
-  #     )
-  #   rescue Exception
-  #     STDERR.puts("Error while adding user to Mailchimp marketing list: #{$!}")
-  #   end
-  # end
+  def add_to_marketing_email_list
+    begin
+      mailchimp = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
+      mailchimp.lists(ENV['MAILCHIMP_MARKETING_LIST_ID']).members.create(
+        body: {
+          email_address: self.email,
+          status: "subscribed"
+        }
+      )
+    rescue Exception
+      STDERR.puts("Error while adding user to Mailchimp marketing list: #{$!}")
+    end
+  end
 
-  # def remove_from_email_lists
-  #   begin
-  #     mailchimp = Gibbon::Request.new
-  #     mailchimp.lists(ENV['MAILCHIMP_MARKETING_LIST_ID']).members(Digest::MD5.hexdigest(self.email)).update(body: { status: "unsubscribed" })
-  #   rescue Exception
-  #     STDERR.puts("Error while adding user to Mailchimp marketing list: #{$!}")
-  #   end
-  # end
+  def remove_from_email_lists
+    begin
+      mailchimp = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
+      mailchimp.lists(ENV['MAILCHIMP_MARKETING_LIST_ID']).members(Digest::MD5.hexdigest(self.email)).update(body: { status: "unsubscribed" })
+    rescue Exception
+      STDERR.puts("Error while adding user to Mailchimp marketing list: #{$!}")
+    end
+  end
 end
