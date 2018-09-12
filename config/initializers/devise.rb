@@ -6,9 +6,9 @@ Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
-  # Devise will use the `secret_key_base` as its `secret_key`
+  # Devise will use the `key_base` as its `key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '4fc7d8c603473cbe6eb87423480d36b94ac9874f1fb56298fb83f3474357a7a4fbe79c1860b5f78db5d25d61fafc330a2daa47027d970fbfca2de68ecadbb281'
+  config.key = ENV['SECRET_KEY_BASE']
   
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
