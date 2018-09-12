@@ -11,7 +11,9 @@ class Notification < ApplicationRecord
     'App Announcement',
     'May Be Interested In',
     'Product Features',
-    'Marketing News'
+    'Marketing News',
+    'Response Thanked',
+    'New Thanked Response'
   ]
   enum status: [:unread, :read, :deleted]
 

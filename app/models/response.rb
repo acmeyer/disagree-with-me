@@ -15,10 +15,8 @@ class Response < ApplicationRecord
 
   private
   def create_notification
-    # Create a notification to send to post's author
-    self.post.author
     Notification.create(
-      message: I18n.t('notifications.messages.new_response', post_truncated: self.post.content.truncate(50)),
+      message: I18n.t('notifications.messages.new_response', post_truncated: self.post.content.truncate(75)),
       user_id: self.post.author.id,
       notification_type: 'New Response',
       notifiable: self,

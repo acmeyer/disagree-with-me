@@ -135,7 +135,7 @@ class NavBar extends React.Component {
     }
 
     return (
-      <nav className="navbar navbar-dark bg-dark navbar-expand-md">
+      <nav className="navbar navbar-dark bg-dark navbar-expand-md fixed-top">
         <div className="container">
           <Link to="/" className="navbar-brand">
             Disagree with Me
