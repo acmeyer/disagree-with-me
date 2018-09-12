@@ -39,6 +39,7 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'rack-attack'
 gem 'gibbon'
 gem 'exception_notification'
+gem 'sidekiq'
 
 # Frontend Libraries
 #=============================

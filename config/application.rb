@@ -16,6 +16,8 @@ module DisagreeWithMe
     config.middleware.use Rack::Deflater
     config.middleware.use Rack::Attack
 
+    config.active_job.queue_adapter = :sidekiq
+
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins "#{ENV['DOMAIN_NAME']}", "api.#{ENV['DOMAIN_NAME']}" 
