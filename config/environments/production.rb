@@ -86,6 +86,13 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
+  config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "[Disagree with Me ERROR] ",
+      :sender_address => %{"Disagree with Me Errors" <support@disagreewithme.app>},
+      :exception_recipients => ENV["EXCEPTION_RECIPIENTS"].blank? ? ["hi@disagreewithme.app"] : ENV["EXCEPTION_RECIPIENTS"].split(',')
+    }
+
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter

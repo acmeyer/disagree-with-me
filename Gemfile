@@ -38,6 +38,7 @@ gem 'acts_as_paranoid', '~> 0.6.0'
 gem 'rack-cors', require: 'rack/cors'
 gem 'rack-attack'
 gem 'gibbon'
+gem 'exception_notification'
 
 # Frontend Libraries
 #=============================
