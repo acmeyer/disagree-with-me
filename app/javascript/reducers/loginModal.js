@@ -1,6 +1,7 @@
 
 const initial = {
   isVisible: false,
+  view: 'login',
 };
 
 export function loginModalReducer(state = initial, action) {
@@ -14,6 +15,7 @@ export function loginModalReducer(state = initial, action) {
     return {
       ...state, 
       isVisible: true,
+      view: action.view,
     };
   }
 

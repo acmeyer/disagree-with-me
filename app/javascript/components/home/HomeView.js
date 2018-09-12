@@ -29,6 +29,12 @@ class HomeView extends React.Component {
     if (currentUrl === '/login' && !this.props.user.loggedIn) {
       this.props.showLoginModal();
       mixpanel.track('Shown Login Modal', {from: 'home page'});
+    } else if (currentUrl === '/signup' && !this.props.user.loggedIn) {
+      this.props.showLoginModal('signup');
+      mixpanel.track('Shown Signup Modal');
+    } else if (currentUrl === '/reset_password' && !this.props.user.loggedIn) {
+      this.props.showLoginModal('reset_password');
+      mixpanel.track('Shown Reset Password Modal');
     }
   }
 
@@ -140,7 +146,7 @@ class HomeView extends React.Component {
 function actions(dispatch) {
   return {
     showComposeView: () => { dispatch(showComposeView()) },
-    showLoginModal: () => { dispatch(showLoginModal()) },
+    showLoginModal: (view) => { dispatch(showLoginModal(view)) },
     fetchPosts: (page, options) => { dispatch(fetchPosts(page, options)) },
   };
 }

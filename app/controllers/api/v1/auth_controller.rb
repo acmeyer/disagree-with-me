@@ -37,6 +37,16 @@ class Api::V1::AuthController < ApplicationController
     end
   end
 
+  def send_reset_password_instructions
+    begin
+      @user = User.find_by_email(params[:email])
+      @user.send_reset_password_instructions
+      render json: {message: I18n.t('api.messages.success')}, status: 200
+    rescue => e
+      render_error_message(e.message)
+    end
+  end
+
   private
   def render_user
     json = UserJson.new(@user, :auth).call
@@ -60,7 +70,7 @@ class Api::V1::AuthController < ApplicationController
   end
 
   def user_sign_up_params
-    params.fetch(:user, {}).permit(
+    params.permit(
       :email,
       :password,
       :password_confirmation,

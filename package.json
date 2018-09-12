@@ -26,6 +26,7 @@
     "reselect": "^3.0.1"
   },
   "devDependencies": {
+    "resolve-url-loader": "^2.3.1",
     "webpack-dev-server": "2.11.2"
   }
 }

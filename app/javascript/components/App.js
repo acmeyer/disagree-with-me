@@ -32,11 +32,13 @@ class App extends React.Component {
       <Router>
         <div className="app-wrap">
           <NavBar />
-          <LoginModal />
+          <LoginModal key={this.props.loginView} />
           <ReportModal />
           <ComposePostModal />
           <Route exact path="/" component={HomeView} />
           <Route path="/login" component={HomeView} />
+          <Route path="/signup" component={HomeView} />
+          <Route path="/reset_password" component={HomeView} />
           <Route path="/latest" component={HomeView} />
           <Route path="/popular" component={HomeView} />
           <Route path="/conversations/:postId" component={ConversationView} />
@@ -81,6 +83,7 @@ function actions(dispatch) {
 function select(store) {
   return {
     user: store.user,
+    loginView: store.loginModal.view,
   };
 }
 

@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   # Devise routes
-  # devise_for :users, skip: [:registrations], controllers: {
-  #   passwords: 'users/passwords',
-  #   sessions: 'users/sessions'
-  # }
+  devise_for :users, only: [:passwords], controllers: {
+    passwords: 'users/passwords'
+    # sessions: 'users/sessions'
+  }
 
   
   # API routes
@@ -12,7 +12,8 @@ Rails.application.routes.draw do
       namespace :v1 do
         # Auth routes
         post 'auth/signin', to: 'auth#signin'
-        # post 'auth/signup', to: 'auth#signup'
+        post 'auth/signup', to: 'auth#signup'
+        post 'auth/send_reset_password_instructions', to: 'auth#send_reset_password_instructions'
 
         # Search
         post 'search', to: 'search#index'
@@ -59,6 +60,8 @@ Rails.application.routes.draw do
   # Web App routes
   get "activity/:list", to: "web_app#index"
   get "login", to: "web_app#index"
+  get "signup", to: "web_app#index"
+  get "reset_password", to: "web_app#index"
   get "conversations/:post_id", to: "web_app#index"
   get "search", to: "web_app#index"
   get "latest", to: "web_app#index"

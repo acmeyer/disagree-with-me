@@ -8,6 +8,16 @@ function track(action) {
       });
       mixpanel.track('Logged in');
       break;
+    case 'SIGNED_UP':
+      mixpanel.identify(action.user.id.toString());
+      mixpanel.people.set({
+        '$email': action.user.email
+      });
+      mixpanel.track('Signed up');
+      break;
+    case 'RESET_PASSWORD_SENT':
+      mixpanel.track('Reset Password Sent', {email: action.email});
+      break;
     case 'LOGGED_OUT':
       mixpanel.track('Logged out');
       break;
@@ -22,6 +32,7 @@ function track(action) {
       break;
     case 'THANKED_RESPONSE':
       mixpanel.track('Thanked Response', {response_id: action.response.id});
+      break;
   }
 }
 

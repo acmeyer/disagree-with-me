@@ -19,6 +19,13 @@ export function userReducer(state = initialState, action) {
       ...action.user,
     }
   }
+  if (action.type === 'SIGNED_UP') {
+    return {
+      ...state,
+      loggedIn: true,
+      ...action.user,
+    }
+  }
   if (action.type === 'LOGGED_OUT') {
     return initialState;
   }

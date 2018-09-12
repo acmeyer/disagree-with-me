@@ -5,7 +5,7 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
 
     -# Title
-    %title= content_for?(:title) ? yield(:title) : 'Travel Canny'
+    %title= content_for?(:title) ? yield(:title) : 'Disagree with Me'
     %meta{name: 'og:title', content: "#{content_for?(:title) ? yield(:title) : 'Disagree with Me'}"}
     -# Description
     %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : ''}"}
