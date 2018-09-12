@@ -16,6 +16,6 @@ class Report < ApplicationRecord
   end
 
   def send_admin_email
-    puts "Need to set up email to send admins for reports."
+    AdminMailer.new_reported_content(self.id).deliver_later
   end
 end

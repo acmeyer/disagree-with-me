@@ -1,0 +1,21 @@
+%div There's been new content reported in the app. Details are below.
+
+%dl
+  %li 
+    User ID reporting: 
+    %strong #{@report.user.id}
+  %li 
+    Type of content reporting: 
+    %strong #{@report.reportable_type}
+  %li 
+    Reported content ID: 
+    %strong #{@report.reportable_id}
+  %li 
+    Reason reporting: 
+    %strong #{@report.reason}
+  %li 
+    Description: 
+    %strong #{@report.description}
+
+%p
+  Admin Alert Bot
