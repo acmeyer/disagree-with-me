@@ -39,7 +39,7 @@ class Api::V1::AuthController < ApplicationController
 
   def send_reset_password_instructions
     begin
-      @user = User.find_by_email(params[:email])
+      @user = User.find_by_email!(params[:email])
       @user.send_reset_password_instructions
       render json: {message: I18n.t('api.messages.success')}, status: 200
     rescue => e
@@ -55,6 +55,10 @@ class Api::V1::AuthController < ApplicationController
 
   def render_error_message(message)
     render json: {error: message}, status: 422
+  end
+
+  def record_not_found(e)
+    render json: { error: t('api.errors.not_found', default: 'Not Found.') }, status: 404
   end
 
   def record_invalid(e)

@@ -43,5 +43,9 @@
       .main
         %h1.display-4.text-center.mb-4= link_to "Disagree with Me", root_path, class: 'text-dark'
         = yield
+    %footer.footer.py-3
+      .container
+        %hr
+        .small.text-muted &copy; Disagree with Me
 
     = yield :javascripts 

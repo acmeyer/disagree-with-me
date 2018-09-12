@@ -19,7 +19,7 @@ en:
     auth:
       titles:
         sign_up: "Sign Up"
-        login: "Log In"
+        login: "Login"
         sign_in: "Sign In"
         forgot_your_password: "Forgot your password?"
         change_password: "Change your password"
@@ -32,6 +32,9 @@ en:
       forgot_password: "Forgot password?"
       have_an_account: "Have an account? Sign in"
       dont_have_an_account: "Don't have an account? Sign up"
+      login_with_new_password: "Login with new password"
+      messages:
+        password_updated: "Your password has been updated!"
   buttons:
     add: "Add"
     adding: "Adding..."

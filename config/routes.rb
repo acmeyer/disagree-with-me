@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   # Devise routes
   devise_for :users, only: [:passwords], controllers: {
     passwords: 'users/passwords'
-    # sessions: 'users/sessions'
   }
+  get 'users/password_changed', to: 'auth#password_changed'
 
   
   # API routes

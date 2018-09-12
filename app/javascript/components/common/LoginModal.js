@@ -248,8 +248,6 @@ class LoginModal extends React.Component {
     let content, title, lead;
     let {visible} = this.props;
 
-    console.log(this.state.view);
-
     if (this.state.view === 'reset_password') {
       title = 'Reset Password';
       lead = 'Enter your email below and we\'ll send you instructions on how to reset your password.';
