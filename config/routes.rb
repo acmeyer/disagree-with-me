@@ -57,6 +57,11 @@ Rails.application.routes.draw do
     end
   end
 
+  # Error routes
+  match '/404', to: 'errors#file_not_found', via: :all
+  match '/500', to: 'errors#internal_server_error', via: :all
+  match '/401', to: 'errors#error_401', via: :all
+
   # Web App routes
   get "activity/:list", to: "web_app#index"
   get "login", to: "web_app#index"

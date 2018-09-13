@@ -1,0 +1,26 @@
+// Bootstrap variables
+
+// Import Frameworks
+@import 'bootstrap';
+// Utilities
+@import 'util/colors';
+@import 'util/mixins';
+@import 'util/typography';
+@import 'util/navigation';
+
+html, body {
+  height: 100%;
+}
+
+.main {
+  min-height: 100vh;
+  h1 {
+    font-size: 2rem;
+  }
+  h1 a:hover {
+    text-decoration: none;
+  }
+  .error-page-body {
+    max-width: 600px;
+  }
+}

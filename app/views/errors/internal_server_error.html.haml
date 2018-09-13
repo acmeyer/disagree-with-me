@@ -1,0 +1,8 @@
+- content_for :head do
+  %meta{:content => "nothing", :name => "empty"}
+
+.error-page-body.my-3.mx-auto.text-center
+  %h1.display-4= t('errors.titles.server_error')
+  %p.lead= t('errors.internal_error')
+  %p
+    = link_to t('views.errors.go_to_home'), root_path

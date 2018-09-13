@@ -1,4 +1,12 @@
 en:
+  errors:
+    titles:
+      not_found: "Page Not Found"
+      server_error: "Server Error"
+      not_authorized: "Unauthorized Access"
+    internal_error: "Oops! An unexpected error occurred. Our development team has been notified to address the issue."
+    not_found_message: "We're sorry but it looks like you try navigating to a page that doesn't exist."
+    not_authorized_message: "You don't have permission to access the requested information."
   api:
     auth:
       invalid_email_or_password: "Invalid email or password."
@@ -37,6 +45,8 @@ en:
       login_with_new_password: "Login with new password"
       messages:
         password_updated: "Your password has been updated!"
+    errors:
+      go_to_home: "Go to Home Page"
   buttons:
     add: "Add"
     adding: "Adding..."

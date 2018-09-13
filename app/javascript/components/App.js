@@ -3,11 +3,13 @@ import {
   BrowserRouter as Router,
   Route,
   Redirect,
+  Switch,
 } from 'react-router-dom';
 import NavBar from './NavBar';
 import Footer from './Footer';
 import LoginModal from './common/LoginModal';
 import ReportModal from './common/ReportModal';
+import NotFound from './common/NotFound';
 import ComposePostModal from './common/ComposePostModal';
 import HomeView from './home/HomeView';
 import ConversationView from './conversations/ConversationView';
@@ -35,38 +37,41 @@ class App extends React.Component {
           <LoginModal key={this.props.loginView} />
           <ReportModal />
           <ComposePostModal />
-          <Route exact path="/" component={HomeView} />
-          <Route path="/login" component={HomeView} />
-          <Route path="/signup" component={HomeView} />
-          <Route path="/reset_password" component={HomeView} />
-          <Route path="/latest" component={HomeView} />
-          <Route path="/popular" component={HomeView} />
-          <Route path="/conversations/:postId" component={ConversationView} />
-          <Route path="/search" component={SearchView} />
-          <Route path="/activity/:list" render={props => {
-            return this.props.user.loggedIn ? (
-              <ActivityView key={props.match.params.list} {...props} />
-            )  : (
-              <Redirect
-                to={{
-                  pathname: "/login",
-                  state: { from: props.location }
-                }}
-              />
-            )
-          }} />
-          <Route path="/me/:list" render={(props) => {
-            return this.props.user.loggedIn ? (
-              <UserView key={props.match.params.list} {...props} />
-            ) : (
-              <Redirect
-                to={{
-                  pathname: "/login",
-                  state: { from: props.location }
-                }}
-              />
-            )
-          }} />
+          <Switch>
+            <Route exact path="/" component={HomeView} />
+            <Route path="/login" component={HomeView} />
+            <Route path="/signup" component={HomeView} />
+            <Route path="/reset_password" component={HomeView} />
+            <Route path="/latest" component={HomeView} />
+            <Route path="/popular" component={HomeView} />
+            <Route path="/conversations/:postId" component={ConversationView} />
+            <Route path="/search" component={SearchView} />
+            <Route path="/activity/:list" render={props => {
+              return this.props.user.loggedIn ? (
+                <ActivityView key={props.match.params.list} {...props} />
+              )  : (
+                <Redirect
+                  to={{
+                    pathname: "/login",
+                    state: { from: props.location }
+                  }}
+                />
+              )
+            }} />
+            <Route path="/me/:list" render={(props) => {
+              return this.props.user.loggedIn ? (
+                <UserView key={props.match.params.list} {...props} />
+              ) : (
+                <Redirect
+                  to={{
+                    pathname: "/login",
+                    state: { from: props.location }
+                  }}
+                />
+              )
+            }} />
+            <Route component={NotFound} />
+          </Switch>
           <Footer />
         </div>
       </Router>

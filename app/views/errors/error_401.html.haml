@@ -1,0 +1,5 @@
+.error-page-body.my-3.mx-auto.text-center
+  %h1.display-4= t('errors.titles.not_authorized')
+  %p.lead= t('errors.not_authorized_message')
+  %p
+    = link_to t('views.errors.go_to_home'), root_path

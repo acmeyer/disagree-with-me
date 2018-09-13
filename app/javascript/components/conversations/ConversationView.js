@@ -121,8 +121,8 @@ class ConversationView extends React.Component {
         action = <Button text="See All Responses" onClick={() => this.handleChangeResponseFilters(false)} />;
       } else {
         message = "There are no responses yet";
-        description = "Be the first to share the opposing viewpoint.";
-        action = <Button text="See All Responses" onClick={() => this.handleChangeResponseFilters(false)} />;
+        description = !this.props.post.is_author ? "Be the first to share the opposing viewpoint." : "All responses to your post will show here.";
+        action = !this.props.post.is_author ? <Button text="Respond" onClick={() => this.showConversationComments()} /> : null;
       }
       content = (
         <NonIdealState
