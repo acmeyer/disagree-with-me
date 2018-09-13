@@ -49,7 +49,7 @@ class SearchView extends React.Component {
         content = (
           <NonIdealState
             title="Find new conversations"
-            description="Search for specific topics or key words your interested in seeing discussions about."
+            description="Search for specific topics or keywords your interested in seeing discussions about."
           />
         );
       }

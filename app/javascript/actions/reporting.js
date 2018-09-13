@@ -36,6 +36,6 @@ export function reportContent(data, reason, description) {
 
     return axios.post(url, report_data, headers).then(() => {
       // success!
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }

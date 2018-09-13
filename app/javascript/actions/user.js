@@ -28,7 +28,7 @@ export function fetchUser() {
     dispatch(requestUser());
     return axios.get(url, headers).then((response) => {
       dispatch(receiveUser(response.data));
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }
 
@@ -88,6 +88,6 @@ export function fetchUserList(list = 'posts', page = 1) {
     }
     return axios.get(url, headers).then((response) => {
       dispatch(receiveUserList(response.data));
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }

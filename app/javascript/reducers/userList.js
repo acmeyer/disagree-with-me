@@ -20,6 +20,12 @@ export function userListReducer(state = initial, action) {
       loading: true,
     }
   }
+  if (action.type === 'API_ERROR') {
+    return {
+      ...state,
+      loading: false,
+    }
+  }
   if (action.type === 'REQUEST_MORE_USER_LIST') {
     return {
       ...state,

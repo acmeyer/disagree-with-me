@@ -35,7 +35,11 @@ export function appendOrReplaceById(originalCollection, newItem) {
   }
 }
 
-export function handleAPIError(error) {
+export function handleAPIError(error, dispatch) {
   const message = _.get(error.response, 'data.error');
   AppToaster.show({ message: message, intent: "danger", icon: "error" });
+  dispatch({
+    type: 'API_ERROR',
+    error: message
+  });
 }

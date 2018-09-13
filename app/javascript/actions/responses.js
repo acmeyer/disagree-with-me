@@ -48,7 +48,7 @@ export function createResponse(content, postId) {
     return axios.post(url, {content}, headers).then((response) => {
       dispatch(receiveResponse(response.data));
       return response.data;
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }
 
@@ -69,7 +69,7 @@ export function toggleResponseUpvote(response) {
 
     return axios.post(url, {}, headers).then((response) => {
       dispatch(receiveResponse(response.data));
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }
 
@@ -90,6 +90,6 @@ export function thankResponse(response) {
 
     return axios.post(url, {}, headers).then((response) => {
       dispatch(receiveResponse(response.data));
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }

@@ -33,6 +33,6 @@ export function search(query) {
     dispatch(requestSearch());
     return axios.post(url, {query}, headers).then((response) => {
       dispatch(receiveResults(response.data));
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }

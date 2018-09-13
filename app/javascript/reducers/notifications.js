@@ -20,6 +20,12 @@ export function notificationsReducer(state = initial, action) {
       loading: true,
     }
   }
+  if (action.type === 'API_ERROR') {
+    return {
+      ...state,
+      loading: false,
+    }
+  }
   if (action.type === 'REQUEST_MORE_NOTIFICATIONS') {
     return {
       ...state,

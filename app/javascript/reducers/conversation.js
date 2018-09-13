@@ -27,6 +27,12 @@ export function conversationReducer(state = initial, action) {
       loading: true,
     }
   }
+  if (action.type === 'API_ERROR') {
+    return {
+      ...state,
+      loading: false,
+    }
+  }
   if (action.type === 'REQUEST_CONVERSATION_RESPONSES') {
     return {
       ...state,

@@ -61,7 +61,7 @@ export function fetchConversationPost(postId) {
     dispatch(requestConversationPost());
     return axios.get(url, headers).then((response) => {
       dispatch(receiveConversationPost(response.data));
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }
 
@@ -86,7 +86,7 @@ export function fetchConversationResponses(postId, page = 1) {
     }
     return axios.get(url, headers).then((response) => {
       dispatch(receiveConversationResponses(response.data));
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }
 

@@ -52,7 +52,7 @@ export function fetchNotifications(page = 1, options = {}) {
     }
     return axios.get(url, headers).then((response) => {
       dispatch(receiveNotifications(response.data, options.list));
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }
 
@@ -74,7 +74,7 @@ export function notificationAction(notification, action) {
         notification: response.data,
         notification_action: action,
       });
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }
 
@@ -94,6 +94,6 @@ export function markAllNotificationsRead() {
       dispatch({
         type: 'MARK_ALL_NOTIFICATIONS_READ',
       });
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }

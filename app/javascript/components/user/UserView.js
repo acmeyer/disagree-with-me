@@ -2,6 +2,7 @@ import React from 'react';
 import PageSubmenu from '../common/PageSubmenu';
 import LoadingView from '../common/LoadingView';
 import PageList from '../common/PageList';
+import PageHeader from '../common/PageHeader';
 import PostCell from '../common/PostCell';
 import ResponseCell from '../common/ResponseCell';
 import {connect} from 'react-redux';
@@ -37,34 +38,56 @@ class UserView extends React.Component {
       {
         active: list === 'bookmarks',
         href: '/me/bookmarks',
-        title: 'My Bookmarks'
+        title: 'Bookmarks'
       },
       {
         active: list === 'posts',
         href: '/me/posts',
-        title: 'My Posts'
+        title: 'Posts'
       },
       {
         active: list === 'responses',
         href: '/me/responses',
-        title: 'My Responses'
+        title: 'Responses'
       },
       {
         active: list === 'thanks',
         href: '/me/thanks',
-        title: 'My Thanks'
+        title: 'Thanks'
       },
       {
         active: list === 'post-upvotes',
         href: '/me/post-upvotes',
-        title: 'My Post Upvotes'
+        title: 'Post Upvotes'
       },
       {
         active: list === 'response-upvotes',
         href: '/me/response-upvotes',
-        title: 'My Response Upvotes'
+        title: 'Response Upvotes'
       },
     ]
+  }
+
+  getPageTitle = () => {
+    let {list} = this.props.match.params;
+    if (list === 'bookmarks') {
+      return 'My Bookmarks';
+    }
+    if (list === 'posts') {
+      return "My Posts";
+    }
+    if (list === 'responses') {
+      return "My Responses";
+    }
+    if (list === 'thanks') {
+      return "My Thanks";
+    }
+    if (list === 'post-upvotes') {
+      return "My Post Upvotes";
+    }
+    if (list === 'response-upvotes') {
+      return "My Response Upvotes";
+    }
   }
 
   renderUserList = () => {
@@ -143,6 +166,7 @@ class UserView extends React.Component {
               <PageSubmenu links={this.submenuLinks()} />
             </div>
             <div className="col-12 col-md-8 col-lg-9">
+            <PageHeader title={this.getPageTitle()} />
               <PageList>
                 {content}
                 {loadMore}

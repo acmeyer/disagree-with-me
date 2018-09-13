@@ -84,7 +84,7 @@ export function fetchPosts(page = 1, options={}) {
 
     return axios.get(url, headers).then((response) => {
       dispatch(receivePosts(response.data));
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }
 
@@ -105,7 +105,7 @@ export function togglePostUpvote(post) {
 
     return axios.post(url, {}, headers).then((response) => {
       dispatch(receivePost(response.data));
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }
 
@@ -126,7 +126,7 @@ export function togglePostBookmark(post) {
     
     return axios.post(url, {}, headers).then((response) => {
       dispatch(receivePost(response.data));
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }
 
@@ -146,6 +146,6 @@ export function createPost(content) {
     return axios.post(url, {content}, headers).then((response) => {
       dispatch(receivePost(response.data));
       return response.data.id;
-    }).catch(error => handleAPIError(error));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }
