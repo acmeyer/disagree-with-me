@@ -16,6 +16,7 @@ import ConversationView from './conversations/ConversationView';
 import UserView from './user/UserView';
 import SearchView from './search/SearchView';
 import ActivityView from './activity/ActivityView';
+import AboutPage from './about/AboutPage';
 import {connect} from 'react-redux';
 
 import {
@@ -40,6 +41,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={HomeView} />
             <Route path="/login" component={HomeView} />
+            <Route path="/about" component={AboutPage} />
             <Route path="/signup" component={HomeView} />
             <Route path="/reset_password" component={HomeView} />
             <Route path="/latest" component={HomeView} />
