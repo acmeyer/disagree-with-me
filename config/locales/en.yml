@@ -65,3 +65,5 @@ en:
     email: 'Email'
     password: 'Password'
     confirm_password: 'Confirm Password'  
+  emails:
+    welcome_subject: "Welcome to Disagree with Me!"

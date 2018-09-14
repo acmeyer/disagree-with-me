@@ -24,6 +24,9 @@ class User < ApplicationRecord
   after_create :add_to_marketing_email_list
   before_destroy :remove_from_email_lists
 
+  # needed because sidekiq could receive before the record finishes being added to the DB
+  after_commit :send_welcome_email, on: :create
+
   def responded_to_post?(post_id)
     self.responses.pluck(:post_id).include?(post_id)
   end
@@ -100,5 +103,9 @@ class User < ApplicationRecord
     rescue Exception
       STDERR.puts("Error while adding user to Mailchimp marketing list: #{$!}")
     end
+  end
+
+  def send_welcome_email
+    UserMailer.welcome_email(self.id).deliver_later
   end
 end

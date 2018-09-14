@@ -49,7 +49,7 @@ class WelcomeModal extends React.Component {
             Thanks again for checking out the site and be sure to <a href="mailto:hi@disagreewithme.app" target="_blank">send us a note</a>&nbsp;if you have any feedback or think of ways to improve the site!
           </p>
           <p>
-            Cheers to thinking better!
+            Cheers to better thinking!
           </p>
         </div>
       </AppModal>
