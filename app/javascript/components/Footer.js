@@ -8,9 +8,9 @@ class Footer extends React.Component {
       <footer className="footer py-3">
         <div className="container">
           <hr />
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="small text-muted">&copy; Disagree with Me</div>
-            <div className="footer-links">
+          <div className="d-flexalign-items-center">
+            <div className="small text-muted d-inline-block">&copy; Disagree with Me</div>
+            <div className="footer-links float-md-right">
               <div className="small link d-md-inline-block mr-3">
                 <Link className="text-muted" to="/about">About</Link>
               </div>

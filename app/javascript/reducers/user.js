@@ -2,6 +2,7 @@
 const initialState = {
   loggedIn: false,
   loading: false,
+  seenWelcomeMessage: false,
 };
 
 export function userReducer(state = initialState, action) {
@@ -19,6 +20,12 @@ export function userReducer(state = initialState, action) {
       ...action.user,
     }
   }
+  if (action.type === 'SEEN_WELCOME_MESSAGE') {
+    return {
+      ...state,
+      seenWelcomeMessage: true,
+    }
+  }
   if (action.type === 'SIGNED_UP') {
     return {
       ...state,
@@ -27,7 +34,11 @@ export function userReducer(state = initialState, action) {
     }
   }
   if (action.type === 'LOGGED_OUT') {
-    return initialState;
+    return {
+      ...state,
+      loggedIn: false,
+      loading: false,
+    }
   }
 
   return state;

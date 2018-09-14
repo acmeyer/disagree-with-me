@@ -15,6 +15,12 @@ function receiveUser(json) {
   };
 }
 
+export function seenWelcomeMessage() {
+  return {
+    type: 'SEEN_WELCOME_MESSAGE',
+  }
+}
+
 export function fetchUser() {
   return (dispatch, getState) => {
     const userEmail = getState().user.email;
