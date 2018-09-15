@@ -3,13 +3,11 @@ import {
   BrowserRouter as Router,
   Route,
   Redirect,
-  Switch,
 } from 'react-router-dom';
 import NavBar from './NavBar';
 import Footer from './Footer';
 import LoginModal from './common/LoginModal';
 import ReportModal from './common/ReportModal';
-import NotFound from './common/NotFound';
 import ComposePostModal from './common/ComposePostModal';
 import HomeView from './home/HomeView';
 import ConversationView from './conversations/ConversationView';
@@ -38,42 +36,66 @@ class App extends React.Component {
           <LoginModal key={this.props.loginView} />
           <ReportModal />
           <ComposePostModal />
-          <Switch>
-            <Route exact path="/" component={HomeView} />
-            <Route path="/login" component={HomeView} />
-            <Route path="/about" component={AboutPage} />
-            <Route path="/signup" component={HomeView} />
-            <Route path="/reset_password" component={HomeView} />
-            <Route path="/latest" component={HomeView} />
-            <Route path="/popular" component={HomeView} />
-            <Route path="/conversations/:postId" component={ConversationView} />
-            <Route path="/search" component={SearchView} />
-            <Route path="/activity/:list" render={props => {
-              return this.props.user.loggedIn ? (
-                <ActivityView key={props.match.params.list} {...props} />
-              )  : (
+          <Route exact path="/" component={HomeView} />
+          <Route path="/latest" component={HomeView} />
+          <Route path="/popular" component={HomeView} />
+          <Route path="/about" component={AboutPage} />
+          <Route path="/conversations/:postId" component={ConversationView} />
+          <Route path="/search" component={SearchView} />
+          <Route path="/login" render={props => {
+            return this.props.user.loggedIn ? (
                 <Redirect
                   to={{
-                    pathname: "/login",
+                    pathname: "/",
                     state: { from: props.location }
                   }}
                 />
-              )
-            }} />
-            <Route path="/me/:list" render={(props) => {
-              return this.props.user.loggedIn ? (
-                <UserView key={props.match.params.list} {...props} />
-              ) : (
+              ) : <HomeView />;
+          }} />
+          <Route path="/signup" render={props => {
+            return this.props.user.loggedIn ? (
                 <Redirect
                   to={{
-                    pathname: "/login",
+                    pathname: "/",
                     state: { from: props.location }
                   }}
                 />
-              )
-            }} />
-            <Route component={NotFound} />
-          </Switch>
+              ) : <HomeView />;
+          }} />
+          <Route path="/reset_password" render={props => {
+            return this.props.user.loggedIn ? (
+                <Redirect
+                  to={{
+                    pathname: "/",
+                    state: { from: props.location }
+                  }}
+                />
+              ) : <HomeView />;
+          }} />
+          <Route path="/activity/:list" render={props => {
+            return this.props.user.loggedIn ? (
+              <ActivityView key={props.match.params.list} {...props} />
+            )  : (
+              <Redirect
+                to={{
+                  pathname: "/login",
+                  state: { from: props.location }
+                }}
+              />
+            )
+          }} />
+          <Route path="/me/:list" render={(props) => {
+            return this.props.user.loggedIn ? (
+              <UserView key={props.match.params.list} {...props} />
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/login",
+                  state: { from: props.location }
+                }}
+              />
+            )
+          }} />
           <Footer />
         </div>
       </Router>
