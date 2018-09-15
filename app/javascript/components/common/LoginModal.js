@@ -126,7 +126,7 @@ class LoginModal extends React.Component {
             className="form-control" 
             id="email-address" 
             aria-describedby="emailHelp" 
-            autoComplete="email"
+            autoComplete="username"
             placeholder="Email"
             onChange={(e) => this.setState({email: e.target.value})}
             onKeyDown={(e) => e.keyCode === 13 ? this.resetPassword() : null}
@@ -147,7 +147,7 @@ class LoginModal extends React.Component {
             className="form-control" 
             id="email-address" 
             aria-describedby="emailHelp" 
-            autoComplete="email"
+            autoComplete="username"
             placeholder="Email"
             onChange={(e) => this.setState({email: e.target.value})}
             onKeyDown={(e) => e.keyCode === 13 ? this.signup() : null}
@@ -193,7 +193,7 @@ class LoginModal extends React.Component {
             id="email-address" 
             aria-describedby="emailHelp" 
             placeholder="Email"
-            autoComplete="email"
+            autoComplete="username"
             onChange={(e) => this.setState({email: e.target.value})}
             onKeyDown={(e) => e.keyCode === 13 ? this.login() : null}
             value={this.state.email}
