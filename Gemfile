@@ -41,6 +41,7 @@ gem 'gibbon'
 gem 'exception_notification'
 gem 'sidekiq'
 # gem 'httparty'
+gem 'newrelic_rpm'
 
 # Frontend Libraries
 #=============================
