@@ -13,7 +13,7 @@ class UserJson
 
   def to_json(user, options)
     return nil unless user
-    Rails.cache.fetch("json/v1.0/#{@format}/#{user.cache_key}") do
+    Rails.cache.fetch("json/v1.0/#{@format}/#{user.cache_key_with_version}") do
       case @format
       when :auth
         auth_json(user, options)

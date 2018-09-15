@@ -14,7 +14,7 @@ class NotificationJson
 
   def to_json(notification, user, options)
     return nil unless notification
-    Rails.cache.fetch("json/v1.0/#{@format}/#{notification.cache_key}/#{user.cache_key}") do
+    Rails.cache.fetch("json/v1.0/#{@format}/#{user.cache_key_with_version}/#{notification.cache_key_with_version}") do
       case @format
       when :full
         full_json(notification, user, options)

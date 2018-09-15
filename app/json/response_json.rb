@@ -14,7 +14,7 @@ class ResponseJson
 
   def to_json(response, user, options)
     return nil unless response
-    Rails.cache.fetch("json/v1.0/#{@format}/#{response.cache_key}/#{user ? user.cache_key : 'anonymous'}") do
+    Rails.cache.fetch("json/v1.0/#{@format}/#{user ? user.cache_key_with_version : 'anonymous'}/#{response.cache_key_with_version}") do
       case @format
       when :full
         full_json(response, user, options)

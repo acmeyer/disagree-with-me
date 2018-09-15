@@ -14,7 +14,7 @@ class PostJson
 
   def to_json(post, user, options)
     return nil unless post
-    Rails.cache.fetch("json/v1.0/#{@format}/#{post.cache_key}/#{user ? user.cache_key : 'anonymous'}") do
+    Rails.cache.fetch("json/v1.0/#{@format}/#{user ? user.cache_key_with_version : 'anonymous'}/#{post.cache_key_with_version}") do
       case @format
       when :full
         full_json(post, user, options)

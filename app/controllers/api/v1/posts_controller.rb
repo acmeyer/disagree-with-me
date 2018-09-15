@@ -34,6 +34,7 @@ class Api::V1::PostsController < Api::V1::ApiController
   def toggle_upvote
     begin
       @user.toggle_upvote!(@post)
+      @post.reload
       render_post
     rescue => e
       render_error_message(e.message)
@@ -43,6 +44,7 @@ class Api::V1::PostsController < Api::V1::ApiController
   def toggle_bookmark
     begin
       @user.toggle_bookmark!(@post)
+      @post.reload
       render_post
     rescue => e
       render_error_message(e.message)
