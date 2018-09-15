@@ -371,7 +371,6 @@ DEPENDENCIES
   rack-cors
   rails (~> 5.2.1)
   react-rails
-  redis (~> 4.0)
   sass-rails (~> 5.0)
   selenium-webdriver
   sidekiq

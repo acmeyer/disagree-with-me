@@ -14,7 +14,7 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 4.0'
+# gem 'redis', '~> 4.0'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
