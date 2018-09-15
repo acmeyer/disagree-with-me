@@ -7,8 +7,6 @@ import {
 } from '../../actions';
 import {connect} from 'react-redux';
 
-const MAX_POST_LENGTH = 500;
-
 class ResponseInput extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +14,6 @@ class ResponseInput extends React.Component {
     this.state = {
       loading: false,
       content: '',
-      remainingCharacters: MAX_POST_LENGTH,
       cancelConfirmationVisible: false,
     }
   }
@@ -32,18 +29,17 @@ class ResponseInput extends React.Component {
   }
 
   responseIsValid = () => {
-    return !this.state.loading && (this.state.content.length > 0 && this.state.content.length <= MAX_POST_LENGTH);
+    return !this.state.loading && this.state.content.length > 0;
   }
 
   updateResponseContent = (text) => {
     this.setState({
       content: text,
-      remainingCharacters: MAX_POST_LENGTH - text.length,
     });
   }
 
   resetInput = () => {
-    this.setState({loading: false, content: '', remainingCharacters: MAX_POST_LENGTH});
+    this.setState({loading: false, content: ''});
     this.input.blur();
   }
 
@@ -80,9 +76,6 @@ class ResponseInput extends React.Component {
         />
         {(inFocus || this.responseIsValid()) &&
           <div>
-            <div className={`d-flex justify-content-end mt-1 remaining-characters-count small ${this.state.remainingCharacters < 21 ? 'text-danger' : 'text-muted' }`}>
-              {this.state.remainingCharacters} characters left
-            </div>
             <div className="create-response mt-3 d-flex justify-content-end">
               <Button 
                 disabled={!this.responseIsValid()} 

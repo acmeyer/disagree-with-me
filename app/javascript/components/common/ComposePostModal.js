@@ -9,8 +9,6 @@ import {
 } from '../../actions';
 import {connect} from 'react-redux';
 
-const MAX_POST_LENGTH = 500;
-
 class ComposePostModal extends React.Component {
   constructor(props) {
     super(props);
@@ -18,7 +16,6 @@ class ComposePostModal extends React.Component {
     this.state = {
       loading: false,
       content: '',
-      remainingCharacters: MAX_POST_LENGTH,
       cancelConfirmationVisible: false,
     }
   }
@@ -37,13 +34,12 @@ class ComposePostModal extends React.Component {
   }
 
   postIsValid = () => {
-    return !this.state.loading && (this.state.content.length > 0 && this.state.content.length <= MAX_POST_LENGTH);
+    return !this.state.loading && this.state.content.length > 0;
   }
 
   updatePostContent = (text) => {
     this.setState({
       content: text,
-      remainingCharacters: MAX_POST_LENGTH - text.length,
     });
   }
 
@@ -82,9 +78,6 @@ class ComposePostModal extends React.Component {
                 onChange={(e) => this.updatePostContent(e.target.value)}
                 value={this.state.content}
               />
-              <div className={`d-flex justify-content-end mt-1 remaining-characters-count small ${this.state.remainingCharacters < 21 ? 'text-danger' : 'text-muted' }`}>
-                {this.state.remainingCharacters} characters left
-              </div>
             </div>
           </div>
           <Button 
