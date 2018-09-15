@@ -126,6 +126,7 @@ class LoginModal extends React.Component {
             className="form-control" 
             id="email-address" 
             aria-describedby="emailHelp" 
+            autoComplete="email"
             placeholder="Email"
             onChange={(e) => this.setState({email: e.target.value})}
             onKeyDown={(e) => e.keyCode === 13 ? this.resetPassword() : null}
@@ -146,6 +147,7 @@ class LoginModal extends React.Component {
             className="form-control" 
             id="email-address" 
             aria-describedby="emailHelp" 
+            autoComplete="email"
             placeholder="Email"
             onChange={(e) => this.setState({email: e.target.value})}
             onKeyDown={(e) => e.keyCode === 13 ? this.signup() : null}
@@ -158,6 +160,7 @@ class LoginModal extends React.Component {
             className="form-control" 
             id="password" 
             placeholder="Password" 
+            autoComplete="new-password"
             onChange={(e) => this.setState({password: e.target.value})}
             onKeyDown={(e) => e.keyCode === 13 ? this.signup() : null}
             value={this.state.password}
@@ -168,6 +171,7 @@ class LoginModal extends React.Component {
             type="password" 
             className="form-control" 
             id="password-confirmation" 
+            autoComplete="new-password"
             placeholder="Confirm Password" 
             onChange={(e) => this.setState({passwordConfirmation: e.target.value})}
             onKeyDown={(e) => e.keyCode === 13 ? this.signup() : null}
@@ -189,6 +193,7 @@ class LoginModal extends React.Component {
             id="email-address" 
             aria-describedby="emailHelp" 
             placeholder="Email"
+            autoComplete="email"
             onChange={(e) => this.setState({email: e.target.value})}
             onKeyDown={(e) => e.keyCode === 13 ? this.login() : null}
             value={this.state.email}
@@ -199,6 +204,7 @@ class LoginModal extends React.Component {
             type="password" 
             className="form-control" 
             id="password" 
+            autoComplete="current-password"
             placeholder="Password" 
             onChange={(e) => this.setState({password: e.target.value})}
             onKeyDown={(e) => e.keyCode === 13 ? this.login() : null}
@@ -271,17 +277,19 @@ class LoginModal extends React.Component {
             <p className="lead text-center">{lead}</p>
           </div>
           <hr />
-          {content}
-          <Button 
-            disabled={this.state.loading} 
-            loading={this.state.loading} 
-            onClick={() => this.handleSubmit()}
-            fill 
-            intent="primary" 
-            large
-          >
-            {title}
-          </Button>
+          <form onSubmit={() => this.handleSubmit()}>
+            {content}
+            <Button 
+              disabled={this.state.loading} 
+              loading={this.state.loading} 
+              onClick={() => this.handleSubmit()}
+              fill 
+              intent="primary" 
+              large
+            >
+              {title}
+            </Button>
+          </form>
           {this.renderFooterLinks()}
         </div>
       </AppModal>
