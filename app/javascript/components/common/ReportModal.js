@@ -31,7 +31,7 @@ class LoginModal extends React.Component {
       AppToaster.show({ message: 'A reason for reporting is required', intent: "danger", icon: "error" });
       return;
     }
-    if (this.state.selectedReason.value === 'other') {
+    if (this.state.selectedReason.value === 'other' && this.state.description === '') {
       AppToaster.show({ message: 'A description is required when the \'Other\' option is selected', intent: "danger", icon: "error"})
       return;
     }

@@ -1,6 +1,6 @@
 class Response < ApplicationRecord
   acts_as_paranoid
-  acts_as_votable cacheable_strategy: :update_attributes
+  acts_as_votable
 
   belongs_to :post, counter_cache: true, touch: true
   belongs_to :author, class_name: "User", foreign_key: :user_id
