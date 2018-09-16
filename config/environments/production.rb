@@ -108,6 +108,7 @@ Rails.application.configure do
     :authentication => :plain,
     :enable_starttls_auto => true
   }
+  config.action_mailer.default_url_options = { :host => ENV['DOMAIN_NAME'] }
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
