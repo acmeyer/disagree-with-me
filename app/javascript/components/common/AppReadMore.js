@@ -1,4 +1,5 @@
 import React from 'react';
+import Text from 'react-format-text';
 import _ from 'lodash';
 
 class AppReadMore extends React.Component {
@@ -17,7 +18,7 @@ class AppReadMore extends React.Component {
 
   render() {
     if (this.props.text.length < this.props.length) {
-      return this.props.text;
+      return <Text>{this.props.text}</Text>;
     }
 
     const text = this.state.truncate ? _.truncate(this.props.text, {'length': this.props.length || 100}) : this.props.text;
@@ -25,7 +26,7 @@ class AppReadMore extends React.Component {
 
     return (
       <div>
-        {text} <a className="small read-more-link" onClick={this.toggle}>({link_text})</a>
+        <Text>{text}</Text> <a className="small read-more-link" onClick={this.toggle}>({link_text})</a>
       </div>
     )
   }

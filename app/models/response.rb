@@ -1,4 +1,6 @@
 class Response < ApplicationRecord
+  include ActionView::Helpers::TextHelper
+
   acts_as_paranoid
   acts_as_votable
 
@@ -12,6 +14,10 @@ class Response < ApplicationRecord
 
   scope :thanked, -> { where(author_thanked: true) }
   scope :not_thanked, -> { where(author_thanked: false) }
+
+  def formatted_content
+    return simple_format(self.content)
+  end
 
   private
   def create_notification

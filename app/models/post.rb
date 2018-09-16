@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  include ActionView::Helpers::TextHelper
+
   acts_as_paranoid
   acts_as_votable
   acts_as_taggable
@@ -33,6 +35,10 @@ class Post < ApplicationRecord
     end
 
     searchableAttributes ['unordered(content)', 'unordered(tags)']
+  end
+
+  def formatted_content
+    return simple_format(self.content)
   end
 
   def top_response

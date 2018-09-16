@@ -3,6 +3,7 @@ import LoadingView from '../common/LoadingView';
 import PostActions from '../common/PostActions';
 import ResponseActions from '../common/ResponseActions';
 import ResponseInput from '../common/ResponseInput';
+import Text from 'react-format-text';
 import moment from 'moment';
 import { 
   Menu, 
@@ -54,7 +55,7 @@ class ConversationView extends React.Component {
     return (
       <div key={response.id} className="response py-3">
         {authorIcon}
-        {response.content}
+        <Text>{response.content}</Text>
         <div className="small time-ago text-muted">{moment(response.created_at).fromNow()}</div>
         <ResponseActions response={response} />
       </div>
@@ -160,7 +161,7 @@ class ConversationView extends React.Component {
       content = (
         <div className="conversation-wrap">
           <div className="post-wrap">
-            <div className="post-text">{post.content}</div>
+            <div className="post-text"><Text>{post.content}</Text></div>
             <div className="small time-ago text-muted">{moment(post.created_at).fromNow()}</div>
             <PostActions 
               post={post} 
