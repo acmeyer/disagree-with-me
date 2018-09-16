@@ -85,7 +85,7 @@ class HomeView extends React.Component {
     if (this.props.user.loggedIn) {
       this.props.showComposeView();
     } else {
-      this.showLogin();
+      this.props.showLoginModal();
     }
   }
 
