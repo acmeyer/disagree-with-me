@@ -35,9 +35,9 @@ export function userReducer(state = initialState, action) {
   }
   if (action.type === 'LOGGED_OUT') {
     return {
-      ...state,
       loggedIn: false,
       loading: false,
+      seenWelcomeMessage: state.seenWelcomeMessage,
     }
   }
 

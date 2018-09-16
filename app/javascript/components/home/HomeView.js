@@ -13,19 +13,15 @@ import {
   showComposeView,
 } from '../../actions';
 
+import _ from 'lodash';
+
 class HomeView extends React.Component {
   componentWillMount() {
     // Fetch posts
-    const currentUrl = this.props.match.url;
-    if (currentUrl === '/latest') {
-      this.props.fetchPosts(1, {latest: true});
-    } else if (currentUrl === '/popular') {
-      this.props.fetchPosts(1, {popular: true});
-    } else {
-      this.props.fetchPosts(1);
-    }
+    this.fetchNewPosts();
 
     // Show login if coming to login page and not logged in yet
+    const currentUrl = this.props.match.url;
     if (currentUrl === '/login' && !this.props.user.loggedIn) {
       this.props.showLoginModal();
       mixpanel.track('Shown Login Modal', {from: 'home page'});
@@ -42,6 +38,23 @@ class HomeView extends React.Component {
     const currentUrl = this.props.match.url;
     const list = currentUrl === '/popular' ? 'popular' : 'latest';
     mixpanel.track('Viewed Home Page', {list});
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!_.isEqual(this.props.user.id, prevProps.user.id)) {
+      this.fetchNewPosts();
+    }
+  }
+
+  fetchNewPosts = () => {
+    const currentUrl = this.props.match.url;
+    if (currentUrl === '/latest') {
+      this.props.fetchPosts(1, {latest: true});
+    } else if (currentUrl === '/popular') {
+      this.props.fetchPosts(1, {popular: true});
+    } else {
+      this.props.fetchPosts(1);
+    }
   }
 
   submenuLinks = () => {

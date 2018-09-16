@@ -36,9 +36,9 @@ class App extends React.Component {
           <LoginModal key={this.props.loginView} />
           <ReportModal />
           <ComposePostModal />
-          <Route exact path="/" component={HomeView} />
-          <Route path="/latest" component={HomeView} />
-          <Route path="/popular" component={HomeView} />
+          <Route exact path="/" render={props => <HomeView key={this.props.user} {...props} />} />
+          <Route path="/latest" render={props => <HomeView key={this.props.user} {...props} />} />
+          <Route path="/popular" render={props => <HomeView key={this.props.user} {...props} />} />
           <Route path="/about" component={AboutPage} />
           <Route path="/conversations/:postId" component={ConversationView} />
           <Route path="/search" component={SearchView} />
