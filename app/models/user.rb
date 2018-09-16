@@ -40,6 +40,14 @@ class User < ApplicationRecord
       resource.unliked_by self
     else
       self.likes resource
+
+      # Send notification to author
+      Notification.create(
+        message: I18n.t('notifications.messages.new_upvote', resource_type: resource.class.to_s.downcase, content_truncated: resource.content.truncate(75)),
+        user_id: resource.author.id,
+        notification_type: 'New Response',
+        notifiable: resource,
+      )
     end
   end
 

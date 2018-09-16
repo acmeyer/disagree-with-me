@@ -13,7 +13,8 @@ class Notification < ApplicationRecord
     'Product Features',
     'Marketing News',
     'Response Thanked',
-    'New Thanked Response'
+    'New Thanked Response',
+    'New Upvote'
   ]
   enum status: [:unread, :read, :deleted]
 

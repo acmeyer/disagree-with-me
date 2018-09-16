@@ -25,6 +25,7 @@ en:
       new_response: "There's a new response to your post: \"%{post_truncated}\"! Check it out and be sure to thank it if you find it helpful."
       new_response_to_bookmarked: "There's a new thanked response to a post you've bookmarked: \"%{response_truncated}\"! Be sure to check it out and upvote it if you find it useful."
       thanked_response: "Nice work! Your response \"%{response_truncated}\" to the post: \"%{post_truncated}\" was thanked by its author."
+      new_upvote: "Awesome! Someone's upvoted your %{resource_type}: \"%{content_truncated}\"."
   views:
     auth:
       titles:
