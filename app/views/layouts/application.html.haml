@@ -44,9 +44,11 @@
     = stylesheet_link_tag 'https://fonts.googleapis.com/icon?family=Material+Icons'
 
     = mixpanel_javascript
+    = drift_javascript
 
     = yield :head
 
   %body.bg-light
     = yield
+
     = yield :javascripts
