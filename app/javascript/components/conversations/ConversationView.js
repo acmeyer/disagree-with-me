@@ -177,8 +177,12 @@ class ConversationView extends React.Component {
     return (
       <div className="page-wrap">
         <div className="container">
-          <div className="conversation-view card mt-4">
-            {content}
+          <div className="row justify-content-md-center">
+            <div className="col-12 col-md-10 col-lg-9">
+              <div className="conversation-view card mt-4">
+                {content}
+              </div>
+            </div>
           </div>
         </div>
       </div>

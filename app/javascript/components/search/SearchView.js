@@ -77,35 +77,39 @@ class SearchView extends React.Component {
     return (
       <div className="page-wrap">
         <div className="container">
-          <div className="search-box-wrap my-3">
-            <div className="form-group">
-              <div className="search-input-wrap">
-                <input
-                  ref={(input) => { this.input = input; }}
-                  autoFocus={true}
-                  autoComplete="off"
-                  type="text" 
-                  className="form-control form-control-lg" 
-                  id="search-input" 
-                  placeholder="Search Disagree with Me"
-                  value={this.state.searchQuery}
-                  onChange={(e) => this.updateSearch(e.target.value)}
-                />
-                <i className="fas fa-search text-muted search-icon" />
-                {(this.state.searchQuery && this.state.searchQuery !== '') &&
-                  <i className="fas fa-times text-muted reset-search-icon" onClick={this.clearSearch} />
-                }
+          <div className="row justify-content-md-center">
+            <div className="col-12 col-md-10 col-lg-9">
+              <div className="search-box-wrap my-3">
+                <div className="form-group">
+                  <div className="search-input-wrap">
+                    <input
+                      ref={(input) => { this.input = input; }}
+                      autoFocus={true}
+                      autoComplete="off"
+                      type="text" 
+                      className="form-control form-control-lg" 
+                      id="search-input" 
+                      placeholder="Search Disagree with Me"
+                      value={this.state.searchQuery}
+                      onChange={(e) => this.updateSearch(e.target.value)}
+                    />
+                    <i className="fas fa-search text-muted search-icon" />
+                    {(this.state.searchQuery && this.state.searchQuery !== '') &&
+                      <i className="fas fa-times text-muted reset-search-icon" onClick={this.clearSearch} />
+                    }
+                  </div>
+                </div>
               </div>
+              <div className="search-results-wrap">
+                {this.renderSearchResults()}
+              </div>
+              {(this.state.searchQuery !== '' && this.props.results.length > 0) &&
+                <div className="powered-by-wrap text-right mt-5 text-muted text-uppercase small">
+                  Powered by <a href="https://www.algolia.com" target="_blank">Algolia</a>
+                </div>
+              }
             </div>
           </div>
-          <div className="search-results-wrap">
-            {this.renderSearchResults()}
-          </div>
-          {(this.state.searchQuery !== '' && this.props.results.length > 0) &&
-            <div className="powered-by-wrap text-right mt-5 text-muted text-uppercase small">
-              Powered by <a href="https://www.algolia.com" target="_blank">Algolia</a>
-            </div>
-          }
         </div>
       </div>
     );

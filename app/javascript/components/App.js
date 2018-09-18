@@ -21,6 +21,7 @@ import {
   fetchUser,
   fetchNotifications,
 } from '../actions';
+import BookmarksView from './bookmarks/BookmarksView';
 
 class App extends React.Component {
   componentWillMount() {
@@ -38,9 +39,9 @@ class App extends React.Component {
           <LoginModal key={this.props.loginView} />
           <ReportModal />
           <ComposePostModal />
-          <Route exact path="/" render={props => <HomeView key={this.props.user} {...props} />} />
-          <Route path="/latest" render={props => <HomeView key={this.props.user} {...props} />} />
-          <Route path="/popular" render={props => <HomeView key={this.props.user} {...props} />} />
+          <Route exact path="/" render={props => <HomeView key={this.props.user.id} {...props} />} />
+          <Route path="/latest" render={props => <HomeView key={this.props.user.id} {...props} />} />
+          <Route path="/popular" render={props => <HomeView key={this.props.user.id} {...props} />} />
           <Route path="/about" component={AboutPage} />
           <Route path="/conversations/:postId" component={ConversationView} />
           <Route path="/search" component={SearchView} />
@@ -78,6 +79,18 @@ class App extends React.Component {
             return this.props.user.loggedIn ? (
               <ActivityView key={props.match.params.list} {...props} />
             )  : (
+              <Redirect
+                to={{
+                  pathname: "/login",
+                  state: { from: props.location }
+                }}
+              />
+            )
+          }} />
+          <Route path="/bookmarks" render={(props) => {
+            return this.props.user.loggedIn ? (
+              <BookmarksView key={this.props.user.id} {...props} />
+            ) : (
               <Redirect
                 to={{
                   pathname: "/login",

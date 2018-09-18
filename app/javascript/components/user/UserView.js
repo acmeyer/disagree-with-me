@@ -36,11 +36,6 @@ class UserView extends React.Component {
     let {list} = this.props.match.params;
     return [
       {
-        active: list === 'bookmarks',
-        href: '/me/bookmarks',
-        title: 'Bookmarks'
-      },
-      {
         active: list === 'posts',
         href: '/me/posts',
         title: 'Posts'
@@ -70,9 +65,6 @@ class UserView extends React.Component {
 
   getPageTitle = () => {
     let {list} = this.props.match.params;
-    if (list === 'bookmarks') {
-      return 'My Bookmarks';
-    }
     if (list === 'posts') {
       return "My Posts";
     }
@@ -97,10 +89,6 @@ class UserView extends React.Component {
     } else {
       let {list} = this.props.match.params;
       let message, description;
-      if (list === 'bookmarks') {
-        message = 'No bookmarks found!'
-        description = 'When you bookmark a post, it will show here.'
-      }
       if (list === 'posts') {
         message = 'No posts found!'
         description = 'When you create a post, it will show here.'

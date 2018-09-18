@@ -71,6 +71,7 @@ Rails.application.routes.draw do
   get "search", to: "web_app#index"
   get "latest", to: "web_app#index"
   get "popular", to: "web_app#index"
+  get "bookmarks", to: "web_app#index"
   get "me/:route", to: "web_app#index"
   get "about", to: "web_app#index"
   root to: "web_app#index"

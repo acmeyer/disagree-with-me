@@ -30,7 +30,7 @@ class LoginModal extends React.Component {
       email: '',
       password: '',
       passwordConfirmation: '',
-      view: 'login',
+      view: 'signup',
     });
     this.props.dispatch(hideLoginModal());
   }

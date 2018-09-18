@@ -40,15 +40,15 @@ class NavBar extends React.Component {
     this.routeUnlisten();
   }
 
-  showLogin = (e) => {
-    this.props.showLoginModal();
+  showLogin = (view) => {
+    this.props.showLoginModal(view);
   }
 
   handleCreate = () => {
     if (this.props.user.loggedIn) {
       this.props.showComposeView();
     } else {
-      this.showLogin();
+      this.showLogin('signup');
     }
   }
 
@@ -98,7 +98,7 @@ class NavBar extends React.Component {
         <ul className="navbar-nav ml-auto">
           {searchLink}
           <li className="nav-item">
-            <Link to="/me/bookmarks" className={`nav-link ${page === '/me/bookmarks' ? 'active' : ''}`}>
+            <Link to="/bookmarks" className={`nav-link ${page === '/bookmarks' ? 'active' : ''}`}>
               <i className="fas fa-bookmark" />
               <span className="pl-2 d-md-none">Bookmarks</span>
             </Link>
@@ -125,7 +125,7 @@ class NavBar extends React.Component {
         <ul className="navbar-nav ml-auto">
           {searchLink}
           <li className="nav-item">
-            <div className={'nav-link'} onClick={this.showLogin}>
+            <div className={'nav-link'} onClick={(e) => this.showLogin('login')}>
               Login
             </div>
           </li>
@@ -173,7 +173,7 @@ class NavBar extends React.Component {
 function actions(dispatch) {
   return {
     logOut: () => { dispatch(logOut()) },
-    showLoginModal: () => { dispatch(showLoginModal()) },
+    showLoginModal: (view) => { dispatch(showLoginModal(view)) },
     showComposeView: () => { dispatch(showComposeView()) },
   };
 }
