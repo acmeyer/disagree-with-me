@@ -4,7 +4,7 @@ import PageSubmenu from '../common/PageSubmenu';
 import PageList from '../common/PageList';
 import LoadingView from '../common/LoadingView';
 import ActivityCell from './ActivityCell';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Redirect} from 'react-router-dom';
 import { Button, NonIdealState } from "@blueprintjs/core";
 import {connect} from 'react-redux';
 import {
@@ -13,11 +13,19 @@ import {
   markAllNotificationsRead,
 } from '../../actions';
 
+const activityLists = [
+  'unread',
+  'read',
+  'all'
+];
+
 class ActivityView extends React.Component {
   componentDidMount() {
     let {list} = this.props.match.params;
-    this.props.fetchNotifications(1, {list});
-    mixpanel.track('Viewed Activity Page', {list});
+    if (activityLists.includes(list)) {
+      this.props.fetchNotifications(1, {list});
+      mixpanel.track('Viewed Activity Page', {list});
+    }
   }
 
   submenuLinks = () => {
@@ -90,6 +98,15 @@ class ActivityView extends React.Component {
 
   render() {
     let content, loadMore;
+
+    let {list} = this.props.match.params;
+    if (!activityLists.includes(list)) {
+      return (
+        <Redirect
+          to={{pathname: "/activity/unread"}}
+        />
+      );
+    }
 
     if (this.props.isLoading) {
       content = <LoadingView />;

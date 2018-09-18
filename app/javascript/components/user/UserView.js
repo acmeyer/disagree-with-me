@@ -6,22 +6,28 @@ import PageHeader from '../common/PageHeader';
 import PostCell from '../common/PostCell';
 import ResponseCell from '../common/ResponseCell';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Redirect} from 'react-router-dom';
 import { NonIdealState, Button } from "@blueprintjs/core";
 
 import {
   fetchUserList,
 } from '../../actions';
 
-class UserView extends React.Component {
-  componentWillMount() {
-    let {list} = this.props.match.params;
-    this.props.fetchUserList(list);
-  }
+const userLists = [
+  'posts',
+  'responses',
+  'thanks',
+  'post-upvotes',
+  'response-upvotes'
+];
 
+class UserView extends React.Component {
   componentDidMount() {
     let {list} = this.props.match.params;
-    mixpanel.track('Viewed User List Page', {list});
+    if (userLists.includes(list)) {
+      this.props.fetchUserList(list);
+      mixpanel.track('Viewed User List Page', {list});
+    }
   }
 
   renderCell = (obj) => {
@@ -128,6 +134,14 @@ class UserView extends React.Component {
 
   render() {
     let content, loadMore;
+    let {list} = this.props.match.params;
+    if (!userLists.includes(list)) {
+      return (
+        <Redirect
+          to={{pathname: "/me/posts"}}
+        />
+      );
+    }
 
     if (this.props.isLoading) {
       content = <LoadingView />
