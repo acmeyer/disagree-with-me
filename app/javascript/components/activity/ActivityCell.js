@@ -17,9 +17,6 @@ class ActivityCell extends React.Component {
           </div>
           <ActivityActions 
             notification={this.props.notification} 
-            handleDelete={this.props.handleDeleteNotification}
-            handleMarkRead={this.props.handleMarkNotificationRead}
-            handleMarkUnread={this.props.handleMarkNotificationUnread}
           />
         </div>
       </div>

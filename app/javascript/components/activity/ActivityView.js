@@ -9,7 +9,6 @@ import { Button, NonIdealState } from "@blueprintjs/core";
 import {connect} from 'react-redux';
 import {
   fetchNotifications,
-  notificationAction,
   markAllNotificationsRead,
 } from '../../actions';
 
@@ -50,21 +49,6 @@ class ActivityView extends React.Component {
     }
   }
 
-  handleDeleteNotification = (notification) => {
-    this.props.notificationAction(notification, 'delete');
-    mixpanel.track('Deleted Notification', {notification_id: notification.id});
-  }
-
-  handleMarkNotificationRead = (notification) => {
-    this.props.notificationAction(notification, 'mark_read');
-    mixpanel.track('Marked Notification Read', {notification_id: notification.id});
-  } 
-
-  handleMarkNotificationUnread = (notification) => {
-    this.props.notificationAction(notification, 'mark_unread');
-    mixpanel.track('Marked Notification Unread', {notification_id: notification.id});
-  }
-
   handleMarkAllRead = () => {
     this.props.markAllNotificationsRead();
   }
@@ -76,9 +60,6 @@ class ActivityView extends React.Component {
         user={this.props.user} 
         notification={notification}
         handleShowNotification={this.handleShowNotification}
-        handleDeleteNotification={this.handleDeleteNotification}
-        handleMarkNotificationRead={this.handleMarkNotificationRead}
-        handleMarkNotificationUnread={this.handleMarkNotificationUnread}
       />
     );
   }
@@ -169,7 +150,6 @@ class ActivityView extends React.Component {
 function actions(dispatch) {
   return {
     fetchNotifications: (page, options) => { dispatch(fetchNotifications(page, options)) },
-    notificationAction: (notification, action) => { dispatch(notificationAction(notification, action)) },
     markAllNotificationsRead: (notification) => { dispatch(markAllNotificationsRead(notification)) },
   };
 }
