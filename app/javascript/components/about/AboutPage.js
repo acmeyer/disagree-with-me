@@ -22,13 +22,13 @@ class AboutPage extends React.Component {
 
           <p>
             Some of the things we will have zero tolerance for on Disagree with Me include:
-            <ul>
-              <li>Personal attacks of any kind</li>
-              <li>Abusive language</li>
-              <li>Completely off-topic remarks</li>
-              <li>Inappropriate content</li>
-            </ul>
           </p>
+          <ul>
+            <li>Personal attacks of any kind</li>
+            <li>Abusive language</li>
+            <li>Completely off-topic remarks</li>
+            <li>Inappropriate content</li>
+          </ul>
 
           <p>We believe you can voice valuable dissent without having to succumb to any of the above and therefore will take action if we find anything that violates our terms. Outside of these topics, we plan on being very open to all kinds of opinion and viewpoints, even ones that may not be popular today.</p>
 

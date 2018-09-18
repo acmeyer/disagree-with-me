@@ -1,1 +1,4 @@
+- if !@post.blank?
+  - content_for :description, @post.content.truncate(160)
+  - content_for :url, @post.share_url
 = react_component("Root")

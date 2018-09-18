@@ -54,7 +54,7 @@ class PostActions extends React.Component {
     let shareLink = `${protocol}${domain}/conversations/${this.props.post.id}`;
     if (type === 'twitter') {
       window.open(
-        `https://twitter.com/intent/tweet?text=Check+out+this+conversation+on+Disagree+with+Me&url=${shareLink}&hashtags=disagreewithme`,
+        `https://twitter.com/intent/tweet?text=Check+out+this+conversation+on+Disagree+with+Me&url=${shareLink}&hashtags=disagreewithme&via=DisagreeApp`,
         '_blank'
       );
       mixpanel.track('Shared Conversation', {post_id: this.props.post.id, via: 'twitter'});

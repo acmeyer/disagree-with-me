@@ -37,6 +37,10 @@ class Post < ApplicationRecord
     searchableAttributes ['unordered(content)', 'unordered(tags)']
   end
 
+  def share_url
+    return "#{Rails.env.development? ? 'http://' : 'https://'}#{ENV['DOMAIN_NAME']}/conversations/#{self.id}"
+  end
+
   def formatted_content
     return simple_format(self.content)
   end

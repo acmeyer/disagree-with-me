@@ -4,12 +4,18 @@
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0, shrink-to-fit=no"}
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
 
-    -# Title
     %title= content_for?(:title) ? yield(:title) : 'Disagree with Me'
+    %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'Seek out and provide opposing viewpoints'}"}
+
+    -# Open Graph Tags
+    %meta{property: "og:image", content: '/apple-icon.png'}
     %meta{name: 'og:title', content: "#{content_for?(:title) ? yield(:title) : 'Disagree with Me'}"}
-    -# Description
-    %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : ''}"}
-    %meta{:name => "og:description", :content => "#{content_for?(:description) ? yield(:description) : ''}"}
+    %meta{property: "og:description", content: "#{content_for?(:description) ? yield(:description) : 'Seek out and provide opposing viewpoints'}"}
+    %meta{property: "og:url", content: "#{content_for?(:url) ? yield(:url) : 'https://www.disagreewithme.app'}"}
+    %meta{property: "og:site_name", content: "Disagree with Me"}
+    // Twitter Card Tags
+    %meta{name: "twitter:card", content: "summary"}
+    %meta{name: "twitter:site", content: "@disagreeapp"}
 
     %link{:href => "/apple-icon-57x57.png", :rel => "apple-touch-icon", :sizes => "57x57"}/
     %link{:href => "/apple-icon-60x60.png", :rel => "apple-touch-icon", :sizes => "60x60"}/
