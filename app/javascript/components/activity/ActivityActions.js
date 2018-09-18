@@ -59,17 +59,21 @@ class ActivityActions extends React.Component {
     if (this.props.notification.status === 'unread') {
       toggleRead = (
         <div className="action px-3" onClick={(e) => this.markAsRead(e)}>
-          <Tooltip content="Mark as Read" position="top">
-            {this.state.toggleReadLoading ? <Spinner size={16} /> : <span className={`action-icon`}><i className={`fas fa-check`} /></span>}
-          </Tooltip>
+          {this.state.toggleReadLoading ? <Spinner size={16} /> : 
+            <Tooltip content="Mark as Read" position="top">
+              <span className={`action-icon`}><i className={`fas fa-check`} /></span>
+            </Tooltip>
+          }
         </div>
       );
     } else {
       toggleRead = (
         <div className="action px-3" onClick={(e) => this.markAsUnread(e)}>
-          <Tooltip content="Mark as Unread" position="top">
-            {this.state.toggleReadLoading ? <Spinner size={16}  /> : <span className={`action-icon`}><i className={`far fa-envelope-open`} /></span>}
-          </Tooltip>
+          {this.state.toggleReadLoading ? <Spinner size={16}  /> : 
+            <Tooltip content="Mark as Unread" position="top">
+              <span className={`action-icon`}><i className={`far fa-envelope-open`} /></span>
+            </Tooltip>
+          }
         </div>
       );
     }
@@ -77,9 +81,11 @@ class ActivityActions extends React.Component {
       <div className="activity-actions border-left d-flex flex-column justify-content-around">
         {toggleRead}
         <div className="action px-3" onClick={(e) => this.delete(e)}>
-          <Tooltip content="Delete" position="top">
-            {this.state.deleteLoading ? <Spinner size={16} /> : <span className={`action-icon`}><i className={`far fa-trash-alt`} /></span>}
-          </Tooltip>
+          {this.state.deleteLoading ? <Spinner size={16} /> : 
+            <Tooltip content="Delete" position="top">
+              <span className={`action-icon`}><i className={`far fa-trash-alt`} /></span>
+            </Tooltip>
+          }
         </div>
       </div>
     );
