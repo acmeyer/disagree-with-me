@@ -9,6 +9,7 @@ import { Button, NonIdealState } from "@blueprintjs/core";
 import {connect} from 'react-redux';
 import {
   fetchNotifications,
+  notificationAction,
   markAllNotificationsRead,
 } from '../../actions';
 
@@ -39,6 +40,12 @@ class ActivityView extends React.Component {
       },
     ]
   }
+
+  handleMarkNotificationRead = (notification) => {
+    this.props.notificationAction(notification, 'mark_read');
+    mixpanel.track('Marked Notification Read', {notification_id: notification.id});
+  } 
+
 
   handleShowNotification = (notification) => {
     this.handleMarkNotificationRead(notification);
@@ -150,6 +157,7 @@ class ActivityView extends React.Component {
 function actions(dispatch) {
   return {
     fetchNotifications: (page, options) => { dispatch(fetchNotifications(page, options)) },
+    notificationAction: (notification, action) => { dispatch(notificationAction(notification, action)) },
     markAllNotificationsRead: (notification) => { dispatch(markAllNotificationsRead(notification)) },
   };
 }

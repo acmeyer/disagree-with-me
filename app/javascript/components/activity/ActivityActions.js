@@ -21,12 +21,20 @@ class ActivityActions extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   markAsRead = (e) => {
     e.stopPropagation();
     let {notification} = this.props;
     this.setState({toggleReadLoading: true});
     this.props.dispatch(notificationAction(notification, 'mark_read')).then(() => {
-      this.setState({toggleReadLoading: false});
+      if (this.mounted) {this.setState({toggleReadLoading: false});}
     }).catch(err => this.setState({toggleReadLoading: false}));
 
     mixpanel.track('Marked Notification Read', {notification_id: notification.id});
@@ -37,7 +45,7 @@ class ActivityActions extends React.Component {
     let {notification} = this.props;
     this.setState({toggleReadLoading: true});
     this.props.dispatch(notificationAction(notification, 'mark_unread')).then(() => {
-      this.setState({toggleReadLoading: false});
+      if (this.mounted) {this.setState({toggleReadLoading: false});}
     }).catch(err => this.setState({toggleReadLoading: false}));
 
     mixpanel.track('Marked Notification Unread', {notification_id: notification.id});
@@ -48,7 +56,7 @@ class ActivityActions extends React.Component {
     let {notification} = this.props;
     this.setState({deleteLoading: true});
     this.props.dispatch(notificationAction(notification, 'delete')).then(() => {
-      this.setState({deleteLoading: false});
+      if (this.mounted) {this.setState({deleteLoading: false});}
     }).catch(err => this.setState({deleteLoading: false}));
 
     mixpanel.track('Deleted Notification', {notification_id: notification.id});
