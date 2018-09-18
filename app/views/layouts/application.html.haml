@@ -8,7 +8,7 @@
     %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'Seek out and provide opposing viewpoints'}"}
 
     -# Open Graph Tags
-    %meta{property: "og:image", content: '/apple-icon.png'}
+    %meta{property: "og:image", content: 'https://www.disagreewithme.app/apple-icon.png'}
     %meta{name: 'og:title', content: "#{content_for?(:title) ? yield(:title) : 'Disagree with Me'}"}
     %meta{property: "og:description", content: "#{content_for?(:description) ? yield(:description) : 'Seek out and provide opposing viewpoints'}"}
     %meta{property: "og:url", content: "#{content_for?(:url) ? yield(:url) : 'https://www.disagreewithme.app'}"}
