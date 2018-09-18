@@ -22,6 +22,7 @@ function receiveNotifications(json, list) {
     page: json.page,
     totalPages: json.total_pages,
     totalEntries: json.total_entries,
+    unreadCount: json.unread_count,
     list,
   };
 }

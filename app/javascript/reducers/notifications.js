@@ -11,6 +11,7 @@ const initial = {
   page: 1,
   totalPages: null,
   totalEntries: null,
+  unreadCount: 0,
 };
 
 export function notificationsReducer(state = initial, action) {
@@ -45,6 +46,7 @@ export function notificationsReducer(state = initial, action) {
       page: action.page,
       totalPages: action.totalPages,
       totalEntries: action.totalEntries,
+      unreadCount: action.unreadCount,
     };
   }
   if (action.type === 'MARK_ALL_NOTIFICATIONS_READ') {
@@ -52,25 +54,35 @@ export function notificationsReducer(state = initial, action) {
     return {
       ...state,
       list: updatedList,
+      unreadCount: 0,
     }
   }
   if (action.type === 'NOTIFICATION_ACTION') {
     let updatedList = state.list;
+    let updatedUnread = state.unreadCount;
     if (state.type === 'unread') {
       if (action.notification_action === 'mark_read' || 'delete') {
         updatedList = state.list.filter(n => n.id !== action.notification.id);
+        updatedUnread = state.unreadCount - 1;
       } else {
         updatedList = replaceById(state.list, action.notification);
       }
     } else if (state.type === 'read') {
       if (action.notification_action === 'mark_unread' || 'delete') {
         updatedList = state.list.filter(n => n.id !== action.notification.id);
+        updatedUnread = state.unreadCount + 1;
       } else {
         updatedList = replaceById(state.list, action.notification);
       }
     } else {
       if (action.notification_action === 'delete') {
         updatedList = state.list.filter(n => n.id === action.notification.id);
+      } else if (action.notification_action === 'mark_unread') {
+        updatedUnread = state.unreadCount + 1;
+        updatedList = replaceById(state.list, action.notification);
+      } else if (action.notification_action === 'mark_read') {
+        updatedUnread = state.unreadCount - 1;
+        updatedList = replaceById(state.list, action.notification);
       } else {
         updatedList = replaceById(state.list, action.notification);
       }
@@ -78,6 +90,7 @@ export function notificationsReducer(state = initial, action) {
     return {
       ...state,
       list: updatedList,
+      unreadCount: updatedUnread,
     };
   }
   if (action.type === 'RECEIVED_NOTIFICATION') {

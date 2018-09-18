@@ -19,12 +19,14 @@ import {connect} from 'react-redux';
 
 import {
   fetchUser,
+  fetchNotifications,
 } from '../actions';
 
 class App extends React.Component {
   componentWillMount() {
     if (this.props.user.loggedIn) {
       this.props.fetchUser();
+      this.props.fetchNotifications(1, {list: 'unread'});
     }
   }
 
@@ -105,6 +107,7 @@ class App extends React.Component {
 
 function actions(dispatch) {
   return {
+    fetchNotifications: (page, options) => { dispatch(fetchNotifications(page, options)) },
     fetchUser: () => { dispatch(fetchUser()) },
   };
 }

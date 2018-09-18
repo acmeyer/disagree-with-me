@@ -15,6 +15,7 @@ class NotificationsJson
       total_pages: @total_pages,
       total_entries: @total_entries,
       notifications: @notifications.map{|n| NotificationJson.new(n, @user, :full).call },
+      unread_count: @user.notifications.unread.size,
     }
   end
 end

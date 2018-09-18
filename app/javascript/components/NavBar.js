@@ -91,9 +91,9 @@ class NavBar extends React.Component {
     );
     if (this.props.user.loggedIn) {
       let notification_count;
-      // if (this.props.notifications.length > 0) {
-      //   notification_count = <span className="badge badge-pill badge-danger">{this.props.notifications.length}</span>;
-      // }
+      if (this.props.unreadNotifications > 0) {
+        notification_count = <span className="badge badge-pill badge-danger">{this.props.unreadNotifications}</span>;
+      }
       navLinks = (
         <ul className="navbar-nav ml-auto">
           {searchLink}
@@ -182,7 +182,7 @@ function actions(dispatch) {
 function select(store) {
   return {
     user: store.user,
-    notifications: store.notifications.list,
+    unreadNotifications: store.notifications.unreadCount,
   };
 }
 
