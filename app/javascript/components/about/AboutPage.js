@@ -36,7 +36,7 @@ class AboutPage extends React.Component {
 
               <p>While we may not be perfect and acknowledge the challenge of building a productive anonymous platform online, we do think it is important enough to try and will do everything we can to see it succeed.</p>
 
-              <p>Charlie Munger, Warren Buffett’s business partner of Berkshire Hathaway fame, has a great quote that outlines the goal of Disagree with Me pretty well:</p>
+              <p>Charlie Munger, Warren Buffett’s business partner at Berkshire Hathaway, has a great quote that outlines the goal of Disagree with Me pretty well:</p>
               
               <p className="px-3">“I never allow myself to have an opinion on anything that I don’t know the other side’s argument better than they do.”</p>
               

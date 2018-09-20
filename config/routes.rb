@@ -68,9 +68,6 @@ Rails.application.routes.draw do
   get "signup", to: "web_app#index"
   get "reset_password", to: "web_app#index"
   get "conversations/:post_id", to: "web_app#index", as: 'conversation'
-  get "search", to: "web_app#index"
-  get "latest", to: "web_app#index"
-  get "popular", to: "web_app#index"
   get "bookmarks", to: "web_app#index"
   get "me/:route", to: "web_app#index"
   get "about", to: "web_app#index"

@@ -8,7 +8,17 @@ class Api::V1::SearchController < Api::V1::ApiController
       else
         @current_page = 1
       end
-      @posts = Post.search(params[:query], hitsPerPage: 30)
+      if !params[:sortBy].blank?
+        if params[:sortBy] == 'Most Popular'
+          @posts = Post.search(params[:query], replica: "Post_#{ENV['ALGOLIA_ENVIRONMENT']}_popular", hitsPerPage: 10)
+        elsif params[:sortBy] == 'Most Recent'
+          @posts = Post.search(params[:query], replica: "Post_#{ENV['ALGOLIA_ENVIRONMENT']}_latest", hitsPerPage: 10)
+        else
+          @posts = Post.search(params[:query], hitsPerPage: 10)
+        end
+      else
+        @posts = Post.search(params[:query], hitsPerPage: 10)
+      end
       render_results
     rescue => e
       render_error_message(e.message)

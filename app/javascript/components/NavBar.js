@@ -73,14 +73,14 @@ class NavBar extends React.Component {
 
   render() {
     let page, navLinks, createButton;
-    let searchLink = (
-      <li className="nav-item">
-        <Link to="/search" className={`nav-link ${page === '/search' ? 'active' : ''}`}>
-          <i className="fas fa-search" />
-          <span className="pl-2 d-md-none">Search</span>
-        </Link>
-      </li>
-    );
+    // let searchLink = (
+    //   <li className="nav-item">
+    //     <Link to="/search" className={`nav-link ${page === '/search' ? 'active' : ''}`}>
+    //       <i className="fas fa-search" />
+    //       <span className="pl-2 d-md-none">Search</span>
+    //     </Link>
+    //   </li>
+    // );
     createButton = (
       <li className="nav-item add-new-button">
         <div className="btn btn-light" onClick={this.handleCreate}>
@@ -96,7 +96,7 @@ class NavBar extends React.Component {
       }
       navLinks = (
         <ul className="navbar-nav ml-auto">
-          {searchLink}
+          {/* {searchLink} */}
           <li className="nav-item">
             <Link to="/bookmarks" className={`nav-link ${page === '/bookmarks' ? 'active' : ''}`}>
               <i className="fas fa-bookmark" />
@@ -123,7 +123,7 @@ class NavBar extends React.Component {
     } else {
       navLinks = (
         <ul className="navbar-nav ml-auto">
-          {searchLink}
+          {/* {searchLink} */}
           <li className="nav-item">
             <div className={'nav-link'} onClick={(e) => this.showLogin('login')}>
               Login

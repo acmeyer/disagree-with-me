@@ -18,7 +18,7 @@ function receiveResults(json) {
   };
 }
 
-export function search(query) {
+export function search(query, sortBy) {
   return (dispatch, getState) => {
     const userEmail = getState().user.email;
     const apiToken = getState().user.apiToken;
@@ -31,7 +31,7 @@ export function search(query) {
     const url = `${serverDomain}/search`;
 
     dispatch(requestSearch());
-    return axios.post(url, {query}, headers).then((response) => {
+    return axios.post(url, {query, sortBy}, headers).then((response) => {
       dispatch(receiveResults(response.data));
     }).catch(error => handleAPIError(error, dispatch));
   }

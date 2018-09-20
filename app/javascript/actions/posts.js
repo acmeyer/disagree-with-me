@@ -68,12 +68,8 @@ export function fetchPosts(page = 1, options={}) {
     }
     let url = `${serverDomain}/posts?page=${page}`;
 
-    if (options.latest) {
-      url = url + '&latest=true';
-    } else if (options.popular) {
-      url = url + '&popular=true';
-    } else {
-      url = url + '&latest=true';
+    if (options.random) {
+      url = url + '&random=true';
     }
 
     if (page > 1) {

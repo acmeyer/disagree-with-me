@@ -40,11 +40,8 @@ class App extends React.Component {
           <ReportModal />
           <ComposePostModal />
           <Route exact path="/" render={props => <HomeView key={this.props.user.id} {...props} />} />
-          <Route path="/latest" render={props => <HomeView key={this.props.user.id} {...props} />} />
-          <Route path="/popular" render={props => <HomeView key={this.props.user.id} {...props} />} />
           <Route path="/about" component={AboutPage} />
           <Route path="/conversations/:postId" component={ConversationView} />
-          <Route path="/search" component={SearchView} />
           <Route path="/login" render={props => {
             return this.props.user.loggedIn ? (
                 <Redirect

@@ -35,6 +35,14 @@ class Post < ApplicationRecord
     end
 
     searchableAttributes ['unordered(content)', 'unordered(tags)']
+
+    add_replica "Post_#{ENV['ALGOLIA_ENVIRONMENT']}_popular", inherit: true, per_environment: true do
+      customRanking ['desc(upvotes_count)', 'desc(responses_count)']
+    end
+
+    add_replica "Post_#{ENV['ALGOLIA_ENVIRONMENT']}_latest", inherit: true, per_environment: true do
+      customRanking ['desc(created_at)']
+    end
   end
 
   def share_url

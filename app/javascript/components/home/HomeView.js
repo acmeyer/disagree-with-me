@@ -1,22 +1,37 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import PageSubmenu from '../common/PageSubmenu';
-import PageList from '../common/PageList';
 import LoadingView from '../common/LoadingView';
 import PostCell from '../common/PostCell';
-import { Button } from "@blueprintjs/core";
+import { 
+  NonIdealState, 
+  Button,
+  Menu,
+  Popover,
+  MenuItem,
+} from "@blueprintjs/core";
 
 import {
   showLoginModal,
   fetchPosts,
   showComposeView,
+  search,
+  clearSearch,
 } from '../../actions';
 
 import _ from 'lodash';
 
 class HomeView extends React.Component {
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchQuery: '',
+      sortBy: 'Relevance',
+    };
+  }
+
+  componentDidMount() {
     // Fetch posts
     this.fetchNewPosts();
 
@@ -32,12 +47,8 @@ class HomeView extends React.Component {
       this.props.showLoginModal('reset_password');
       mixpanel.track('Shown Reset Password Modal');
     }
-  }
 
-  componentDidMount() {
-    const currentUrl = this.props.match.url;
-    const list = currentUrl === '/popular' ? 'popular' : 'latest';
-    mixpanel.track('Viewed Home Page', {list});
+    mixpanel.track('Viewed Home Page');
   }
 
   componentDidUpdate(prevProps) {
@@ -47,38 +58,7 @@ class HomeView extends React.Component {
   }
 
   fetchNewPosts = () => {
-    const currentUrl = this.props.match.url;
-    if (currentUrl === '/latest') {
-      this.props.fetchPosts(1, {latest: true});
-    } else if (currentUrl === '/popular') {
-      this.props.fetchPosts(1, {popular: true});
-    } else {
-      this.props.fetchPosts(1);
-    }
-  }
-
-  submenuLinks = () => {
-    const currentUrl = this.props.match.url;
-    return [
-      // {
-      //   active: currentUrl === '/' || currentUrl === '/login',
-      //   href: '/',
-      //   title: 'Trending',
-      //   icon: 'chart-line'
-      // },
-      {
-        active: currentUrl === '/' || currentUrl === '/latest' || currentUrl === '/login',
-        href: '/latest',
-        title: 'Latest',
-        icon: 'clock'
-      },
-      {
-        active: currentUrl === '/popular',
-        href: '/popular',
-        title: 'Popular',
-        icon: 'star'
-      },
-    ]
+    this.props.fetchPosts(1, {random: true});
   }
 
   handleCreate = () => {
@@ -113,41 +93,135 @@ class HomeView extends React.Component {
     );
   }
 
+  updateSearch = (value) => {
+    this.setState({searchQuery: value});
+    this.props.search(value);
+    mixpanel.track('Perform Search', {query: value});
+  }
+
+  updateSortBy = (value) => {
+    this.setState({sortBy: value});
+    this.props.search(this.state.searchQuery, value);
+    mixpanel.track('Sorted Search', {sortBy: value});
+  }
+
+  clearSearch = () => {
+    this.setState({searchQuery: ''});
+    this.props.clearSearch();
+    this.input.focus();
+  }
+
+  sortByMenu = () => {
+    const sortByOptions = [
+      'Relevance',
+      'Most Popular',
+      'Most Recent'
+    ]
+    return (
+      <Menu>
+        {sortByOptions.filter(o => o !== this.state.sortBy).map(option => {
+          return (
+            <MenuItem key={option} text={option} onClick={() => this.updateSortBy(option)} />
+          );
+        })}
+      </Menu>
+    );
+  }
+
+  renderSearchFilters = () => {
+    return (
+      <div className="search-filters">
+        <div className="d-flex justify-content-between align-items-center flex-row">
+          <div>
+            Results for: <strong>{this.state.searchQuery}</strong>
+            <span className="px-2">|</span>
+            <a href="#" onClick={this.clearSearch}>Clear</a>
+          </div>
+          <div>
+            <span className="pr-2">Sort by:</span>
+            <Popover content={this.sortByMenu()} position="bottom">
+              <Button text={this.state.sortBy} rightIcon="caret-down" />
+            </Popover>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  renderSearchInput = () => {
+    return (
+      <div className="search-box-wrap my-3">
+        <div className="form-group">
+          <div className="search-input-wrap">
+            <input
+              ref={(input) => { this.input = input; }}
+              autoFocus={true}
+              autoComplete="off"
+              type="text" 
+              className="form-control form-control-lg" 
+              id="search-input" 
+              placeholder="Search for topics or keywords..."
+              value={this.state.searchQuery}
+              onChange={(e) => this.updateSearch(e.target.value)}
+            />
+            <i className="fas fa-search text-muted search-icon" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
-    let content, loadMore;
+    let content, searchFilters;
 
     if (this.props.isLoading) {
       content = <LoadingView />;
     } else {
-      content = this.props.posts.map(this.renderPost);
-      if (this.props.moreResults) {
-        loadMore = (
-          <div className="load-more text-center m-3">
-            <Button 
-              onClick={this.handleLoadMorePosts}
-              loading={this.props.loadingMore}
-              text="Load More"
+      if (this.state.searchQuery !== '') {
+        searchFilters = this.renderSearchFilters();
+        if (this.props.searchIsLoading) {
+          content = <LoadingView />;
+        } else if (this.props.searchResults.length > 0) {
+          content = this.props.searchResults.map(this.renderPost);
+        } else {
+          content = (
+            <NonIdealState
+              icon="issue"
+              title="No results found"
+              description={`Is this something you're interesting in?`}
+              action={<Button text="Start a Discussion" onClick={() => this.handleCreate()} />}
             />
+          );
+        }
+      } else {
+        content = (
+          <div>
+            <div className="create-post card d-md-none p-3 text-muted mt-3" onClick={this.handleCreate}>
+              What are you seeking feedback on?
+            </div>
+            {this.props.posts.map(this.renderPost)}
           </div>
-        )
+        );
       }
     }
 
     return (
       <div className="page-wrap">
         <div className="container">
-          <div className="row">
-            <div className="col-12 col-md-4 col-lg-3">
-              <PageSubmenu links={this.submenuLinks()} />
-            </div>
-            <div className="col-12 col-md-8 col-lg-9">
-              <div className="create-post card d-md-none p-3 text-muted mt-3" onClick={this.handleCreate}>
-                What are you seeking feedback on?
+          <div className="row justify-content-md-center">
+            <div className="col-12 col-md-10 col-lg-9">
+              <div className="my-3 lead text-center">
+                Seek out and provide opposing viewpoints
               </div>
-              <PageList>
-                {content}
-                {loadMore}
-              </PageList>
+              {this.renderSearchInput()}
+              {searchFilters}
+              <hr/>
+              {content}
+              {(this.state.searchQuery !== '' && this.props.searchResults.length > 0) &&
+                <div className="powered-by-wrap text-right mt-3 text-muted text-uppercase small">
+                  Powered by <a href="https://www.algolia.com" target="_blank">Algolia</a>
+                </div>
+              }
             </div>
           </div>
         </div>
@@ -158,6 +232,8 @@ class HomeView extends React.Component {
 
 function actions(dispatch) {
   return {
+    search: (query, sortBy) => { dispatch(search(query, sortBy)) },
+    clearSearch: () => { dispatch(clearSearch()) },
     showComposeView: () => { dispatch(showComposeView()) },
     showLoginModal: (view) => { dispatch(showLoginModal(view)) },
     fetchPosts: (page, options) => { dispatch(fetchPosts(page, options)) },
@@ -169,9 +245,9 @@ function select(store) {
     isLoading: store.posts.loading,
     user: store.user,
     posts: store.posts.list,
-    moreResults: store.posts.moreResults,
     page: store.posts.page,
-    loadingMore: store.posts.loadingMore,
+    searchIsLoading: store.search.loading,
+    searchResults: store.search.list,
   };
 }
 
