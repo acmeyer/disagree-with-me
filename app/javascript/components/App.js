@@ -12,7 +12,6 @@ import ComposePostModal from './common/ComposePostModal';
 import HomeView from './home/HomeView';
 import ConversationView from './conversations/ConversationView';
 import UserView from './user/UserView';
-import SearchView from './search/SearchView';
 import ActivityView from './activity/ActivityView';
 import AboutPage from './about/AboutPage';
 import {connect} from 'react-redux';

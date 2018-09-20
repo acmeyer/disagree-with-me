@@ -137,7 +137,7 @@ class HomeView extends React.Component {
             <span className="px-2">|</span>
             <a href="#" onClick={this.clearSearch}>Clear</a>
           </div>
-          <div>
+          <div className="text-right">
             <span className="pr-2">Sort by:</span>
             <Popover content={this.sortByMenu()} position="bottom">
               <Button text={this.state.sortBy} rightIcon="caret-down" />
@@ -196,9 +196,6 @@ class HomeView extends React.Component {
       } else {
         content = (
           <div>
-            <div className="create-post card d-md-none p-3 text-muted mt-3" onClick={this.handleCreate}>
-              What are you seeking feedback on?
-            </div>
             {this.props.posts.map(this.renderPost)}
           </div>
         );
@@ -215,6 +212,12 @@ class HomeView extends React.Component {
               </div>
               {this.renderSearchInput()}
               {searchFilters}
+              {(this.state.searchQuery === '') &&
+                <div className="text-center">
+                  <div>or</div>
+                  <Button fill large className="create-post d-md-none my-3" text="Create a Post" onClick={this.handleCreate} />
+                </div>
+              }
               <hr/>
               {content}
               {(this.state.searchQuery !== '' && this.props.searchResults.length > 0) &&
