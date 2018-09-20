@@ -19,15 +19,18 @@ import {
   clearSearch,
 } from '../../actions';
 
+import queryString from 'query-string';
 import _ from 'lodash';
 
 class HomeView extends React.Component {
   constructor(props) {
     super(props);
 
+    const searchParams = queryString.parse(this.props.location.search);
+
     this.state = {
-      searchQuery: '',
-      sortBy: 'Relevance',
+      searchQuery: searchParams.query || '',
+      sortBy: searchParams.sortBy || 'Relevance',
     };
   }
 
@@ -96,17 +99,20 @@ class HomeView extends React.Component {
   updateSearch = (value) => {
     this.setState({searchQuery: value});
     this.props.search(value);
+    this.props.history.push(`?query=${value}`);
     mixpanel.track('Perform Search', {query: value});
   }
 
   updateSortBy = (value) => {
     this.setState({sortBy: value});
     this.props.search(this.state.searchQuery, value);
+    this.props.history.push(`?query=${this.state.searchQuery}&sortBy=${value}`);
     mixpanel.track('Sorted Search', {sortBy: value});
   }
 
   clearSearch = () => {
     this.setState({searchQuery: ''});
+    this.props.history.push('/');
     this.props.clearSearch();
     this.input.focus();
   }
@@ -213,9 +219,9 @@ class HomeView extends React.Component {
               {this.renderSearchInput()}
               {searchFilters}
               {(this.state.searchQuery === '') &&
-                <div className="text-center">
+                <div className="text-center d-md-none">
                   <div>or</div>
-                  <Button fill large className="create-post d-md-none my-3" text="Create a Post" onClick={this.handleCreate} />
+                  <Button fill large className="create-post my-3" text="Create a Post" onClick={this.handleCreate} />
                 </div>
               }
               <hr/>
