@@ -14,6 +14,7 @@ import ConversationView from './conversations/ConversationView';
 import UserView from './user/UserView';
 import ActivityView from './activity/ActivityView';
 import AboutPage from './about/AboutPage';
+import TermsPage from './terms/TermsPage';
 import {connect} from 'react-redux';
 
 import {
@@ -21,6 +22,7 @@ import {
   fetchNotifications,
 } from '../actions';
 import BookmarksView from './bookmarks/BookmarksView';
+import PrivacyPage from './privacy/PrivacyPage';
 
 class App extends React.Component {
   componentWillMount() {
@@ -40,6 +42,8 @@ class App extends React.Component {
           <ComposePostModal />
           <Route exact path="/" render={props => <HomeView key={this.props.user.id} {...props} />} />
           <Route path="/about" component={AboutPage} />
+          <Route path="/terms" component={TermsPage} />
+          <Route path="/privacy" component={PrivacyPage} />
           <Route path="/conversations/:postId" component={ConversationView} />
           <Route path="/login" render={props => {
             return this.props.user.loggedIn ? (

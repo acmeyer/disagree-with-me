@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 class AboutPage extends React.Component {
   componentDidMount() {
@@ -20,7 +21,7 @@ class AboutPage extends React.Component {
 
               <p>The biggest difference between Disagree with Me and other online forums is the noticeable absence of an association between users and their content. This was done on purpose. As noted above, one important concept in creating a place where dissent can thrive is by separating a viewpoint from the person holding that viewpoint. Something that has become apparent on sites like Twitter is that often the people and not the specific idea are attacked or a viewpoint is attacked because of the person holding the idea. So in order to try and avoid this from happening on Disagree with Me, you will find no users associated with any of the posts or responses found on the site. We’re trying to create a place where the idea is the center of the network, not the people.</p>
 
-              <p>One of the biggest challenges with anonymity online has been abuse. It is a lot easier to attack and be an otherwise terrible person when you can hide online. We’re aware of this challenge and are planning to build tools and processes at the very start to avoid this site from becoming a cesspool of hateful comments like has happened in so many other places online. This is always a particularly challenging problem to solve, especially for a site that openly encourages disagreement and wants its users to share their different viewpoints, but we will do our best and hope our users will help us weed out the few bad apples that may exist. We plan on doing this by requiring all users to create an account, even though it won’t be public to others, in order to disable bad actors, and providing a way for anyone to report posts and responses that violate our terms.</p>
+              <p>One of the biggest challenges with anonymity online has been abuse. It is a lot easier to attack and be an otherwise terrible person when you can hide online. We’re aware of this challenge and are planning to build tools and processes at the very start to avoid this site from becoming a cesspool of hateful comments like has happened in so many other places online. This is always a particularly challenging problem to solve, especially for a site that openly encourages disagreement and wants its users to share their different viewpoints, but we will do our best and hope our users will help us weed out the few bad apples that may exist. We plan on doing this by requiring all users to create an account, even though it won’t be public to others, in order to disable bad actors, and providing a way for anyone to report posts and responses that violate our <Link to="/terms">terms</Link>.</p>
 
               <p>
                 Some of the things we will have zero tolerance for on Disagree with Me include:
@@ -32,7 +33,7 @@ class AboutPage extends React.Component {
                 <li>Inappropriate content</li>
               </ul>
 
-              <p>We believe you can voice valuable dissent without having to succumb to any of the above and therefore will take action if we find anything that violates our terms. Outside of these topics, we plan on being very open to all kinds of opinion and viewpoints, even ones that may not be popular today.</p>
+              <p>We believe you can voice valuable dissent without having to succumb to any of the above and therefore will take action if we find anything that violates our <Link to="/terms">terms</Link>. Outside of these topics, we plan on being very open to all kinds of opinion and viewpoints, even ones that may not be popular today.</p>
 
               <p>While we may not be perfect and acknowledge the challenge of building a productive anonymous platform online, we do think it is important enough to try and will do everything we can to see it succeed.</p>
 

@@ -161,7 +161,6 @@ class HomeView extends React.Component {
           <div className="search-input-wrap">
             <input
               ref={(input) => { this.input = input; }}
-              autoFocus={true}
               autoComplete="off"
               type="text" 
               className="form-control form-control-lg" 

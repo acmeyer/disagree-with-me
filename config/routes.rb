@@ -71,5 +71,7 @@ Rails.application.routes.draw do
   get "bookmarks", to: "web_app#index"
   get "me/:route", to: "web_app#index"
   get "about", to: "web_app#index"
+  get "terms", to: "web_app#index"
+  get "privacy", to: "web_app#index"
   root to: "web_app#index"
 end
