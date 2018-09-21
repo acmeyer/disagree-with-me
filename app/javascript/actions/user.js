@@ -15,9 +15,36 @@ function receiveUser(json) {
   };
 }
 
+function updateNotificationSetting(data) {
+  return {
+    type: 'UPDATE_NOTIFICATION_SETTING',
+    data
+  }
+}
+
 export function seenWelcomeMessage() {
   return {
     type: 'SEEN_WELCOME_MESSAGE',
+  }
+}
+
+export function updateUserNotificationSettings(field, value) {
+  return (dispatch, getState) => {
+    const userEmail = getState().user.email;
+    const apiToken = getState().user.apiToken;
+    let url = `${serverDomain}/users/my_notifications_settings`;
+
+    const headers = {
+      headers: {'Authorization': apiToken, 'User-Email': userEmail}
+    };
+
+    let data = {};
+    data[field] = value;
+
+    dispatch(updateNotificationSetting(data));
+    return axios.post(url, data, headers).then((response) => {
+      dispatch(receiveUser(response.data));
+    }).catch(error => handleAPIError(error, dispatch));
   }
 }
 

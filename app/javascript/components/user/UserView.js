@@ -88,25 +88,30 @@ class UserView extends React.Component {
         href: '/me/response-upvotes',
         title: 'Response Upvotes'
       },
+      {
+        active: list === 'settings',
+        href: '/notification_settings',
+        title: 'Notification Settings'
+      },
     ]
   }
 
   getPageTitle = () => {
     let {list} = this.props.match.params;
     if (list === 'posts') {
-      return "My Posts";
+      return "Your Posts";
     }
     if (list === 'responses') {
-      return "My Responses";
+      return "Your Responses";
     }
     if (list === 'thanks') {
-      return "My Thanks";
+      return "Your Thanks";
     }
     if (list === 'post-upvotes') {
-      return "My Post Upvotes";
+      return "Your Post Upvotes";
     }
     if (list === 'response-upvotes') {
-      return "My Response Upvotes";
+      return "Your Response Upvotes";
     }
   }
 

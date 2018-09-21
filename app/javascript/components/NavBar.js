@@ -65,6 +65,7 @@ class NavBar extends React.Component {
         <MenuItem text="My Thanks" onClick={() => this.props.history.push('/me/thanks')} />
         <MenuItem text="My Post Upvotes" onClick={() => this.props.history.push('/me/post-upvotes')} />
         <MenuItem text="My Response Upvotes" onClick={() => this.props.history.push('/me/response-upvotes')} />
+        <MenuItem text="Notification Settings" onClick={() => this.props.history.push('/notification_settings')} />
         <MenuDivider />
         <MenuItem text="Log Out" onClick={() => this.setState({confirmLogOutVisible: true})} />
       </Menu>
@@ -73,14 +74,6 @@ class NavBar extends React.Component {
 
   render() {
     let page, navLinks, createButton;
-    // let searchLink = (
-    //   <li className="nav-item">
-    //     <Link to="/search" className={`nav-link ${page === '/search' ? 'active' : ''}`}>
-    //       <i className="fas fa-search" />
-    //       <span className="pl-2 d-md-none">Search</span>
-    //     </Link>
-    //   </li>
-    // );
     createButton = (
       <li className="nav-item add-new-button">
         <div className="btn btn-light" onClick={this.handleCreate}>

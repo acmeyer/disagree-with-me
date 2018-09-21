@@ -12,6 +12,7 @@ import ComposePostModal from './common/ComposePostModal';
 import HomeView from './home/HomeView';
 import ConversationView from './conversations/ConversationView';
 import UserView from './user/UserView';
+import UserSettingsView from './user/UserSettingsView';
 import ActivityView from './activity/ActivityView';
 import AboutPage from './about/AboutPage';
 import TermsPage from './terms/TermsPage';
@@ -90,6 +91,18 @@ class App extends React.Component {
           <Route path="/bookmarks" render={(props) => {
             return this.props.user.loggedIn ? (
               <BookmarksView key={this.props.user.id} {...props} />
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/login",
+                  state: { from: props.location }
+                }}
+              />
+            )
+          }} />
+          <Route path="/notification_settings" render={(props) => {
+            return this.props.user.loggedIn ? (
+              <UserSettingsView key={props.match.params.list} {...props} />
             ) : (
               <Redirect
                 to={{

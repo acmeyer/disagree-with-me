@@ -27,7 +27,7 @@ Rails.application.routes.draw do
         get 'users/my_thanks', to: 'users#my_thanks'
         get 'users/my_post_upvotes', to: 'users#my_post_upvotes'
         get 'users/my_response_upvotes', to: 'users#my_response_upvotes'
-        post 'users/my_notifications_settings', to: 'user#my_notifications_settings'
+        post 'users/my_notifications_settings', to: 'users#my_notifications_settings'
 
         resources :posts, only: [:index, :show, :create] do
           resources :responses, only: [:index, :show, :create] do
@@ -71,6 +71,7 @@ Rails.application.routes.draw do
   get "conversations/:post_id", to: "web_app#index", as: 'conversation'
   get "bookmarks", to: "web_app#index"
   get "me/:route", to: "web_app#index", as: 'user'
+  get "notification_settings", to: "web_app#index", as: 'notification_settings'
   get "about", to: "web_app#index"
   get "terms", to: "web_app#index"
   get "privacy", to: "web_app#index"

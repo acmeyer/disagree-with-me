@@ -13,6 +13,15 @@ export function userReducer(state = initialState, action) {
       ...action.user
     };
   }
+  if (action.type === 'UPDATE_NOTIFICATION_SETTING') {
+    return {
+      ...state,
+      notifications_settings: {
+        ...state.notifications_settings,
+        ...action.data,
+      },
+    }
+  }
   if (action.type === 'LOGGED_IN') {
     return {
       ...state,
