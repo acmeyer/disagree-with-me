@@ -60,6 +60,22 @@ class HomeView extends React.Component {
     }
   }
 
+  showPost = (post) => {
+    if (this.state.searchQuery !== '') {
+      this.props.history.push(`?query=${this.state.searchQuery}&sortBy=${this.state.sortBy}`);
+    }
+    this.props.history.push(`/conversations/${post.id}`);
+  }
+
+  showPostComments = (e, post) => {
+    e.stopPropagation();
+    if (this.props.user.loggedIn) {
+      this.props.history.push(`/conversations/${post.id}`);
+    } else {
+      this.props.showLoginModal();
+    }
+  }
+
   fetchNewPosts = () => {
     this.props.fetchPosts(1, {random: true});
   }
@@ -92,6 +108,8 @@ class HomeView extends React.Component {
         user={this.props.user} 
         post={post} 
         showTopResponse 
+        showPost={() => this.showPost(post)}
+        showPostComments={(e) => this.showPostComments(e, post)}
       />
     );
   }
@@ -99,14 +117,12 @@ class HomeView extends React.Component {
   updateSearch = (value) => {
     this.setState({searchQuery: value});
     this.props.search(value);
-    this.props.history.push(`?query=${value}`);
     mixpanel.track('Perform Search', {query: value});
   }
 
   updateSortBy = (value) => {
     this.setState({sortBy: value});
     this.props.search(this.state.searchQuery, value);
-    this.props.history.push(`?query=${this.state.searchQuery}&sortBy=${value}`);
     mixpanel.track('Sorted Search', {sortBy: value});
   }
 

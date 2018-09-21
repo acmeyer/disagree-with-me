@@ -11,6 +11,7 @@ import { NonIdealState, Button } from "@blueprintjs/core";
 
 import {
   fetchUserList,
+  showLoginModal,
 } from '../../actions';
 
 const userLists = [
@@ -30,11 +31,32 @@ class UserView extends React.Component {
     }
   }
 
+  showPost = (post) => {
+    this.props.history.push(`/conversations/${post.id}`);
+  }
+
+  showPostComments = (e, post) => {
+    e.stopPropagation();
+    if (this.props.user.loggedIn) {
+      this.props.history.push(`/conversations/${post.id}`);
+    } else {
+      this.props.showLoginModal();
+    }
+  }
+
   renderCell = (obj) => {
     if (obj.post_id) {
       return <ResponseCell key={obj.id} user={this.props.user} response={obj} />;
     } else {
-      return <PostCell key={obj.id} user={this.props.user} post={obj} />;
+      return (
+        <PostCell 
+          key={obj.id} 
+          user={this.props.user} 
+          post={obj}
+          showPost={() => this.showPost(obj)}
+          showPostComments={(e) => this.showPostComments(e, post)}
+        />
+      );
     }
   }
 
@@ -183,6 +205,7 @@ class UserView extends React.Component {
 
 function actions(dispatch) {
   return {
+    showLoginModal: (view) => { dispatch(showLoginModal(view)) },
     fetchUserList: (list, page) => { dispatch(fetchUserList(list, page)) },
   };
 }
