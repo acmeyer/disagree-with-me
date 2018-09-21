@@ -5,7 +5,7 @@ class Notification < ApplicationRecord
   validates :message, presence: true
 
   after_initialize :set_default_status, :if => :new_record?
-  after_create :send_notification_email
+  after_create :send_notification_email!
 
   enum notification_type: [
     'New Response',
