@@ -1,6 +1,6 @@
 %p Hi #{@user.email},
 
-%p There's a new thanked response on the post #{@notification.notifiable.content.truncate(100)} that you bookmarked.
+%p There's a new thanked response on the post: "#{@notification.notifiable.content.truncate(100)}" that you bookmarked.
 
 %p 
   #{link_to 'View the conversation on Disagree with Me', conversation_url(post_id: @notification.notifiable.id)}

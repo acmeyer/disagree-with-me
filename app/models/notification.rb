@@ -38,12 +38,7 @@ class Notification < ApplicationRecord
     self.save!
   end
 
-  private
-  def set_default_status
-    self.status ||= :unread
-  end
-
-  def send_notification_email
+  def send_notification_email!
     notifications_setting = self.user.notifications_setting
     notification_type = self.notification_type
     case notification_type
@@ -64,5 +59,10 @@ class Notification < ApplicationRecord
         NotificationsMailer.new_upvote(self.id).deliver_later
       end
     end
+  end
+
+  private
+  def set_default_status
+    self.status ||= :unread
   end
 end
