@@ -1,5 +1,5 @@
 class AdminMailer < ApplicationMailer
-  default from: "alerts@#{ENV['DOMAIN_NAME']}"
+  default from: "Disagree with Me Alerts <alerts@#{ENV['DOMAIN_NAME']}>"
   layout 'mailer'
 
   def new_reported_content(report_id)

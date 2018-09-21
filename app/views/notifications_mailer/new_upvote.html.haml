@@ -1,0 +1,6 @@
+%p Hi #{@user.email},
+
+%p Sweet, someone's upvoted your #{@notification.notifiable_type.downcase}: "#{@notification.notifiable.content.truncate(100)}".
+
+%p 
+  #{link_to 'View it on Disagree with Me', conversation_url(post_id: @notification.notifiable_type == 'Post' ? @notification.notifiable.id : @notification.notifiable.post.id)}

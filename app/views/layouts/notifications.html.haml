@@ -1,0 +1,8 @@
+%html
+  %body
+    = yield
+    %p
+      \- The Disagree with Me Team
+    %hr
+    %p
+      %small Don't want this email notification? #{link_to 'Manage your email settings here', user_url(route: 'notification_settings')}.

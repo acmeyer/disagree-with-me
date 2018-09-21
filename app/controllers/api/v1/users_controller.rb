@@ -4,7 +4,7 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def me
     authorize @user
-    render_user(:short)
+    render_user(:full)
   end
 
   def change_password
@@ -88,9 +88,19 @@ class Api::V1::UsersController < Api::V1::ApiController
     render_responses
   end
 
+  def my_notifications_settings
+    authorize @user
+    @user.notifications_setting.update(notification_params)
+    render_user(:full)
+  end
+
   private
   def user_password_params
     params.permit(:current_password, :password, :password_confirmation)
+  end
+
+  def notification_params
+    params.permit(:new_response_email, :response_thanked_email, :new_thanked_email, :new_upvote_email)
   end
 
   def render_user(format)

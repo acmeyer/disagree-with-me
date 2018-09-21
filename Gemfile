@@ -42,6 +42,7 @@ gem 'exception_notification'
 gem 'sidekiq'
 gem 'httparty'
 gem 'newrelic_rpm'
+gem 'premailer-rails'
 
 # Frontend Libraries
 #=============================

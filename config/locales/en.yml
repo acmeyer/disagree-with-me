@@ -21,6 +21,11 @@ en:
       only_post_author: "Only the post author can do this!"
       response_already_thanked: "Response already thanked."
   notifications:
+    subjects:
+      new_response: "There's a new response to your post!"
+      new_response_to_bookmarked: "There's a new thanked response to a post you've bookmarked!"
+      thanked_response: "Nice work! Your response was thanked by the post's author"
+      new_upvote: "Awesome! Someone's upvoted your %{resource_type}"
     messages:
       new_response: "There's a new response to your post: \"%{post_truncated}\"! Check it out and be sure to thank it if you find it helpful."
       new_response_to_bookmarked: "There's a new thanked response to a post you've bookmarked: \"%{response_truncated}\"! Be sure to check it out and upvote it if you find it useful."

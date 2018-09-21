@@ -37,4 +37,8 @@ class UserPolicy
   def my_response_upvotes?
     user.id == other_user.id
   end
+
+  def my_notifications_settings?
+    user.id == other_user.id
+  end
 end

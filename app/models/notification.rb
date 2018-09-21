@@ -5,6 +5,7 @@ class Notification < ApplicationRecord
   validates :message, presence: true
 
   after_initialize :set_default_status, :if => :new_record?
+  after_create :send_notification_email
 
   enum notification_type: [
     'New Response',
@@ -40,5 +41,28 @@ class Notification < ApplicationRecord
   private
   def set_default_status
     self.status ||= :unread
+  end
+
+  def send_notification_email
+    notifications_setting = self.user.notifications_setting
+    notification_type = self.notification_type
+    case notification_type
+    when 'New Response'
+      if notifications_setting.new_response_email
+        NotificationsMailer.new_response(self.id).deliver_later
+      end
+    when 'Response Thanked'
+      if notifications_setting.response_thanked_email
+        NotificationsMailer.response_thanked(self.id).deliver_later
+      end
+    when 'New Thanked Response'
+      if notifications_setting.new_thanked_email
+        NotificationsMailer.new_thanked(self.id).deliver_later
+      end
+    when 'New Upvote'
+      if notifications_setting.new_upvote_email
+        NotificationsMailer.new_upvote(self.id).deliver_later
+      end
+    end
   end
 end

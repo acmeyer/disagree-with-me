@@ -15,13 +15,14 @@ class User < ApplicationRecord
   has_many :bookmarked_posts, through: :bookmarks, source: :post
   has_many :reports
   has_many :notifications, dependent: :destroy
+  has_one :notifications_setting, dependent: :destroy
 
   after_save :expire_tokens, if: Proc.new { |user| user.saved_change_to_encrypted_password? }
   after_initialize :set_default_role, :if => :new_record?
 
   enum role: [:user, :admin]
 
-  after_create :add_to_marketing_email_list
+  after_create :add_to_marketing_email_list, :create_notifications_setting
   before_destroy :remove_from_email_lists
 
   # needed because sidekiq could receive before the record finishes being added to the DB
@@ -45,7 +46,7 @@ class User < ApplicationRecord
       Notification.create(
         message: I18n.t('notifications.messages.new_upvote', resource_type: resource.class.to_s.downcase, content_truncated: resource.content.truncate(75)),
         user_id: resource.author.id,
-        notification_type: 'New Response',
+        notification_type: 'New Upvote',
         notifiable: resource,
       )
     end
@@ -115,5 +116,9 @@ class User < ApplicationRecord
 
   def send_welcome_email
     UserMailer.welcome_email(self.id).deliver_later
+  end
+
+  def create_notifications_setting
+    NotificationsSetting.create(user_id: self.id)
   end
 end

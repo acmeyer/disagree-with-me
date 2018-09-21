@@ -46,6 +46,12 @@ class UserJson
     {
       id: user.id,
       email: user.email,
+      notifications_settings: {
+        new_response_email: user.notifications_setting.new_response_email,
+        response_thanked_email: user.notifications_setting.response_thanked_email,
+        new_thanked_email: user.notifications_setting.new_thanked_email,
+        new_upvote_email: user.notifications_setting.new_upvote_email,
+      }
     }
   end
 end

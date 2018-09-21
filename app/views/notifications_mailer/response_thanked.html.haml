@@ -1,0 +1,6 @@
+%p Hi #{@user.email},
+
+%p Your response: "#{@notification.notifiable.content.truncate(100)}" was thanked by the post's author. Nice work!
+
+%p 
+  #{link_to 'View it on Disagree with Me', conversation_url(post_id: @notification.notifiable.post.id)}

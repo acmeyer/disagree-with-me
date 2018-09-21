@@ -1,0 +1,9 @@
+%p Hi #{@user.email},
+
+%p Someone's written a new response to your post: "#{@notification.notifiable.post.content.truncate(100)}"
+
+%p Their response is below. Be sure to thank them if you find it helpful:
+
+#{ @notification.notifiable.formatted_content}
+%p 
+  #{link_to 'View it on Disagree with Me', conversation_url(post_id: @notification.notifiable.post.id)}
