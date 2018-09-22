@@ -64,8 +64,6 @@ class Api::V1::PostsController < Api::V1::ApiController
     elsif params[:sort]
       posts = posts.order(params[:sort])
     elsif params[:random] == "true"
-      # Return a random set of posts,
-      # eventually goal is to make this more sophisticated
       posts = posts.order("RANDOM()")
     else
       posts = posts.order(created_at: :desc)
@@ -77,10 +75,10 @@ class Api::V1::PostsController < Api::V1::ApiController
   def render_posts
     json = PostsJson.new(
       @user,
-      @posts.page(@current_page).per(5),
+      @posts.page(@current_page),
       @current_page,
-      @posts.page(@current_page).per(5).total_pages,
-      @posts.page(@current_page).per(5).total_count,
+      @posts.page(@current_page).total_pages,
+      @posts.page(@current_page).total_count,
       :full
     )
     render json: json.as_json

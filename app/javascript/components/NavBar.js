@@ -89,7 +89,6 @@ class NavBar extends React.Component {
       }
       navLinks = (
         <ul className="navbar-nav ml-auto">
-          {/* {searchLink} */}
           <li className="nav-item">
             <Link to="/bookmarks" className={`nav-link ${page === '/bookmarks' ? 'active' : ''}`}>
               <i className="fas fa-bookmark" />
@@ -116,7 +115,6 @@ class NavBar extends React.Component {
     } else {
       navLinks = (
         <ul className="navbar-nav ml-auto">
-          {/* {searchLink} */}
           <li className="nav-item">
             <div className={'nav-link'} onClick={(e) => this.showLogin('login')}>
               Login

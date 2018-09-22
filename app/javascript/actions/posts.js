@@ -55,7 +55,7 @@ function toggleBookmark(post) {
   }
 }
 
-export function fetchPosts(page = 1, options={}) {
+export function fetchPosts(page = 1, list = 'latest') {
   return (dispatch, getState) => {
     let headers = {headers: {}};
     const userEmail = getState().user.email;
@@ -68,9 +68,14 @@ export function fetchPosts(page = 1, options={}) {
     }
     let url = `${serverDomain}/posts?page=${page}`;
 
-    if (options.random) {
+    if (list === 'latest') {
+      url = url + '&latest=true';
+    } else if (list === 'popular') {
+      url = url + '&popular=true';
+    } else {
       url = url + '&random=true';
     }
+
 
     if (page > 1) {
       dispatch(requestMorePosts());

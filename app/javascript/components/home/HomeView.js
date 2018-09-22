@@ -29,6 +29,7 @@ class HomeView extends React.Component {
     const searchParams = queryString.parse(this.props.location.search);
 
     this.state = {
+      list: 'latest',
       searchQuery: searchParams.query || '',
       sortBy: searchParams.sortBy || 'Relevance',
     };
@@ -77,7 +78,7 @@ class HomeView extends React.Component {
   }
 
   fetchNewPosts = () => {
-    this.props.fetchPosts(1, {random: true});
+    this.props.fetchPosts(1, this.state.list);
   }
 
   handleCreate = () => {
@@ -90,15 +91,9 @@ class HomeView extends React.Component {
 
   handleLoadMorePosts = () => {
     const page = this.props.page + 1;
-    const currentUrl = this.props.match.url;
-    if (currentUrl === '/latest') {
-      this.props.fetchPosts(page, {latest: true});
-    } else if (currentUrl === '/popular') {
-      this.props.fetchPosts(page, {popular: true});
-    } else {
-      this.props.fetchPosts(page);
-    }
-    mixpanel.track('Load More Posts', {page: 'home', list: currentUrl === '/popular' ? 'popular' : 'latest'});
+    const {list} = this.state;
+    this.props.fetchPosts(page, list);
+    mixpanel.track('Load More Posts', {page: 'home', list: 'list'});
   }
 
   renderPost = (post) => {
@@ -126,7 +121,8 @@ class HomeView extends React.Component {
     mixpanel.track('Sorted Search', {sortBy: value});
   }
 
-  clearSearch = () => {
+  clearSearch = (e) => {
+    e.preventDefault();
     this.setState({searchQuery: ''});
     this.props.history.push('/');
     this.props.clearSearch();
@@ -148,6 +144,19 @@ class HomeView extends React.Component {
         })}
       </Menu>
     );
+  }
+
+  handleChangePostList = (list) => {
+    this.setState({list}, () => this.fetchNewPosts());
+  }
+
+  renderListFilters = () => {
+    return (
+      <div className="list-filters">
+        <a onClick={() => this.state.list === 'latest' ? null : this.handleChangePostList('latest')} className={`filter mr-2 ${this.state.list === 'latest' ? 'font-weight-bold' : ''}`}>Latest</a>
+        <a onClick={() => this.state.list === 'popular' ? null : this.handleChangePostList('popular')} className={`filter mr-2 ${this.state.list === 'popular' ? 'font-weight-bold' : ''}`}>Popular</a>
+      </div>
+    )
   }
 
   renderSearchFilters = () => {
@@ -193,31 +202,44 @@ class HomeView extends React.Component {
   }
 
   render() {
-    let content, searchFilters;
+    let content, filters, loadMore;
 
-    if (this.props.isLoading) {
-      content = <LoadingView />;
+    if (this.state.searchQuery !== '') {
+      filters = this.renderSearchFilters();
+      if (this.props.searchIsLoading) {
+        content = <LoadingView />;
+      } else if (this.props.searchResults.length > 0) {
+        content = this.props.searchResults.map(this.renderPost);
+      } else {
+        content = (
+          <NonIdealState
+            icon="issue"
+            title="No results found"
+            description={`Is this something you're interesting in?`}
+            action={<Button text="Start a Discussion" onClick={() => this.handleCreate()} />}
+          />
+        );
+      }
     } else {
-      if (this.state.searchQuery !== '') {
-        searchFilters = this.renderSearchFilters();
-        if (this.props.searchIsLoading) {
-          content = <LoadingView />;
-        } else if (this.props.searchResults.length > 0) {
-          content = this.props.searchResults.map(this.renderPost);
-        } else {
-          content = (
-            <NonIdealState
-              icon="issue"
-              title="No results found"
-              description={`Is this something you're interesting in?`}
-              action={<Button text="Start a Discussion" onClick={() => this.handleCreate()} />}
-            />
+      filters = this.renderListFilters();
+      if (this.props.isLoading) {
+        content = <LoadingView />;
+      } else {
+        if (this.props.moreResults) {
+          loadMore = (
+            <div className="load-more text-center m-3">
+              <Button 
+                onClick={this.handleLoadMorePosts}
+                loading={this.props.loadingMore}
+                text="Load More"
+              />
+            </div>
           );
         }
-      } else {
         content = (
           <div>
             {this.props.posts.map(this.renderPost)}
+            {loadMore}
           </div>
         );
       }
@@ -232,7 +254,7 @@ class HomeView extends React.Component {
                 Seek out and provide opposing viewpoints
               </div>
               {this.renderSearchInput()}
-              {searchFilters}
+              {filters}
               {(this.state.searchQuery === '') &&
                 <div className="text-center d-md-none">
                   <div>or</div>
@@ -270,6 +292,8 @@ function select(store) {
     user: store.user,
     posts: store.posts.list,
     page: store.posts.page,
+    moreResults: store.posts.moreResults,
+    loadingMore: store.posts.loadingMore,
     searchIsLoading: store.search.loading,
     searchResults: store.search.list,
   };
