@@ -27,13 +27,12 @@ class Api::V1::SearchController < Api::V1::ApiController
 
   private
   def render_results
-    json = PostsJson.new(
+    json = SearchJson.new(
       @user,
       @posts.page(@current_page),
       @current_page,
       @posts.page(@current_page).total_pages,
-      @posts.count,
-      :full
+      @posts.page(@current_page).total_count,
     )
     render json: json.as_json
   end

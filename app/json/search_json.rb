@@ -1,11 +1,10 @@
-class ResponsesJson
-  def initialize(user, responses, current_page, total_pages, total_entries, format=:full)
+class SearchJson
+  def initialize(user, posts, current_page, total_pages, total_entries)
     @user = user
-    @responses = responses
+    @posts = posts
     @current_page = current_page
     @total_pages = total_pages
     @total_entries = total_entries
-    @format = format
   end
 
   def as_json
@@ -14,7 +13,7 @@ class ResponsesJson
       page: @current_page,
       total_pages: @total_pages,
       total_entries: @total_entries,
-      responses: @responses.map{|r| ResponseJson.new(r, @user, @format).call },
+      posts: @posts.map{|p| SearchResultJson.new(p, @user).call },
     }
   end
 end

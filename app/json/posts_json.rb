@@ -14,7 +14,7 @@ class PostsJson
       page: @current_page,
       total_pages: @total_pages,
       total_entries: @total_entries,
-      posts: @posts.map{|p| PostJson.new(p, @user, :full).call },
+      posts: @posts.map{|p| PostJson.new(p, @user, @format).call },
     }
   end
 end
