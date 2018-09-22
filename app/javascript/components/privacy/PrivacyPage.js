@@ -29,7 +29,7 @@ class PrivacyPage extends React.Component {
                   <li>Monitor the site's usage and detect and prevent technical issues</li>
               </ul>
               <h4>Security</h4>
-              <p>We will make the best efforts possible to protect your data but be aware that we cannot guarantee it's protection. We use the latest secure practices and collect very little personally identifiable information from you.</p>
+              <p>We will make the best efforts possible to protect your data but be aware that we cannot guarantee its protection. We use the latest secure practices and collect very little personally identifiable information from you.</p>
 
               <h4>Analytics</h4>
               <p>We use Mixpanel as our analytics provider. Mixpanel is provided by Mixpanel Inc.</p>   

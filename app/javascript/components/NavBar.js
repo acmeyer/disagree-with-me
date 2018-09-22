@@ -60,11 +60,11 @@ class NavBar extends React.Component {
   userMenu = () => {
     return (
       <Menu>
-        <MenuItem text="My Posts" onClick={() => this.props.history.push('/me/posts')} />
-        <MenuItem text="My Responses" onClick={() => this.props.history.push('/me/responses')} />
-        <MenuItem text="My Thanks" onClick={() => this.props.history.push('/me/thanks')} />
-        <MenuItem text="My Post Upvotes" onClick={() => this.props.history.push('/me/post-upvotes')} />
-        <MenuItem text="My Response Upvotes" onClick={() => this.props.history.push('/me/response-upvotes')} />
+        <MenuItem text="Your Posts" onClick={() => this.props.history.push('/me/posts')} />
+        <MenuItem text="Your Responses" onClick={() => this.props.history.push('/me/responses')} />
+        <MenuItem text="Your Thanks" onClick={() => this.props.history.push('/me/thanks')} />
+        <MenuItem text="Your Post Upvotes" onClick={() => this.props.history.push('/me/post-upvotes')} />
+        <MenuItem text="Your Response Upvotes" onClick={() => this.props.history.push('/me/response-upvotes')} />
         <MenuItem text="Notification Settings" onClick={() => this.props.history.push('/notification_settings')} />
         <MenuDivider />
         <MenuItem text="Log Out" onClick={() => this.setState({confirmLogOutVisible: true})} />
@@ -105,7 +105,7 @@ class NavBar extends React.Component {
             <Popover content={this.userMenu()} position={Position.CENTER_BOTTOM}>
               <a className={`nav-link ${page === '/me' ? 'active' : ''}`}>
                 <i className="fas fa-user-circle" />
-                <span className="pl-2 d-md-none">Me</span>
+                <span className="pl-2 d-md-none">You</span>
               </a>
             </Popover>
           </li>
