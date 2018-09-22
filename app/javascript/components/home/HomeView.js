@@ -254,13 +254,13 @@ class HomeView extends React.Component {
                 Seek out and provide opposing viewpoints
               </div>
               {this.renderSearchInput()}
-              {filters}
               {(this.state.searchQuery === '') &&
                 <div className="text-center d-md-none">
                   <div>or</div>
                   <Button fill large className="create-post my-3" text="Create a Post" onClick={this.handleCreate} />
                 </div>
               }
+              {filters}
               <hr/>
               {content}
               {(this.state.searchQuery !== '' && this.props.searchResults.length > 0) &&
