@@ -14,6 +14,12 @@ class Footer extends React.Component {
               <div className="small link d-md-inline-block mr-3">
                 <Link className="text-muted" to="/about">About</Link>
               </div>
+              <div className="small link d-md-inline-block mr-3">
+                <Link className="text-muted" to="/terms">Terms</Link>
+              </div>
+              <div className="small link d-md-inline-block mr-3">
+                <Link className="text-muted" to="/privacy">Privacy</Link>
+              </div>
               <div className="small link d-md-inline-block">
                 <a className="text-muted" href="mailto:hi@disagreewithme.app" target="_blank">Contact</a>
               </div>

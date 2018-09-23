@@ -17,7 +17,7 @@ class User < ApplicationRecord
   has_many :notifications, dependent: :destroy
   has_one :notifications_setting, dependent: :destroy
 
-  after_save :expire_tokens, if: Proc.new { |user| user.saved_change_to_encrypted_password? }
+  after_save :expire_tokens, if: Proc.new { |user| user.saved_change_to_encrypted_password? || user.disabled }
   after_initialize :set_default_role, :if => :new_record?
 
   enum role: [:user, :admin]
@@ -73,14 +73,6 @@ class User < ApplicationRecord
       raise StandardError, I18n.t('models.errors.response_already_thanked', default: 'Response already thanked.')
     end
   end
-
-  def active_for_authentication?
-    super && !disabled
-  end
-
-  def inactive_message   
-  	!disabled ? super : :disabled_account  
-  end 
 
   private
   def set_default_role

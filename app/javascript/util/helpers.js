@@ -37,9 +37,16 @@ export function appendOrReplaceById(originalCollection, newItem) {
 
 export function handleAPIError(error, dispatch) {
   const message = _.get(error.response, 'data.error');
-  AppToaster.show({ message: message, intent: "danger", icon: "error" });
-  dispatch({
-    type: 'API_ERROR',
-    error: message
-  });
+  if (error.response.status === 401) {
+    dispatch({
+      type: 'LOGGED_OUT',
+    });
+    AppToaster.show({ message: "You need to login again.", intent: "danger", icon: "error" });
+  } else {
+    AppToaster.show({ message: message, intent: "danger", icon: "error" });
+    dispatch({
+      type: 'API_ERROR',
+      error: message
+    });
+  }
 }

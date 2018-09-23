@@ -10,6 +10,7 @@ en:
   api:
     auth:
       invalid_email_or_password: "Invalid email or password."
+      account_disabled: "Your account has been disabled. Please contact support@disagreewithme.app for more information."
     errors:
       forbidden: "Forbidden."
       unauthorized: "Unauthorized."

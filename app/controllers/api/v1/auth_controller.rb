@@ -13,7 +13,9 @@ class Api::V1::AuthController < ApplicationController
   def signin
     begin
       @user = User.find_for_authentication(:email => params[:email])
-      if @user&.valid_password?(params[:password])
+      if @user.disabled
+        render_error_message(t('api.auth.account_disabled', default: 'Your account has been disabled. Please contact support@disagreewithme.app for more information.'))
+      elsif @user&.valid_password?(params[:password])
         AuthToken.generate_new_token(@user.id, @ip_address, @user_agent)
         @user.reload
         render_user
