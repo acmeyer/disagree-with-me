@@ -13,7 +13,7 @@ class SearchJson
       page: @current_page,
       total_pages: @total_pages,
       total_entries: @total_entries,
-      posts: @posts.map{|p| SearchResultJson.new(p, @user).call },
+      posts: @posts.map{|p| PostJson.new(p, @user, :full).call },
     }
   end
 end
