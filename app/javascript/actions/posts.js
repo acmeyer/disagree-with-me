@@ -55,7 +55,7 @@ function toggleBookmark(post) {
   }
 }
 
-export function fetchPosts(page = 1, list = 'latest') {
+export function fetchPosts(page = 1, list = 'popular') {
   return (dispatch, getState) => {
     let headers = {headers: {}};
     const userEmail = getState().user.email;

@@ -29,7 +29,7 @@ class HomeView extends React.Component {
     const searchParams = queryString.parse(this.props.location.search);
 
     this.state = {
-      list: 'latest',
+      list: 'popular',
       searchQuery: searchParams.query || '',
       sortBy: searchParams.sortBy || 'Relevance',
     };
@@ -153,8 +153,8 @@ class HomeView extends React.Component {
   renderListFilters = () => {
     return (
       <div className="list-filters">
-        <a onClick={() => this.state.list === 'latest' ? null : this.handleChangePostList('latest')} className={`filter mr-2 ${this.state.list === 'latest' ? 'font-weight-bold' : ''}`}>Latest</a>
         <a onClick={() => this.state.list === 'popular' ? null : this.handleChangePostList('popular')} className={`filter mr-2 ${this.state.list === 'popular' ? 'font-weight-bold' : ''}`}>Popular</a>
+        <a onClick={() => this.state.list === 'latest' ? null : this.handleChangePostList('latest')} className={`filter mr-2 ${this.state.list === 'latest' ? 'font-weight-bold' : ''}`}>Latest</a>
       </div>
     )
   }
