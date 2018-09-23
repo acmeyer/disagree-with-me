@@ -12,9 +12,9 @@ class PostCell extends React.Component {
     let {top_response} = this.props.post;
     if (this.props.showTopResponse && top_response) {
       return (
-        <div className="top-response p-3 bg-light">
+        <div className="top-response p-3 bg-white">
           <div className="heading text-uppercase small">
-            <i className="far fa-star mr-1" />
+            <i className="fas fa-star mr-1 text-warning" />
             Top Response
           </div>
           <div className="body mt-2">
