@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   # Devise routes
-  devise_for :users, only: [:passwords], controllers: {
+  devise_for :users, only: [:passwords, :confirmations], controllers: {
+    confirmations: 'users/confirmations',
     passwords: 'users/passwords'
   }
   get 'users/password_changed', to: 'auth#password_changed'
+  get 'users/email_confirmed', to: 'auth#email_confirmed'
 
   
   # API routes
@@ -14,6 +16,7 @@ Rails.application.routes.draw do
         post 'auth/signin', to: 'auth#signin'
         post 'auth/signup', to: 'auth#signup'
         post 'auth/send_reset_password_instructions', to: 'auth#send_reset_password_instructions'
+        post 'auth/resend_confirmation_email', to: 'auth#resend_confirmation_email'
 
         # Search
         post 'search', to: 'search#index'

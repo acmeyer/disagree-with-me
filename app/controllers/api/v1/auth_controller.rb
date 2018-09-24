@@ -16,9 +16,13 @@ class Api::V1::AuthController < ApplicationController
       if @user.disabled
         render_error_message(t('api.auth.account_disabled', default: 'Your account has been disabled. Please contact support@disagreewithme.app for more information.'))
       elsif @user&.valid_password?(params[:password])
-        AuthToken.generate_new_token(@user.id, @ip_address, @user_agent)
-        @user.reload
-        render_user
+        if !@user.confirmed?
+          render_error_message('email_confirmation')
+        else
+          AuthToken.generate_new_token(@user.id, @ip_address, @user_agent)
+          @user.reload
+          render_user
+        end
       else
         render_error_message(t('api.auth.invalid_email_or_password', default: 'Invalid email or password.'))
       end
@@ -31,9 +35,14 @@ class Api::V1::AuthController < ApplicationController
     begin
       @user = User.new(user_sign_up_params)
       @user.save!
-      AuthToken.generate_new_token(@user.id, @ip_address, @user_agent)
-      @user.reload
-      render_user
+      if @user.confirmed?
+        AuthToken.generate_new_token(@user.id, @ip_address, @user_agent)
+        @user.reload
+        render_user
+      else
+        @user.send_confirmation_instructions
+        render_error_message('email_confirmation')
+      end
     rescue => e
       record_invalid(e)
     end
@@ -43,6 +52,16 @@ class Api::V1::AuthController < ApplicationController
     begin
       @user = User.find_by_email!(params[:email])
       @user.send_reset_password_instructions
+      render json: {message: I18n.t('api.messages.success')}, status: 200
+    rescue => e
+      render_error_message(e.message)
+    end
+  end
+
+  def resend_confirmation_email
+    begin
+      @user = User.find_by_email!(params[:email])
+      @user.send_confirmation_instructions
       render json: {message: I18n.t('api.messages.success')}, status: 200
     rescue => e
       render_error_message(e.message)

@@ -3,4 +3,7 @@ class AuthController < ApplicationController
 
   def password_changed
   end
+
+  def email_confirmed
+  end
 end

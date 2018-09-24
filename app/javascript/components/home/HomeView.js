@@ -42,7 +42,7 @@ class HomeView extends React.Component {
     // Show login if coming to login page and not logged in yet
     const currentUrl = this.props.match.url;
     if (currentUrl === '/login' && !this.props.user.loggedIn) {
-      this.props.showLoginModal();
+      this.props.showLoginModal('login');
       mixpanel.track('Shown Login Modal', {from: 'home page'});
     } else if (currentUrl === '/signup' && !this.props.user.loggedIn) {
       this.props.showLoginModal('signup');

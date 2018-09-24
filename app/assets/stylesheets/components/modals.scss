@@ -97,6 +97,14 @@ body.ReactModal__Body--open { overflow: hidden; }
   &.welcome-modal {
     padding: 30px;
   }
+
+  &.confirm-email-modal {
+    max-width: 350px;
+    padding: 30px;
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
 }
 
 // make sure confirmation modals can lay on top

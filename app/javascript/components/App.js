@@ -9,6 +9,7 @@ import Footer from './Footer';
 import LoginModal from './common/LoginModal';
 import ReportModal from './common/ReportModal';
 import ComposePostModal from './common/ComposePostModal';
+import ConfirmEmailModal from './common/ConfirmEmailModal';
 import HomeView from './home/HomeView';
 import ConversationView from './conversations/ConversationView';
 import UserView from './user/UserView';
@@ -41,6 +42,7 @@ class App extends React.Component {
           <LoginModal key={this.props.loginView} />
           <ReportModal />
           <ComposePostModal />
+          <ConfirmEmailModal />
           <Route exact path="/" render={props => <HomeView key={this.props.user.id} {...props} />} />
           <Route path="/about" component={AboutPage} />
           <Route path="/terms" component={TermsPage} />

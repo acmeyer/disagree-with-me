@@ -16,6 +16,38 @@ export function showLoginModal(view) {
   };
 }
 
+export function hideConfirmEmailModal() {
+  return {
+    type: 'HIDE_CONFIRM_EMAIL_MODAL',
+  };
+}
+
+export function showConfirmEmailModal(view, email) {
+  return {
+    type: 'SHOW_CONFIRM_EMAIL_MODAL',
+    view,
+    email
+  };
+}
+
+export function resendConfirmEmail(email) {
+  return (dispatch, getState) => {
+    let url = `${serverDomain}/auth/resend_confirmation_email`;
+
+    return axios.post(url, {email}).then(() => {
+      return;
+    }).catch(error => {
+      let message;
+      if (error.response) {
+        message = _.get(error.response, 'data.error') || "An Unknown Error Occurred", 'error';
+      } else {
+        message = error.message || error.data || "An Unknown Error Occurred", 'error';
+      };
+      return Promise.reject(message);
+    });
+  }
+}
+
 function loggedIn(user) {
   return {
     type: 'LOGGED_IN',

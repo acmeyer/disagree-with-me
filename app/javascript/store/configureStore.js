@@ -33,7 +33,7 @@ function configureStore() {
   const persistConfig = {
     key: 'reduxPersist/v1/dwm/' + environment + '/',
     storage,
-    blacklist: ['loginModal', 'composePostModal', 'conversation', 'reportModal'],
+    blacklist: ['loginModal', 'composePostModal', 'conversation', 'reportModal', 'confirmEmailModal'],
   };
   const persistedReducer = persistReducer(persistConfig, reducers);
   const store = createStore(persistedReducer, {}, enhancer);

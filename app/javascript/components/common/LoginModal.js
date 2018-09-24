@@ -8,6 +8,7 @@ import {
   hideLoginModal,
   sendResetPasswordEmail,
   signupWithEmail,
+  showConfirmEmailModal,
 } from '../../actions';
 import {connect} from 'react-redux';
 
@@ -93,8 +94,13 @@ class LoginModal extends React.Component {
       this.close();
       AppToaster.show({ message: "Welcome, thanks for signing up!", intent: "success", icon: "tick" });
     }).catch(error => {
-      this.setState({loading: false});
-      AppToaster.show({ message: error, intent: "danger", icon: "error" });
+      if (error === 'email_confirmation') {
+        this.props.dispatch(showConfirmEmailModal('signup', this.state.email));
+        this.close();
+      } else {
+        this.setState({loading: false});
+        AppToaster.show({ message: error, intent: "danger", icon: "error" });
+      }
     });
   }
 
@@ -111,8 +117,13 @@ class LoginModal extends React.Component {
     this.props.dispatch(loginWithEmail(this.state.email, this.state.password)).then(() => {
       this.close();
     }).catch(error => {
-      this.setState({loading: false});
-      AppToaster.show({ message: error, intent: "danger", icon: "error" });
+      if (error === 'email_confirmation') {
+        this.props.dispatch(showConfirmEmailModal('login', this.state.email));
+        this.close();
+      } else {
+        this.setState({loading: false});
+        AppToaster.show({ message: error, intent: "danger", icon: "error" });
+      }
     });
   }
 

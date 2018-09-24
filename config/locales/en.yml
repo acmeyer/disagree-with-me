@@ -11,6 +11,7 @@ en:
     auth:
       invalid_email_or_password: "Invalid email or password."
       account_disabled: "Your account has been disabled. Please contact support@disagreewithme.app for more information."
+      email_address_needs_confirmation: "Email address needs to be confirmed."
     errors:
       forbidden: "Forbidden."
       unauthorized: "Unauthorized."
@@ -40,6 +41,7 @@ en:
         sign_in: "Sign In"
         forgot_your_password: "Forgot your password?"
         change_password: "Change your password"
+        resend_confirmation_instructions: "Resend confirmation instructions"
       new_password: "New Password"
       confirm_new_password: "Confirm new password"
       change_my_password: "Change my password"
@@ -50,8 +52,10 @@ en:
       have_an_account: "Have an account? Sign in"
       dont_have_an_account: "Don't have an account? Sign up"
       login_with_new_password: "Login with new password"
+      resend_instructions: "Resend instructions"
       messages:
         password_updated: "Your password has been updated!"
+        email_confirmed: "Your email address has been confirmed!"
     errors:
       go_to_home: "Go to Home Page"
   buttons:

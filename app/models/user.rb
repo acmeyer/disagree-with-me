@@ -1,7 +1,7 @@
 class User < ApplicationRecord
-  # :registerable, :confirmable, :lockable, :timeoutable and :omniauthable
+  # :registerable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, 
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   acts_as_paranoid
   acts_as_voter
@@ -24,9 +24,6 @@ class User < ApplicationRecord
 
   after_create :add_to_marketing_email_list, :create_notifications_setting
   before_destroy :remove_from_email_lists
-
-  # needed because sidekiq could receive before the record finishes being added to the DB
-  after_commit :send_welcome_email, on: :create
 
   def responded_to_post?(post_id)
     self.responses.pluck(:post_id).include?(post_id)
@@ -104,10 +101,6 @@ class User < ApplicationRecord
     rescue Exception
       STDERR.puts("Error while adding user to Mailchimp marketing list: #{$!}")
     end
-  end
-
-  def send_welcome_email
-    UserMailer.welcome_email(self.id).deliver_later
   end
 
   def create_notifications_setting
