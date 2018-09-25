@@ -21,7 +21,7 @@ class Api::V1::AuthController < ApplicationController
   def signin
     begin
       @user = User.find_for_authentication(:email => params[:email])
-      if @user.disabled
+      if @user&.disabled
         render_error_message(t('api.auth.account_disabled', default: 'Your account has been disabled. Please contact support@disagreewithme.app for more information.'))
       elsif @user&.valid_password?(params[:password])
         if !@user.confirmed?
@@ -58,7 +58,7 @@ class Api::V1::AuthController < ApplicationController
   def send_reset_password_instructions
     begin
       @user = User.find_by_email!(params[:email])
-      @user.send_reset_password_instructions
+      @user.resend_confirmation_instructions
       render json: {message: I18n.t('api.messages.success')}, status: 200
     rescue => e
       render_error_message(e.message)
