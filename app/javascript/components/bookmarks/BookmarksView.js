@@ -31,7 +31,7 @@ class BookmarksView extends React.Component {
     if (this.props.user.loggedIn) {
       this.props.history.push(`/conversations/${post.id}`);
     } else {
-      this.props.showLoginModal();
+      this.props.showLoginModal('login');
     }
   }
 

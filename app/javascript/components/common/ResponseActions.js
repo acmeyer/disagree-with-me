@@ -21,7 +21,7 @@ class ResponseActions extends React.Component {
       this.props.toggleResponseUpvote(this.props.response);
       mixpanel.track('Toggled Response Upvote', {response_id: this.props.response.id});
     } else {
-      this.props.showLoginModal();
+      this.props.showLoginModal('login');
       mixpanel.track('Shown Login Modal', {from: 'toggle response upvote', object_id: this.props.response.id});
     }
   }
@@ -32,7 +32,7 @@ class ResponseActions extends React.Component {
       this.props.thankResponse(this.props.response);
       mixpanel.track('Thanked Response', {response_id: this.props.response.id});
     } else {
-      this.props.showLoginModal();
+      this.props.showLoginModal('login');
       mixpanel.track('Shown Login Modal', {from: 'thanked response', object_id: this.props.response.id});
     }
   }
@@ -46,7 +46,7 @@ class ResponseActions extends React.Component {
     if (this.props.user.loggedIn) {
       this.props.showReport(this.props.response, 'response');
     } else {
-      this.props.showLoginModal();
+      this.props.showLoginModal('login');
       mixpanel.track('Shown Login Modal', {from: 'report response', object_id: this.props.response.id});
     }
   }
@@ -135,7 +135,7 @@ class ResponseActions extends React.Component {
 
 function actions(dispatch) {
   return {
-    showLoginModal: () => { dispatch(showLoginModal()) },
+    showLoginModal: (view) => { dispatch(showLoginModal(view)) },
     toggleResponseUpvote: (response) => { dispatch(toggleResponseUpvote(response)) },
     thankResponse: (response) => { dispatch(thankResponse(response)) },
     showReport: (response, type) => { dispatch(showReportModal(response, type)) },

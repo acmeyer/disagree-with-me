@@ -26,7 +26,7 @@ class PostActions extends React.Component {
       this.props.togglePostUpvote(this.props.post);
       mixpanel.track('Toggled Post Upvote', {post_id: this.props.post.id});
     } else {
-      this.props.showLoginModal();
+      this.props.showLoginModal('login');
       mixpanel.track('Shown Login Modal', {from: 'toggle post upvote', object_id: this.props.post.id});
     }
   }
@@ -37,7 +37,7 @@ class PostActions extends React.Component {
       this.props.togglePostBookmark(this.props.post);
       mixpanel.track('Toggled Post Bookmark', {post_id: this.props.post.id});
     } else {
-      this.props.showLoginModal();
+      this.props.showLoginModal('login');
       mixpanel.track('Shown Login Modal', {from: 'toggle post bookmark', object_id: this.props.post.id});
     }
   }
@@ -89,7 +89,7 @@ class PostActions extends React.Component {
     if (this.props.user.loggedIn) {
       this.props.showReport(this.props.post, 'post');
     } else {
-      this.props.showLoginModal();
+      this.props.showLoginModal('login');
       mixpanel.track('Shown Login Modal', {from: 'report post', object_id: this.props.post.id});
     }
   }
@@ -144,7 +144,7 @@ class PostActions extends React.Component {
 
 function actions(dispatch) {
   return {
-    showLoginModal: () => { dispatch(showLoginModal()) },
+    showLoginModal: (view) => { dispatch(showLoginModal(view)) },
     togglePostUpvote: (post) => { dispatch(togglePostUpvote(post)) },
     togglePostBookmark: (post) => { dispatch(togglePostBookmark(post)) },
     showReport: (post, type) => { dispatch(showReportModal(post, type)) },

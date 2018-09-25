@@ -29,7 +29,7 @@ class ResponseCell extends React.Component {
 
 function actions(dispatch) {
   return {
-    showLoginModal: () => { dispatch(showLoginModal()) },
+    showLoginModal: (view) => { dispatch(showLoginModal(view)) },
   };
 }
 
