@@ -10,6 +10,14 @@ class Api::V1::AuthController < ApplicationController
   rescue_from Api::V1::Unauthorized, with: :unauthorized
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
 
+  def oauth
+    begin
+      @user = User.from_omniauth(request.env["omniauth.auth"])
+    rescue => e
+      render_error_message(e.message)
+    end
+  end
+
   def signin
     begin
       @user = User.find_for_authentication(:email => params[:email])

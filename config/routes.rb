@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     scope module: :api, defaults: {format: :json} do
       namespace :v1 do
         # Auth routes
+        post 'auth/oauth', to: 'auth#oauth'
         post 'auth/signin', to: 'auth#signin'
         post 'auth/signup', to: 'auth#signup'
         post 'auth/send_reset_password_instructions', to: 'auth#send_reset_password_instructions'
