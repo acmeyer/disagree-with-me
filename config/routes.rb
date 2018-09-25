@@ -76,6 +76,8 @@ Rails.application.routes.draw do
   get "me/:route", to: "web_app#index", as: 'user'
   get "notification_settings", to: "web_app#index", as: 'notification_settings'
   get "about", to: "web_app#index"
+  get "latest", to: "web_app#index"
+  get "popular", to: "web_app#index"
   get "terms", to: "web_app#index"
   get "privacy", to: "web_app#index"
   root to: "web_app#index"

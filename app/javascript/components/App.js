@@ -44,6 +44,8 @@ class App extends React.Component {
           <ComposePostModal />
           <ConfirmEmailModal />
           <Route exact path="/" render={props => <HomeView key={this.props.user.id} {...props} />} />
+          <Route path="/latest" render={props => <HomeView key={this.props.user.id} {...props} />} />
+          <Route path="/popular" render={props => <HomeView key={this.props.user.id} {...props} />} />
           <Route path="/about" component={AboutPage} />
           <Route path="/terms" component={TermsPage} />
           <Route path="/privacy" component={PrivacyPage} />

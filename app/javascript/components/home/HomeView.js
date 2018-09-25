@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import LoadingView from '../common/LoadingView';
 import PostCell from '../common/PostCell';
 import { 
@@ -28,8 +28,10 @@ class HomeView extends React.Component {
 
     const searchParams = queryString.parse(this.props.location.search);
 
+    const currentUrl = this.props.match.url;
+
     this.state = {
-      list: 'popular',
+      list: currentUrl === '/latest' ? 'latest' : 'popular',
       searchQuery: searchParams.query || '',
       sortBy: searchParams.sortBy || 'Relevance',
     };
@@ -146,15 +148,11 @@ class HomeView extends React.Component {
     );
   }
 
-  handleChangePostList = (list) => {
-    this.setState({list}, () => this.fetchNewPosts());
-  }
-
   renderListFilters = () => {
     return (
       <div className="list-filters">
-        <a onClick={() => this.state.list === 'popular' ? null : this.handleChangePostList('popular')} className={`filter mr-2 ${this.state.list === 'popular' ? 'font-weight-bold' : ''}`}>Popular</a>
-        <a onClick={() => this.state.list === 'latest' ? null : this.handleChangePostList('latest')} className={`filter mr-2 ${this.state.list === 'latest' ? 'font-weight-bold' : ''}`}>Latest</a>
+        <Link to="/popular" className={`filter text-dark mr-2 ${this.state.list === 'popular' ? 'font-weight-bold' : ''}`}>Popular</Link>
+        <Link to="/latest" className={`filter text-dark mr-2 ${this.state.list === 'latest' ? 'font-weight-bold' : ''}`}>Latest</Link>
       </div>
     )
   }
