@@ -48,7 +48,7 @@ class NavBar extends React.Component {
     if (this.props.user.loggedIn) {
       this.props.showComposeView();
     } else {
-      this.showLogin('signup');
+      this.showLogin('login');
     }
   }
 

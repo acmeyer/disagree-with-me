@@ -45,7 +45,7 @@ class ConversationView extends React.Component {
     if (this.props.user.loggedIn) {
       this.setState({responseInFocus: true});
     } else {
-      this.props.dispatch(showLoginModal());
+      this.props.dispatch(showLoginModal('login'));
       mixpanel.track('Shown Login Modal', {from: 'show conversation responses', object_id: postId});
     }
   }
