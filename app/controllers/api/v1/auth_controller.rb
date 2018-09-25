@@ -40,7 +40,6 @@ class Api::V1::AuthController < ApplicationController
         @user.reload
         render_user
       else
-        @user.send_confirmation_instructions
         render_error_message('email_confirmation')
       end
     rescue => e
