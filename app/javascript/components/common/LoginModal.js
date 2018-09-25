@@ -18,6 +18,7 @@ class LoginModal extends React.Component {
 
     this.state = {
       loading: false,
+      loginOption: 'social',
       email: '',
       password: '',
       passwordConfirmation: '',
@@ -28,6 +29,7 @@ class LoginModal extends React.Component {
   close = () => {
     this.setState({
       loading: false,
+      loginOption: 'social',
       email: '',
       password: '',
       passwordConfirmation: '',
@@ -37,9 +39,17 @@ class LoginModal extends React.Component {
   }
 
   handleChangeView = (newView) => {
-    let {view} = this.state;
     this.setState({
       view: newView,
+      password: '',
+      passwordConfirmation: '',
+      loading: false,
+    });
+  }
+
+  handleChangeLoginOption = (option) => {
+    this.setState({
+      loginOption: option,
       password: '',
       passwordConfirmation: '',
       loading: false,
@@ -54,6 +64,10 @@ class LoginModal extends React.Component {
     } else {
       this.login();
     }
+  }
+
+  handleSocialLogin = (social) => {
+    console.log(`${this.state.view} with ${social}`);
   }
 
   resetPassword = () => {
@@ -229,28 +243,94 @@ class LoginModal extends React.Component {
     );
   }
 
-  renderFooterLinks() {
-    let content;
-    let {view} = this.state;
+  renderEmailLogin = () => {
+    let form, title;
+    if (this.state.view === 'reset_password') {
+      form = this.renderResetPasswordForm();
+      title = 'Reset Password';
+    } else if (this.state.view === 'signup') {
+      form = this.renderSignupForm();
+      title = 'Sign Up';
+    } else {
+      form = this.renderLoginForm();
+      title = 'Login';
+    }
+    
+    return (
+      <form onSubmit={() => this.handleSubmit()}>
+        {form}
+        <Button 
+          disabled={this.state.loading} 
+          loading={this.state.loading} 
+          onClick={() => this.handleSubmit()}
+          fill 
+          intent="primary" 
+          large
+        >
+          {title}
+        </Button>
+      </form>
+    );
+  }
 
-    if (view === 'reset_password') {
+  renderSocialLogins = () => {
+    let {view} = this.state;
+    return (
+      <div className="signup-form d-flex flex-column align-items-center justify-content-between">
+        <button className="btn btn-block border d-flex justify-content-center align-items-center" onClick={() => this.handleSocialLogin('google')}>
+          <i className="icon-google-colored mr-2">
+            <span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span>
+          </i>
+          {view === 'signup' ? 'Sign up' : 'Login'} with Google
+        </button>
+        <button className="btn btn-block border d-flex justify-content-center align-items-center" onClick={() => this.handleSocialLogin('facebook')}>
+          <i className="fab fa-facebook text-facebook-blue mr-2" />
+          {view === 'signup' ? 'Sign up' : 'Login'} with Facebook
+        </button>
+        <button className="btn btn-block border d-flex justify-content-center align-items-center" onClick={() => this.handleSocialLogin('twitter')}>
+          <i className="fab fa-twitter text-twitter-blue mr-2" />
+          {view === 'signup' ? 'Sign up' : 'Login'} with Twitter
+        </button>
+        <button className="btn btn-block border d-flex justify-content-center align-items-center" onClick={() => this.handleChangeLoginOption('email')}>
+          <i className="far fa-envelope mr-2" />
+          {view === 'signup' ? 'Sign up' : 'Login'} with Email
+        </button>
+      </div>
+    );
+  }
+
+  renderFooterLinks = () => {
+    let content;
+    let {view, loginOption} = this.state;
+
+    if (loginOption === 'email') {
       content = (
         <div className="text-center">
-          <a href="#" onClick={() => this.handleChangeView('login')}>Remember it again? Login</a>
-        </div>
-      );
-    } else if (view === 'signup') {
-      content = (
-        <div className="text-center">
-          <a href="#" onClick={() => this.handleChangeView('login')}>Already have an account? Login</a>
+          <a href="#" onClick={() => this.handleChangeLoginOption('social')}>
+            &larr; Different {view === 'signup' ? 'sign up' : 'login'} options
+          </a>
         </div>
       );
     } else {
-      content = (
-        <div className="text-center">
-          <a href="#" onClick={() => this.handleChangeView('signup')}>Need an account? Sign Up</a>
-        </div>
-      );
+      if (view === 'reset_password') {
+        content = (
+          <div className="text-center">
+            <a href="#" onClick={() => this.handleChangeView('login')}>Remember it again? Login</a>
+          </div>
+        );
+      } else if (view === 'signup') {
+        content = (
+          <div className="text-center">
+            <a href="#" onClick={() => this.handleChangeView('login')}>Already have an account? Login</a>
+          </div>
+        );
+      } else {
+        content = (
+          <div className="text-center">
+            <a href="#" onClick={() => this.handleChangeView('signup')}>Need an account? Sign Up</a>
+          </div>
+        );
+      }
     }
 
     return (
@@ -268,15 +348,18 @@ class LoginModal extends React.Component {
     if (this.state.view === 'reset_password') {
       title = 'Reset Password';
       lead = 'Enter your email below and we\'ll send you instructions on how to reset your password.';
-      content = this.renderResetPasswordForm();
     } else if (this.state.view === 'signup') {
       title = 'Sign Up';
-      lead = 'Enter your information below to sign up to use Disagree with Me.';
-      content = this.renderSignupForm();
+      lead = 'Sign up to use Disagree with Me.';
     } else {
       title = 'Login';
       lead = 'Login to Disagree with Me to create, respond, upvote, and save posts.';
-      content = this.renderLoginForm();
+    }
+
+    if (this.state.loginOption === 'email') {
+      content = this.renderEmailLogin();
+    } else {
+      content = this.renderSocialLogins();
     }
 
     return (
@@ -288,19 +371,7 @@ class LoginModal extends React.Component {
             <p className="lead text-center">{lead}</p>
           </div>
           <hr />
-          <form onSubmit={() => this.handleSubmit()}>
-            {content}
-            <Button 
-              disabled={this.state.loading} 
-              loading={this.state.loading} 
-              onClick={() => this.handleSubmit()}
-              fill 
-              intent="primary" 
-              large
-            >
-              {title}
-            </Button>
-          </form>
+          {content}
           {this.renderFooterLinks()}
         </div>
       </AppModal>

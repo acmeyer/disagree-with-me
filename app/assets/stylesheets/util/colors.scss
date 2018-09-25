@@ -15,7 +15,22 @@ $primary: $darkGray;
 $cellBorder: #EEEEEE;
 $borderGray: $cellBorder;
 $cellHighlight: $offWhite;
+$facebook-blue: #3B5998;
+$twitter-blue: #1DA1F2;
+$google-blue: #4285f4;
 
 .bg-dark {
   background-color: $darkGray !important;
+}
+
+.text-facebook-blue {
+  color: $facebook-blue !important;
+}
+
+.text-twitter-blue {
+  color: $twitter-blue !important;
+}
+
+.text-google-blue {
+  color: $google-blue !important;
 }
