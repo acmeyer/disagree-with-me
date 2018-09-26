@@ -12,6 +12,7 @@ en:
       invalid_email_or_password: "Invalid email or password."
       account_disabled: "Your account has been disabled. Please contact support@disagreewithme.app for more information."
       email_address_needs_confirmation: "Email address needs to be confirmed."
+      oauth_failed: "Authentication with provider failed. Please try again or contact support@disagreewithme.app."
     errors:
       forbidden: "Forbidden."
       unauthorized: "Unauthorized."

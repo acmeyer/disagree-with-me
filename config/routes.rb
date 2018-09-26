@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   }
   get 'users/password_changed', to: 'auth#password_changed'
   get 'users/email_confirmed', to: 'auth#email_confirmed'
-
   
   # API routes
   constraints subdomain: 'api' do

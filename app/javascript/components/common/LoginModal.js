@@ -1,7 +1,7 @@
 import React from 'react';
 import AppModal from './AppModal';
 import { AppToaster }  from './AppToaster';
-import { Button } from "@blueprintjs/core";
+import { Button, Spinner } from "@blueprintjs/core";
 
 import {
   loginWithEmail,
@@ -9,6 +9,7 @@ import {
   sendResetPasswordEmail,
   signupWithEmail,
   showConfirmEmailModal,
+  loginWithAuthProvider,
 } from '../../actions';
 import {connect} from 'react-redux';
 
@@ -48,6 +49,10 @@ class LoginModal extends React.Component {
   }
 
   handleChangeLoginOption = (option) => {
+    if (this.state.loading) {
+      return;
+    }
+  
     this.setState({
       loginOption: option,
       password: '',
@@ -67,7 +72,15 @@ class LoginModal extends React.Component {
   }
 
   handleSocialLogin = (social) => {
-    console.log(`${this.state.view} with ${social}`);
+    this.setState({loading: true});
+    this.props.dispatch(loginWithAuthProvider(social)).then(() => {
+      this.setState({loading: false});
+      this.close();
+      AppToaster.show({ message: 'Logged in successfully!', intent: "success", icon: "tick" });
+    }).catch(err => {
+      console.log('couldnt sign in', err);
+      this.setState({loading: false});
+    });
   }
 
   resetPassword = () => {
@@ -277,23 +290,31 @@ class LoginModal extends React.Component {
     let {view} = this.state;
     return (
       <div className="signup-form d-flex flex-column align-items-center justify-content-between">
-        <button className="btn btn-block border d-flex justify-content-center align-items-center" onClick={() => this.handleSocialLogin('google')}>
-          <i className="icon-google-colored mr-2">
-            <span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span>
-          </i>
-          {view === 'signup' ? 'Sign up' : 'Login'} with Google
+        <button disabled={this.state.loading} className="btn btn-block border d-flex justify-content-center align-items-center" onClick={() => this.handleSocialLogin('google')}>
+          {this.state.loading ? <Spinner size="16" /> : (
+            <span>
+              <i className="icon-google-colored mr-2">
+                <span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span>
+              </i>
+              {view === 'signup' ? 'Sign up' : 'Login'} with Google
+            </span>
+          )}
         </button>
-        <button className="btn btn-block border d-flex justify-content-center align-items-center" onClick={() => this.handleSocialLogin('facebook')}>
-          <i className="fab fa-facebook text-facebook-blue mr-2" />
-          {view === 'signup' ? 'Sign up' : 'Login'} with Facebook
+        <button disabled={this.state.loading} className="btn btn-block border d-flex justify-content-center align-items-center" onClick={() => this.handleSocialLogin('facebook')}>
+          {this.state.loading ? <Spinner size="16" /> : (
+            <span>
+              <i className="fab fa-facebook text-facebook-blue mr-2" />
+              {view === 'signup' ? 'Sign up' : 'Login'} with Facebook
+            </span>
+          )}
         </button>
-        <button className="btn btn-block border d-flex justify-content-center align-items-center" onClick={() => this.handleSocialLogin('twitter')}>
-          <i className="fab fa-twitter text-twitter-blue mr-2" />
-          {view === 'signup' ? 'Sign up' : 'Login'} with Twitter
-        </button>
-        <button className="btn btn-block border d-flex justify-content-center align-items-center" onClick={() => this.handleChangeLoginOption('email')}>
-          <i className="far fa-envelope mr-2" />
-          {view === 'signup' ? 'Sign up' : 'Login'} with Email
+        <button disabled={this.state.loading} className="btn btn-block border d-flex justify-content-center align-items-center" onClick={() => this.handleChangeLoginOption('email')}>
+          {this.state.loading ? <Spinner size="16" /> : (
+            <span>
+              <i className="far fa-envelope mr-2" />
+              {view === 'signup' ? 'Sign up' : 'Login'} with Email
+            </span>
+          )}
         </button>
       </div>
     );

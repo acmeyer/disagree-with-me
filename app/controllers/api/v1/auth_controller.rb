@@ -12,7 +12,14 @@ class Api::V1::AuthController < ApplicationController
 
   def oauth
     begin
-      @user = User.from_omniauth(request.env["omniauth.auth"])
+      @user = User.create_or_load_from_omniauth(oauth_params)
+      if @user
+        AuthToken.generate_new_token(@user.id, @ip_address, @user_agent)
+        @user.reload
+        render_user
+      else
+        render_error_message(t('api.auth.oauth_failed', default: 'Authentication with provider failed. Please try again or contact support@disagreewithme.app.'))
+      end
     rescue => e
       render_error_message(e.message)
     end
@@ -106,6 +113,15 @@ class Api::V1::AuthController < ApplicationController
       :email,
       :password,
       :password_confirmation,
+    )
+  end
+
+  def oauth_params
+    params.permit(
+      :provider,
+      :token,
+      :uid,
+      :email,
     )
   end
 end

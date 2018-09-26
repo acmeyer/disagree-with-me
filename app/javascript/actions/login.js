@@ -87,6 +87,85 @@ export function loginWithEmail(email, password) {
   }
 }
 
+function oauthLogin(data) {
+  const url = `${serverDomain}/auth/oauth`;
+
+  return axios.post(url, data).then((response) => {
+    return response.data;
+  }).catch(error => {
+    let message;
+    if (error.response) {
+      message = _.get(error.response, 'data.error') || "An Unknown Error Occurred", 'error';
+    } else {
+      message = error.message || error.data || "An Unknown Error Occurred", 'error';
+    };
+    return Promise.reject(message);
+  });
+}
+
+function loginWithGoogle()  {
+  return new Promise((resolve, reject) => {
+    const auth2 = gapi.auth2.getAuthInstance();
+    return auth2.signIn({scope: 'email'}).then(result => {
+      const profile = result.getBasicProfile();
+      const authResponse = result.getAuthResponse();
+      const data = {
+        provider: 'google',
+        uid: profile.getId(),
+        token: authResponse.access_token,
+        email: profile.getEmail()
+      }
+      return oauthLogin(data).then((user) => resolve(user));
+    }).catch(err => reject(err.error));
+  });
+}
+
+function loginWithFacebook() {
+  return new Promise((resolve, reject) => {
+    FB.login(response => {
+      if (response.authResponse) {
+        let {
+          accessToken,
+          grantedScopes,
+          userID,
+        } = response.authResponse;
+        if (grantedScopes.split(',').includes('email')) {
+          FB.api('/me', {fields: 'email'}, function(response) {
+            const email = response.email;
+            const data = {
+              provider: 'facebook',
+              token: accessToken,
+              uid: userID,
+              email,
+            }
+            return oauthLogin(data).then((user) => resolve(user));
+          });
+        } else {
+          return reject('Email permission is required.');
+        }
+      } else {
+        return reject('Cancelled login/permissions not authorized.');
+      }
+    }, {scope: 'email', return_scopes: true});
+  });
+}
+
+export function loginWithAuthProvider(provider) {
+  return (dispatch, getState) => {
+    if (provider === 'facebook') {
+      return loginWithFacebook().then(user => {
+        return dispatch(loggedIn(user));
+      })
+    } else if (provider === 'google') {
+      return loginWithGoogle().then(user => {
+        return dispatch(loggedIn(user));
+      });
+    } else {
+      return Promise.reject('Auth provider not supported.');
+    }
+  }
+}
+
 export function signupWithEmail(data) {
   return (dispatch, getState) => {
     let url = `${serverDomain}/auth/signup`;

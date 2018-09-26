@@ -16,6 +16,8 @@
     // Twitter Card Tags
     %meta{name: "twitter:card", content: "summary"}
     %meta{name: "twitter:site", content: "@disagreeapp"}
+    // Google Meta Tags
+    %meta{name: "google-signin-client_id", content: "#{ENV['GOOGLE_CLIENT_ID']}"}
 
     %link{:href => "/apple-icon-57x57.png", :rel => "apple-touch-icon", :sizes => "57x57"}/
     %link{:href => "/apple-icon-60x60.png", :rel => "apple-touch-icon", :sizes => "60x60"}/
@@ -58,3 +60,29 @@
     = yield
 
     = yield :javascripts
+
+    -# Google js setup
+    = javascript_include_tag "https://apis.google.com/js/platform.js"
+    :javascript
+      gapi.load('auth2', function() {gapi.auth2.init()});
+    
+    -# FB js setup
+    :javascript
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : "#{ENV['FB_APP_ID']}",
+          cookie     : true,
+          xfbml      : true,
+          version    : 'v3.1'
+        });
+      };
+
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+
+

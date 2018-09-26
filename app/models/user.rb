@@ -7,6 +7,7 @@ class User < ApplicationRecord
   acts_as_voter
 
   has_many :auth_tokens, dependent: :destroy
+  has_many :oauth_tokens, dependent: :destroy
   has_many :posts
   has_many :responses
   has_many :thanks, dependent: :destroy
@@ -71,11 +72,37 @@ class User < ApplicationRecord
     end
   end
 
-  def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
-      user.password = Devise.friendly_token[0,20]
-      user.skip_confirmation!
+  def self.create_or_load_from_omniauth(auth)
+    # Find or create an auth token
+    token = OauthToken.where(provider: auth[:provider], uid: auth[:uid], token: auth[:token]).first_or_initialize
+    user = token.user
+
+    # Return the user if they already exist
+    if !user.nil?
+      return user
+    else
+      # If a user already exists with the same email as the auth token account
+      # then log that user in and attach the token
+      # Assumes an email comes with the omniauth data.
+      user = User.find_by_email!(auth[:email])
+      if !user.nil?
+        token.user = user
+        token.save!
+
+        return user
+      else
+        # Assumes email is given.
+        user = User.new(
+          email: auth[:email],
+          password: Devise.friendly_token[0,20],
+        )
+        user.skip_confirmation!
+        user.save!
+        token.user = user
+        token.save!
+
+        return user
+      end
     end
   end
 

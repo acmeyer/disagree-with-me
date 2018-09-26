@@ -46,7 +46,7 @@ class Post < ApplicationRecord
   end
 
   def share_url
-    return "#{Rails.env.development? ? 'http://' : 'https://'}#{ENV['DOMAIN_NAME']}/conversations/#{self.id}"
+    return "https://#{ENV['DOMAIN_NAME']}/conversations/#{self.id}"
   end
 
   def formatted_content

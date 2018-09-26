@@ -18,6 +18,8 @@ module DisagreeWithMe
 
     config.active_job.queue_adapter = :sidekiq
 
+    config.force_ssl = true
+
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins "#{ENV['DOMAIN_NAME']}", "api.#{ENV['DOMAIN_NAME']}", "www.#{ENV['DOMAIN_NAME']}"
