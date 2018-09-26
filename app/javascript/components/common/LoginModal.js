@@ -1,7 +1,7 @@
 import React from 'react';
 import AppModal from './AppModal';
 import { AppToaster }  from './AppToaster';
-import { Button, Spinner } from "@blueprintjs/core";
+import { Button } from "@blueprintjs/core";
 
 import {
   loginWithEmail,
@@ -78,7 +78,6 @@ class LoginModal extends React.Component {
       this.close();
       AppToaster.show({ message: 'Logged in successfully!', intent: "success", icon: "tick" });
     }).catch(err => {
-      console.log('couldnt sign in', err);
       this.setState({loading: false});
     });
   }
@@ -291,30 +290,24 @@ class LoginModal extends React.Component {
     return (
       <div className="signup-form d-flex flex-column align-items-center justify-content-between">
         <button disabled={this.state.loading} className="btn btn-block border d-flex justify-content-center align-items-center" onClick={() => this.handleSocialLogin('google')}>
-          {this.state.loading ? <Spinner size="16" /> : (
-            <span>
-              <i className="icon-google-colored mr-2">
-                <span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span>
-              </i>
-              {view === 'signup' ? 'Sign up' : 'Login'} with Google
-            </span>
-          )}
+          <span>
+            <i className="icon-google-colored mr-2">
+              <span className="path1"></span><span className="path2"></span><span className="path3"></span><span className="path4"></span>
+            </i>
+            {view === 'signup' ? 'Sign up' : 'Login'} with Google
+          </span>
         </button>
         <button disabled={this.state.loading} className="btn btn-block border d-flex justify-content-center align-items-center" onClick={() => this.handleSocialLogin('facebook')}>
-          {this.state.loading ? <Spinner size="16" /> : (
-            <span>
-              <i className="fab fa-facebook text-facebook-blue mr-2" />
-              {view === 'signup' ? 'Sign up' : 'Login'} with Facebook
-            </span>
-          )}
+          <span>
+            <i className="fab fa-facebook text-facebook-blue mr-2" />
+            {view === 'signup' ? 'Sign up' : 'Login'} with Facebook
+          </span>
         </button>
         <button disabled={this.state.loading} className="btn btn-block border d-flex justify-content-center align-items-center" onClick={() => this.handleChangeLoginOption('email')}>
-          {this.state.loading ? <Spinner size="16" /> : (
-            <span>
-              <i className="far fa-envelope mr-2" />
-              {view === 'signup' ? 'Sign up' : 'Login'} with Email
-            </span>
-          )}
+          <span>
+            <i className="far fa-envelope mr-2" />
+            {view === 'signup' ? 'Sign up' : 'Login'} with Email
+          </span>
         </button>
       </div>
     );
@@ -323,6 +316,10 @@ class LoginModal extends React.Component {
   renderFooterLinks = () => {
     let content;
     let {view, loginOption} = this.state;
+
+    if (this.state.loading) {
+      return;
+    }
 
     if (loginOption === 'email') {
       content = (

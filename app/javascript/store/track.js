@@ -6,14 +6,7 @@ function track(action) {
       mixpanel.people.set({
         '$email': action.user.email
       });
-      mixpanel.track('Logged in');
-      break;
-    case 'SIGNED_UP':
-      mixpanel.identify(action.user.id.toString());
-      mixpanel.people.set({
-        '$email': action.user.email
-      });
-      mixpanel.track('Signed up');
+      mixpanel.track('Logged in', {method: action.method});
       break;
     case 'RESET_PASSWORD_SENT':
       mixpanel.track('Reset Password Sent', {email: action.email});

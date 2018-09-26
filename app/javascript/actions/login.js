@@ -48,17 +48,11 @@ export function resendConfirmEmail(email) {
   }
 }
 
-function loggedIn(user) {
+function loggedIn(user, method) {
   return {
     type: 'LOGGED_IN',
-    user
-  }
-}
-
-function signedUp(user) {
-  return {
-    type: 'SIGNED_UP',
     user,
+    method
   }
 }
 
@@ -74,7 +68,7 @@ export function loginWithEmail(email, password) {
     let url = `${serverDomain}/auth/signin`;
 
     return axios.post(url, {email, password}).then((response) => {
-      return dispatch(loggedIn(response.data));
+      return dispatch(loggedIn(response.data, 'email'));
     }).catch(error => {
       let message;
       if (error.response) {
@@ -154,11 +148,11 @@ export function loginWithAuthProvider(provider) {
   return (dispatch, getState) => {
     if (provider === 'facebook') {
       return loginWithFacebook().then(user => {
-        return dispatch(loggedIn(user));
+        return dispatch(loggedIn(user, 'facebook'));
       })
     } else if (provider === 'google') {
       return loginWithGoogle().then(user => {
-        return dispatch(loggedIn(user));
+        return dispatch(loggedIn(user, 'google'));
       });
     } else {
       return Promise.reject('Auth provider not supported.');
@@ -171,7 +165,7 @@ export function signupWithEmail(data) {
     let url = `${serverDomain}/auth/signup`;
 
     return axios.post(url, data).then((response) => {
-      return dispatch(signedUp(response.data));
+      return dispatch(loggedIn(response.data, 'email'));
     }).catch(error => {
       let message;
       if (error.response) {

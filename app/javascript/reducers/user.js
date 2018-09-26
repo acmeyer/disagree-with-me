@@ -35,13 +35,6 @@ export function userReducer(state = initialState, action) {
       seenWelcomeMessage: true,
     }
   }
-  if (action.type === 'SIGNED_UP') {
-    return {
-      ...state,
-      loggedIn: true,
-      ...action.user,
-    }
-  }
   if (action.type === 'LOGGED_OUT') {
     return {
       loggedIn: false,

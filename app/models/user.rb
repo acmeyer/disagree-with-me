@@ -84,7 +84,7 @@ class User < ApplicationRecord
       # If a user already exists with the same email as the auth token account
       # then log that user in and attach the token
       # Assumes an email comes with the omniauth data.
-      user = User.find_by_email!(auth[:email])
+      user = User.find_by_email(auth[:email])
       if !user.nil?
         token.user = user
         token.save!
