@@ -65,7 +65,7 @@ class Api::V1::AuthController < ApplicationController
   def send_reset_password_instructions
     begin
       @user = User.find_by_email!(params[:email])
-      @user.resend_confirmation_instructions
+      @user.send_reset_password_instructions
       render json: {message: I18n.t('api.messages.success')}, status: 200
     rescue => e
       render_error_message(e.message)
@@ -75,7 +75,7 @@ class Api::V1::AuthController < ApplicationController
   def resend_confirmation_email
     begin
       @user = User.find_by_email!(params[:email])
-      @user.send_confirmation_instructions
+      @user.resend_confirmation_instructions
       render json: {message: I18n.t('api.messages.success')}, status: 200
     rescue => e
       render_error_message(e.message)
