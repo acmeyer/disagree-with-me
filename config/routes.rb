@@ -1,3 +1,5 @@
+require  'sidekiq/web'
+
 Rails.application.routes.draw do
   # Devise routes
   devise_for :users, only: [:passwords, :confirmations], controllers: {
@@ -61,6 +63,27 @@ Rails.application.routes.draw do
     end
   end
 
+  # Admin routes
+  constraints subdomain: 'admin' do
+    namespace :admin, path: '/' do
+      # Devise routes
+      devise_for :users, only: [:sessions], controllers: {
+        sessions: 'admin/sessions'
+      }
+
+      resources :users
+      resources :posts
+      resources :reports
+
+      # Ensure only admins can view these pages
+      authenticate :admin_user, lambda { |u| u.admin? } do
+        mount Sidekiq::Web => '/sidekiq'
+      end
+
+      root to: 'dashboard#index'
+    end
+  end
+
   # Error routes
   match '/404', to: 'errors#file_not_found', via: :all
   match '/500', to: 'errors#internal_server_error', via: :all
@@ -73,7 +96,7 @@ Rails.application.routes.draw do
   get "reset_password", to: "web_app#index"
   get "conversations/:post_id", to: "web_app#index", as: 'conversation'
   get "bookmarks", to: "web_app#index"
-  get "me/:route", to: "web_app#index", as: 'user'
+  get "me/:route", to: "web_app#index", as: 'me'
   get "notification_settings", to: "web_app#index", as: 'notification_settings'
   get "about", to: "web_app#index"
   get "latest", to: "web_app#index"

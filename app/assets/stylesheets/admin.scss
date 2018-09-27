@@ -1,0 +1,16 @@
+// Import Frameworks
+@import "bootstrap";
+// Utilities
+@import 'util/mixins';
+@import 'util/colors';
+@import 'util/typography';
+// Components
+@import "components/forms";
+
+.clickable {
+  cursor: pointer;
+}
+
+.authform {
+  max-width: 450px;
+}

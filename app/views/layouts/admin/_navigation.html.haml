@@ -1,0 +1,14 @@
+%nav.navbar.navbar-dark.bg-dark.navbar-expand-lg
+  .container-fluid
+    = link_to admin_root_path, class: 'navbar-brand d-flex' do
+      Disagree with Me Admin
+    %button.navbar-toggler{ type: 'button', data: {toggle: 'collapse', target: '#navbarNav'}}
+      %span.navbar-toggler-icon
+    .collapse.navbar-collapse#navbarNav
+      %ul.navbar-nav.mr-auto
+        = render 'layouts/admin/navigation_links'
+      .navbar-nav.ml-auto
+        - if admin_user_signed_in?
+          = link_to "Log out", destroy_admin_user_session_path, method: :delete, class: "nav-item nav-link"
+        - else
+          = link_to "Log in", new_admin_user_session_path, class: "nav-item nav-link"
