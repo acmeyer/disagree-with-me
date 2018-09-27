@@ -1,0 +1,147 @@
+%ol.breadcrumb
+  %li.breadcrumb-item
+    = link_to "Users", admin_users_path
+  %li.breadcrumb-item.active User Details
+
+.card
+  .card-body
+    .d-flex.justify-content-between
+      %h3 User Details
+      .actions
+        = link_to 'Edit', edit_admin_user_path(@user), class: 'btn btn-light'
+        = link_to 'Disable', disable_admin_user_path(@user), data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+    %hr
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong User id:
+      .col-sm-10
+        .text-left
+          #{@user.id}
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Email:
+      .col-sm-10
+        .text-left
+          #{@user.email}                                                    
+
+    %hr
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Posts
+      .col-sm-10
+        - if @posts.total_count > 0
+          .table-responsive
+            %table.table.table-hover.tours-table
+              %thead
+                %tr
+                  %td ID
+                  %td Content
+                  %td Upvotes
+                  %td Responses
+                  %td
+                  %td
+              %tbody
+                - @posts.each do |post|
+                  %tr
+                    %td= link_to post.id, admin_post_path(post)
+                    %td= post.content.truncate(50)
+                    %td= post.cached_votes_up
+                    %td= post.responses_count
+                    %td= link_to "Edit", edit_admin_post_path(post)
+                    %td= link_to "Delete", admin_post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger'
+          = paginate @posts, window: 1, param_name: :posts_page
+        - else
+          None
+
+    %hr
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Responses
+      .col-sm-10
+        - if @responses.total_count > 0
+          .table-responsive
+            %table.table.table-hover.tours-table
+              %thead
+                %tr
+                  %td ID
+                  %td Content
+                  %td Upvotes
+                  %td Post
+                  %td
+                  %td
+              %tbody
+                - @responses.each do |response|
+                  %tr
+                    %td= link_to response.id, admin_post_response_path(response.post, response)
+                    %td= response.content.truncate(50)
+                    %td= response.cached_votes_up
+                    %td= link_to response.post.id, admin_post_path(response.post)
+                    %td= link_to "Edit", edit_admin_post_response_path(response.post, response)
+                    %td= link_to "Delete", admin_post_response_path(response.post, response), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger'
+          = paginate @responses, window: 1, param_name: :responses_page
+        - else
+          None
+
+    %hr
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Reports
+      .col-sm-10
+        - if @reports.total_count > 0
+          .table-responsive
+            %table.table.table-hover.tours-table
+              %thead
+                %tr
+                  %td ID
+                  %td Reason
+                  %td Description
+                  %td Reported
+                  %td Status
+                  %td
+                  %td
+              %tbody
+                - @reports.each do |report|
+                  %tr
+                    %td= link_to report.id, admin_report_path(report)
+                    %td= report.reason
+                    %td= report.description.truncate(50)
+                    %td #{report.reportable_type} (#{link_to report.reportable_id, report.reportable_type == 'Post' ? admin_post_path(report.reportable) : admin_response_path(report.reportable)})
+                    %td= report.status
+                    %td= link_to "Edit", edit_admin_report_path(report)
+                    %td= link_to "Delete", admin_report_path(report), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger'
+          = paginate @reports, window: 1, param_name: :reports_page
+        - else
+          None          
+
+    %hr
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Auth Tokens
+      .col-sm-10
+        - if @auth_tokens.total_count > 0
+          .table-responsive
+            %table.table.table-hover.tours-table
+              %thead
+                %tr
+                  %td ID
+                  %td Last Used
+                  %td Expires
+                  %td IP Address
+                  %td User Agent
+                  %td
+                  %td
+              %tbody
+                - @auth_tokens.each do |auth_token|
+                  %tr
+                    %td= link_to auth_token.id, admin_user_auth_token_path(@user, auth_token)
+                    %td= auth_token.last_used_at
+                    %td= auth_token.expires_at
+                    %td= auth_token.ip_address.to_s
+                    %td= auth_token.user_agent
+                    %td
+                      - unless auth_token.expired?
+                        = link_to "Expire", expire_admin_user_auth_token_path(@user, auth_token), method: :post, data: { confirm: 'Are you sure?' }, class: 'text-danger'
+                    %td= link_to "Delete", admin_user_auth_token_path(@user, auth_token), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger'
+          = paginate @auth_tokens, window: 1, param_name: :auth_tokens_page
+        - else
+          None                              

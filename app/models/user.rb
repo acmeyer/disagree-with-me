@@ -26,6 +26,9 @@ class User < ApplicationRecord
   after_create :add_to_marketing_email_list, :create_notifications_setting
   before_destroy :remove_from_email_lists
 
+  include PgSearch
+  pg_search_scope :search_users, :against => [:email]
+
   def responded_to_post?(post_id)
     self.responses.pluck(:post_id).include?(post_id)
   end

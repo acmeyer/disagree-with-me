@@ -71,8 +71,22 @@ Rails.application.routes.draw do
         sessions: 'admin/sessions'
       }
 
-      resources :users
-      resources :posts
+      resources :users do
+        member do
+          post 'disable'
+        end
+
+        resources :auth_tokens, except: [:index, :new, :create, :edit, :update] do
+          member do
+            post 'expire'
+          end
+        end
+      end
+
+      resources :posts do
+        resources :responses
+      end
+
       resources :reports
 
       # Ensure only admins can view these pages

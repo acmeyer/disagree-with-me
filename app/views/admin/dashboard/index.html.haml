@@ -1,25 +1,5 @@
 .row
-  .col-sm-6.mb-3
-    .card
-      .card-body
-        %h5.card-title Recent Users
-        .table-responsive
-          %table.table.table-hover
-            %thead
-              %tr
-                %td ID
-                %td Email
-                %td
-            %tbody
-              - @recent_users.each do |user|
-                %tr
-                  %td= user.id
-                  %td= user.email
-                  %td= link_to "View", admin_user_path(user)
-      .card-footer
-        = link_to 'See All Users', admin_users_path, class: 'card-link'
-
-  .col-sm-6.mb-3
+  .col-md-6.mb-3
     .card
       .card-body
         %h5.card-title Recent Posts
@@ -37,4 +17,70 @@
                   %td= post.content.truncate(40)
                   %td= link_to "View", admin_post_path(post)
       .card-footer
-        = link_to 'See All Posts', admin_posts_path, class: 'card-link'            
+        = link_to 'See All Posts', admin_posts_path, class: 'card-link'   
+  .col-md-6.mb-3
+    .card
+      .card-body
+        %h5.card-title Recent Responses
+        .table-responsive
+          %table.table.table-hover
+            %thead
+              %tr
+                %td ID
+                %td Content
+                %td Post
+                %td
+            %tbody
+              - @recent_responses.each do |response|
+                %tr
+                  %td= response.id
+                  %td= response.content.truncate(40)
+                  %td= link_to response.post.id, admin_post_path(response.post)
+                  %td= link_to "View", admin_post_response_path(response.post, response)         
+
+
+.row
+  .col-md-6.mb-3
+    .card
+      .card-body
+        %h5.card-title Recent Reports
+        .table-responsive
+          %table.table.table-hover
+            %thead
+              %tr
+                %td ID
+                %td Reported
+                %td Reason
+                %td Description
+                %td Status
+                %td
+            %tbody
+              - @recent_reports.each do |report|
+                %tr
+                  %td= report.id
+                  %td #{report.reportable_type} (#{link_to report.reportable_id, report.reportable_type == 'Post' ? admin_post_path(report.reportable) : admin_response_path(report.reportable)})
+                  %td= report.reason
+                  %td= report.description.truncate(20)
+                  %td= report.status
+                  %td= link_to "View", admin_report_path(report)
+      .card-footer
+        = link_to 'See All Reports', admin_reports_path, class: 'card-link' 
+  .col-md-6.mb-3
+    .card
+      .card-body
+        %h5.card-title Recent Users
+        .table-responsive
+          %table.table.table-hover
+            %thead
+              %tr
+                %td ID
+                %td Email
+                %td
+            %tbody
+              - @recent_users.each do |user|
+                %tr
+                  %td= user.id
+                  %td= user.email
+                  %td= link_to "View", admin_user_path(user)
+      .card-footer
+        = link_to 'See All Users', admin_users_path, class: 'card-link'         

@@ -15,6 +15,9 @@ class Response < ApplicationRecord
   scope :thanked, -> { where(author_thanked: true) }
   scope :not_thanked, -> { where(author_thanked: false) }
 
+  include PgSearch
+  pg_search_scope :search_responses, :against => [:content]
+
   def formatted_content
     return simple_format(self.content)
   end

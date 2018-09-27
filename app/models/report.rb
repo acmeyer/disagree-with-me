@@ -10,6 +10,11 @@ class Report < ApplicationRecord
   enum reason: ['off-topic', 'inappropriate', 'abusive', 'other']
   enum status: [:unresolved, :resolved]
 
+  scope :unresolved, -> { where(status: :unresolved) }
+
+  include PgSearch
+  pg_search_scope :search_reports, :against => [:reason, :status]
+
   private
   def set_default_status
     self.status ||= :unresolved

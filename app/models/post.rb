@@ -13,6 +13,9 @@ class Post < ApplicationRecord
 
   after_save :update_tags, if: Proc.new { |post| post.saved_change_to_content? }
 
+  include PgSearch
+  pg_search_scope :search_posts, :against => [:content]
+
   include AlgoliaSearch
   algoliasearch index_name: "Post_#{ENV['ALGOLIA_ENVIRONMENT']}" do
     attribute :content
