@@ -1,5 +1,5 @@
 class Admin::UsersController < Admin::ApplicationController
-  before_action :find_user, only: [:edit, :update, :show, :destroy]
+  before_action :find_user, only: [:edit, :update, :show, :destroy, :disable, :enable]
 
   def index
     page = params[:page] || 1
@@ -46,6 +46,22 @@ class Admin::UsersController < Admin::ApplicationController
     @reports = @user.reports.page(reports_page).per(5)
     auth_tokens_page = params[:auth_tokens_page] || 1
     @auth_tokens = @user.auth_tokens.page(auth_tokens_page).per(5)
+  end
+
+  def disable
+    if @user.disable
+      redirect_to admin_user_path(@user), notice: 'User account is disabled.'
+    else
+      redirect_to admin_user_path(@user), alert: @user.errors.full_messages[0]
+    end
+  end
+
+  def enable
+    if @user.enable
+      redirect_to admin_user_path(@user), notice: 'User account is enabled.'
+    else
+      redirect_to admin_user_path(@user), alert: @user.errors.full_messages[0]
+    end
   end
 
   def destroy

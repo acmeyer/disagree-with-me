@@ -75,6 +75,16 @@ class User < ApplicationRecord
     end
   end
 
+  def disable
+    self.disabled = true
+    self.save
+  end
+
+  def enable
+    self.disabled = false
+    self.save
+  end
+
   def self.create_or_load_from_omniauth(auth)
     # Find or create an auth token
     token = OauthToken.where(provider: auth[:provider], uid: auth[:uid], token: auth[:token]).first_or_initialize

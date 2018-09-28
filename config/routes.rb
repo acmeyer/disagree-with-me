@@ -74,6 +74,7 @@ Rails.application.routes.draw do
       resources :users do
         member do
           post 'disable'
+          post 'enable'
         end
 
         resources :auth_tokens, except: [:index, :new, :create, :edit, :update] do
