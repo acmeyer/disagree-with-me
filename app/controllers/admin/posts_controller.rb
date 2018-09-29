@@ -28,9 +28,7 @@ class Admin::PostsController < Admin::ApplicationController
   end
 
   def update
-    # Careful when using update_without_password!!
-    # Only admins should have this capability
-    if @post.update_without_password(post_params)
+    if @post.update(post_params)
       redirect_to admin_post_path(@post), notice: 'Post was successfully updated.'
     else
       render :edit
@@ -38,8 +36,6 @@ class Admin::PostsController < Admin::ApplicationController
   end
 
   def show
-    posts_page = params[:posts_page] || 1
-    @posts = @post.posts.page(posts_page).per(5)
     responses_page = params[:responses_page] || 1
     @responses = @post.responses.page(responses_page).per(5)
   end

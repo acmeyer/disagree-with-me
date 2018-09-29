@@ -1,14 +1,19 @@
-- if user.errors.any?
+- if post.errors.any?
   #error_explanation
-    %h2= "#{pluralize(user.errors.count, "error")} prohibited this user from being saved:"
+    %h2= "#{pluralize(post.errors.count, "error")} prohibited this post from being saved:"
     %ul
-      - user.errors.full_messages.each do |message|
+      - post.errors.full_messages.each do |message|
         %li= message
 
 .form-group
-  = f.label :email, class: ''
-  = f.email_field :email, class: 'form-control'
+  = f.label :content, class: ''
+  = f.text_area :content, class: 'form-control'
 .form-group
-  = f.label :password, class: ''
-  = f.password_field :password, class: 'form-control'
-  %small.form-text.text-muted Leave empty if you do not want to change a user's password
+  = f.label :upvotes, class: ''
+  = f.number_field :cached_votes_up, class: 'form-control'
+.form-group
+  = f.label :responses_count, class: ''
+  = f.number_field :responses_count, class: 'form-control'
+.form-group
+  = f.label :user_id, class: ''
+  = f.number_field :user_id, class: 'form-control'
