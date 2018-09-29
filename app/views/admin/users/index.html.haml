@@ -21,7 +21,7 @@
           %td
       %tbody
         - @users.each do |user|
-          %tr{"data-link" => url_for(action: 'show', id: user.id)}
+          %tr
             %td= link_to user.id, admin_user_path(user)
             %td= link_to user.email, "mailto:#{user.email}"
             %td= user.posts.count
