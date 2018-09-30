@@ -1,12 +1,10 @@
 .card
   .d-flex.p-3.justify-content-between.border.border-top-0.border-right-0.border-left-0
-    %h3.card-title Posts
-    .actions
-      = link_to 'Create Post', new_admin_post_path, class: 'btn btn-primary'
+    %h3.card-title Responses
 
   .d-flex.justify-content-center.search.my-3
     .col-md-6
-      = form_tag admin_posts_path, method: :get do
+      = form_tag admin_responses_path, method: :get do
         = text_field_tag 'search_query', @search_query, class: 'form-control', placeholder: "Search..."
 
   .table-responsive
@@ -14,22 +12,22 @@
       %thead
         %tr
           %td ID
+          %td Post
           %td Upvotes
-          %td Responses
           %td Content
           %td Author
           %td
           %td
       %tbody
-        - @posts.each do |post|
+        - @responses.each do |response|
           %tr
-            %td= link_to post.id, admin_post_path(post)
-            %td= post.cached_votes_up
-            %td= post.responses_count
-            %td= post.content.truncate(35)
-            %td= link_to post.author.id, admin_user_path(post.author)
-            %td= link_to "Edit", edit_admin_post_path(post)
-            %td= link_to "Delete", admin_post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger'
+            %td= link_to response.id, admin_post_response_path(response.post, response)
+            %td= link_to response.post.id, admin_post_path(response.post)
+            %td= response.cached_votes_up
+            %td= response.content.truncate(35)
+            %td= link_to response.author.id, admin_user_path(response.author)
+            %td= link_to "Edit", edit_admin_post_response_path(response.post, response)
+            %td= link_to "Delete", admin_post_response_path(response.post, response), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger'
 
   .d-flex.justify-content-center
-    = paginate @posts, window: 1
+    = paginate @responses, window: 1

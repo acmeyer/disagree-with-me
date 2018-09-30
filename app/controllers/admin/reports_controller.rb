@@ -11,26 +11,11 @@ class Admin::ReportsController < Admin::ApplicationController
     end
   end
 
-  def new
-    @report = Report.new
-  end
-
-  def create
-    @report = Report.new(report_params)
-    if @report.save
-      redirect_to admin_report_path(@report), notice: 'Report was successfully created.'
-    else
-      render :new
-    end
-  end
-
   def edit
   end
 
   def update
-    # Careful when using update_without_password!!
-    # Only admins should have this capability
-    if @report.update_without_password(report_params)
+    if @report.update(report_params)
       redirect_to admin_report_path(@report), notice: 'Report was successfully updated.'
     else
       render :edit
@@ -38,8 +23,6 @@ class Admin::ReportsController < Admin::ApplicationController
   end
 
   def show
-    reports_page = params[:reports_page] || 1
-    @reports = @report.reports.page(reports_page).per(5)
   end
 
   def destroy

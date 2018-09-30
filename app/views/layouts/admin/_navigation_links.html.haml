@@ -3,6 +3,8 @@
     = link_to "Users", admin_users_path, class: 'nav-link'
   %li.nav-item{class: "#{current_page?(admin_posts_path) ? 'active' : ''}"}
     = link_to "Posts", admin_posts_path, class: 'nav-link'  
+  %li.nav-item{class: "#{current_page?(admin_posts_path) ? 'active' : ''}"}
+    = link_to "Responses", admin_responses_path, class: 'nav-link'      
   %li.nav-item{class: "#{current_page?(admin_reports_path) ? 'active' : ''}"}
     = link_to "Reports", admin_reports_path, class: 'nav-link'
   %li.nav-item

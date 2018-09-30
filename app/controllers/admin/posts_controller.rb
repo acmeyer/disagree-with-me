@@ -11,19 +11,6 @@ class Admin::PostsController < Admin::ApplicationController
     end
   end
 
-  def new
-    @post = Post.new
-  end
-
-  def create
-    @post = Post.new(post_params)
-    if @post.save
-      redirect_to admin_post_path(@post), notice: 'Post was successfully created.'
-    else
-      render :new
-    end
-  end
-
   def edit
   end
 

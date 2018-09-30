@@ -34,7 +34,13 @@
         %strong Content:
       .col-sm-10
         .text-left
-          #{@post.formatted_content}                                                        
+          #{@post.formatted_content}  
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Top Response:
+      .col-sm-10
+        .text-left
+          #{@post.top_response.try(:formatted_content)}                                                                 
 
     %hr
     .row.mb-3

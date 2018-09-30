@@ -84,11 +84,12 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :posts do
-        resources :responses
+      get 'responses', to: 'responses#index'
+      resources :posts, except: [:new, :create] do
+        resources :responses, except: [:index, :new, :create]
       end
 
-      resources :reports
+      resources :reports, except: [:new, :create]
 
       # Ensure only admins can view these pages
       authenticate :admin_user, lambda { |u| u.admin? } do

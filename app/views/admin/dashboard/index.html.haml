@@ -58,7 +58,7 @@
               - @recent_reports.each do |report|
                 %tr
                   %td= report.id
-                  %td #{report.reportable_type} (#{link_to report.reportable_id, report.reportable_type == 'Post' ? admin_post_path(report.reportable) : admin_response_path(report.reportable)})
+                  %td #{report.reportable_type} (#{link_to report.reportable_id, report.reportable_type == 'Post' ? admin_post_path(report.reportable) : admin_post_response_path(report.reportable.post, report.reportable)})
                   %td= report.reason
                   %td= report.description.truncate(20)
                   %td= report.status

@@ -1,26 +1,14 @@
 class Admin::ResponsesController < Admin::ApplicationController
-  before_action :find_post, only: [:edit, :update, :show, :destroy]
+  before_action :find_post, except: [:index]
+  before_action :find_response, only: [:edit, :update, :show, :destroy]
 
   def index
     page = params[:page] || 1
     if params[:search_query].blank?
-      @posts = Post.all.order(:id).page(page).per(10)
+      @responses = Response.all.order(:id).page(page).per(10)
     else
       @search_query = params[:search_query]
-      @posts = Post.search_posts(@search_query).order(:id).page(page).per(10)
-    end
-  end
-
-  def new
-    @post = Post.new
-  end
-
-  def create
-    @post = Post.new(post_params)
-    if @post.save
-      redirect_to admin_post_path(@post), notice: 'Post was successfully created.'
-    else
-      render :new
+      @responses = Response.search_responses(@search_query).order(:id).page(page).per(10)
     end
   end
 
@@ -28,38 +16,34 @@ class Admin::ResponsesController < Admin::ApplicationController
   end
 
   def update
-    # Careful when using update_without_password!!
-    # Only admins should have this capability
-    if @post.update_without_password(post_params)
-      redirect_to admin_post_path(@post), notice: 'Post was successfully updated.'
+    if @response.update(response_params)
+      redirect_to admin_post_path(@post), notice: 'Response was successfully updated.'
     else
       render :edit
     end
   end
 
   def show
-    posts_page = params[:posts_page] || 1
-    @posts = @post.posts.page(posts_page).per(5)
-    responses_page = params[:responses_page] || 1
-    @responses = @post.responses.page(responses_page).per(5)
   end
 
   def destroy
-    @post.destroy
-    redirect_to admin_posts_path, notice: 'Post was successfully removed.'
+    @response.destroy
+    redirect_to admin_post_path(@post), notice: 'response was successfully removed.'
   end
 
   private
-
   def find_post
-    @post = Post.find(params[:id])
+    @post = Post.find(params[:post_id]) unless params[:post_id].blank?
   end
 
-  def post_params
-    params.fetch(:post, {}).permit(
+  def find_response
+    @response = Response.find(params[:id])
+  end
+
+  def response_params
+    params.fetch(:response, {}).permit(
       :user_id,
       :content,
-      :responses_count,
       :cached_votes_up
     )
   end

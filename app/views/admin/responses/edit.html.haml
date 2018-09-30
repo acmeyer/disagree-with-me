@@ -1,20 +1,27 @@
 %ol.breadcrumb
   %li.breadcrumb-item
-    = link_to "Users", admin_users_path
-  %li.breadcrumb-item.active Edit User
+    = link_to "Responses", admin_responses_path
+  %li.breadcrumb-item.active Edit Response
+
+%ol.breadcrumb
+  %li.breadcrumb-item
+    = link_to "Posts", admin_posts_path
+  %li.breadcrumb-item
+    = link_to "Post Details", admin_post_path(@response.post)
+  %li.breadcrumb-item.active Edit Response
 
 .card
   .card-body
     .d-flex.justify-content-between
-      %h3 Editing User #{@user.id}
+      %h3 Editing Response #{@response.id}
       .actions
-        = link_to 'Show', [:admin, @user], class: 'btn btn-light'
+        = link_to 'Show', [:admin, @response.post, @response], class: 'btn btn-light'
 
     %hr
-    = form_for [:admin, @user] do |f|
+    = form_for [:admin, @response.post, @response] do |f|
       .row.justify-content-center
         .col-sm-6    
-          = render 'form_fields', f: f, user: @user
+          = render 'form_fields', f: f, response: @response
           %hr
           .actions
             = f.submit 'Update', class: 'btn btn-primary btn-block', data: {disable_with: 'Updating...'}
