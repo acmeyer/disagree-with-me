@@ -14,6 +14,7 @@
           %td ID
           %td Upvotes
           %td Responses
+          %td Reports
           %td Content
           %td Author
           %td
@@ -24,6 +25,7 @@
             %td= link_to post.id, admin_post_path(post)
             %td= post.cached_votes_up
             %td= post.responses_count
+            %td= post.reports.count
             %td= post.content.truncate(35)
             %td= link_to post.author.id, admin_user_path(post.author)
             %td= link_to "Edit", edit_admin_post_path(post)

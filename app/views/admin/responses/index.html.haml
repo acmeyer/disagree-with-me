@@ -14,6 +14,7 @@
           %td ID
           %td Post
           %td Upvotes
+          %td Reports
           %td Content
           %td Author
           %td
@@ -24,6 +25,7 @@
             %td= link_to response.id, admin_post_response_path(response.post, response)
             %td= link_to response.post.id, admin_post_path(response.post)
             %td= response.cached_votes_up
+            %td= response.reports.count
             %td= response.content.truncate(35)
             %td= link_to response.author.id, admin_user_path(response.author)
             %td= link_to "Edit", edit_admin_post_response_path(response.post, response)

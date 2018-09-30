@@ -35,7 +35,7 @@
         %strong Upvotes:
       .col-sm-10
         .text-left
-          #{@response.cached_votes_up}  
+          #{@response.cached_votes_up}           
     .row.mb-3
       .col-sm-2.text-sm-right
         %strong Content:
@@ -48,4 +48,33 @@
         %strong Post:
       .col-sm-10
         .text-left
-          #{@response.post.formatted_content}                                   
+          #{@response.post.formatted_content} 
+
+    %hr
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Reports
+      .col-sm-10
+        - if @reports.total_count > 0
+          .table-responsive
+            %table.table.table-hover.tours-table
+              %thead
+                %tr
+                  %td ID
+                  %td Reason
+                  %td Description
+                  %td Status
+                  %td
+                  %td
+              %tbody
+                - @reports.each do |report|
+                  %tr
+                    %td= link_to report.id, admin_report_path(report)
+                    %td= report.reason
+                    %td= report.description.truncate(50)
+                    %td= report.status
+                    %td= link_to "Edit", edit_admin_report_path(report)
+                    %td= link_to "Delete", admin_report_path(report), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger'
+          = paginate @reports, window: 1, param_name: :reports_page
+        - else
+          None                  

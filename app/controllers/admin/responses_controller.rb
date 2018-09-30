@@ -24,6 +24,8 @@ class Admin::ResponsesController < Admin::ApplicationController
   end
 
   def show
+    reports_page = params[:reports_page] || 1
+    @reports = @response.reports.page(reports_page).per(5)
   end
 
   def destroy
