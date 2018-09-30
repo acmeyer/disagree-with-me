@@ -31,7 +31,7 @@ class HomeView extends React.Component {
     const currentUrl = this.props.match.url;
 
     this.state = {
-      list: currentUrl === '/latest' ? 'latest' : 'popular',
+      list: currentUrl === '/popular' ? 'popular' : 'latest',
       searchQuery: searchParams.query || '',
       sortBy: searchParams.sortBy || 'Relevance',
     };
@@ -151,8 +151,8 @@ class HomeView extends React.Component {
   renderListFilters = () => {
     return (
       <div className="list-filters">
-        <Link to="/popular" className={`filter text-dark mr-2 ${this.state.list === 'popular' ? 'font-weight-bold' : ''}`}>Popular</Link>
         <Link to="/latest" className={`filter text-dark mr-2 ${this.state.list === 'latest' ? 'font-weight-bold' : ''}`}>Latest</Link>
+        <Link to="/popular" className={`filter text-dark mr-2 ${this.state.list === 'popular' ? 'font-weight-bold' : ''}`}>Popular</Link>
       </div>
     )
   }
