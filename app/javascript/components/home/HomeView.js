@@ -54,7 +54,7 @@ class HomeView extends React.Component {
       mixpanel.track('Shown Reset Password Modal');
     }
 
-    mixpanel.track('Viewed Home Page');
+    mixpanel.track('Viewed Home Page', {list: this.state.list});
   }
 
   componentDidUpdate(prevProps) {
