@@ -1,11 +1,11 @@
 - if admin_user_signed_in?
-  %li.nav-item{class: "#{current_page?(admin_users_path) ? 'active' : ''}"}
+  %li.nav-item{class: "#{params[:controller] == 'admin/users' ? 'active' : ''}"}
     = link_to "Users", admin_users_path, class: 'nav-link'
-  %li.nav-item{class: "#{current_page?(admin_posts_path) ? 'active' : ''}"}
+  %li.nav-item{class: "#{params[:controller] == 'admin/posts' ? 'active' : ''}"}
     = link_to "Posts", admin_posts_path, class: 'nav-link'  
-  %li.nav-item{class: "#{current_page?(admin_posts_path) ? 'active' : ''}"}
+  %li.nav-item{class: "#{params[:controller] == 'admin/responses' ? 'active' : ''}"}
     = link_to "Responses", admin_responses_path, class: 'nav-link'      
-  %li.nav-item{class: "#{current_page?(admin_reports_path) ? 'active' : ''}"}
+  %li.nav-item{class: "#{params[:controller] == 'admin/reports' ? 'active' : ''}"}
     = link_to "Reports", admin_reports_path, class: 'nav-link'
   %li.nav-item
     = link_to "Sidekiq", '/sidekiq', class: 'nav-link', target: '_blank'
