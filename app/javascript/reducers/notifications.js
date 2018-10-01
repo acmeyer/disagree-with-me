@@ -40,6 +40,7 @@ export function notificationsReducer(state = initial, action) {
     return {
       ...state, 
       loading: false,
+      loadingMore: false,
       list: updatedList,
       type: action.list,
       moreResults: action.moreResults,

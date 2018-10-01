@@ -20,10 +20,18 @@ const activityLists = [
 ];
 
 class ActivityView extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      markAllLoading: false,
+    };
+  }
+
   componentDidMount() {
     let {list} = this.props.match.params;
     if (activityLists.includes(list)) {
-      this.props.fetchNotifications(1, {list});
+      this.props.dispatch(fetchNotifications(1, {list}));
       mixpanel.track('Viewed Activity Page', {list});
     }
   }
@@ -50,7 +58,7 @@ class ActivityView extends React.Component {
   }
 
   handleMarkNotificationRead = (notification) => {
-    this.props.notificationAction(notification, 'mark_read');
+    this.props.dispatch(notificationAction(notification, 'mark_read'));
     mixpanel.track('Marked Notification Read', {notification_id: notification.id});
   } 
 
@@ -65,7 +73,10 @@ class ActivityView extends React.Component {
   }
 
   handleMarkAllRead = () => {
-    this.props.markAllNotificationsRead();
+    this.setState({markAllLoading: true});
+    this.props.dispatch(markAllNotificationsRead()).then(() => {
+      this.setState({markAllLoading: false});
+    }).catch(err => this.setState({markAllLoading: false}));
   }
 
   renderNotification = (notification) => {
@@ -84,7 +95,7 @@ class ActivityView extends React.Component {
     let {notifications} = this.props;
     if (list === 'unread' && notifications.length > 0) {
       return (
-        <Button icon="tick" text="Mark All Read" onClick={this.handleMarkAllRead} />
+        <Button disabled={this.state.markAllLoading} loading={this.state.markAllLoading} icon="tick" text="Mark All Read" onClick={this.handleMarkAllRead} />
       );
     }
   }
@@ -92,7 +103,7 @@ class ActivityView extends React.Component {
   handleLoadMoreNotifications = () => {
     const page = this.props.page + 1;
     let {list} = this.props.match.params;
-    this.props.fetchNotifications(page, {list});
+    this.props.dispatch(fetchNotifications(page, {list}));
     mixpanel.track('Load More Posts', {page: 'activity', list: list});
   }
 
@@ -171,14 +182,6 @@ class ActivityView extends React.Component {
   }
 }
 
-function actions(dispatch) {
-  return {
-    fetchNotifications: (page, options) => { dispatch(fetchNotifications(page, options)) },
-    notificationAction: (notification, action) => { dispatch(notificationAction(notification, action)) },
-    markAllNotificationsRead: (notification) => { dispatch(markAllNotificationsRead(notification)) },
-  };
-}
-
 function select(store) {
   return {
     isLoading: store.notifications.loading,
@@ -190,4 +193,4 @@ function select(store) {
   };
 }
 
-export default withRouter(connect(select, actions)(ActivityView));
+export default withRouter(connect(select)(ActivityView));
