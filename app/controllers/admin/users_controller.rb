@@ -4,10 +4,10 @@ class Admin::UsersController < Admin::ApplicationController
   def index
     page = params[:page] || 1
     if params[:search_query].blank?
-      @users = User.all.order(:id).page(page).per(10)
+      @users = User.all.order(created_at: :desc).page(page).per(10)
     else
       @search_query = params[:search_query]
-      @users = User.search_users(@search_query).order(:id).page(page).per(10)
+      @users = User.search_users(@search_query).order(created_at: :desc).page(page).per(10)
     end
   end
 

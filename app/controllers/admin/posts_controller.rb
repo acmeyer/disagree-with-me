@@ -4,10 +4,10 @@ class Admin::PostsController < Admin::ApplicationController
   def index
     page = params[:page] || 1
     if params[:search_query].blank?
-      @posts = Post.all.order(:id).page(page).per(10)
+      @posts = Post.all.order(created_at: :desc).page(page).per(10)
     else
       @search_query = params[:search_query]
-      @posts = Post.search_posts(@search_query).order(:id).page(page).per(10)
+      @posts = Post.search_posts(@search_query).order(created_at: :desc).page(page).per(10)
     end
   end
 

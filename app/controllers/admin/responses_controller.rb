@@ -5,10 +5,10 @@ class Admin::ResponsesController < Admin::ApplicationController
   def index
     page = params[:page] || 1
     if params[:search_query].blank?
-      @responses = Response.all.order(:id).page(page).per(10)
+      @responses = Response.all.order(created_at: :desc).page(page).per(10)
     else
       @search_query = params[:search_query]
-      @responses = Response.search_responses(@search_query).order(:id).page(page).per(10)
+      @responses = Response.search_responses(@search_query).order(created_at: :desc).page(page).per(10)
     end
   end
 

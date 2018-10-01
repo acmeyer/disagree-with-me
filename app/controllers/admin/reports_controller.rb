@@ -4,10 +4,10 @@ class Admin::ReportsController < Admin::ApplicationController
   def index
     page = params[:page] || 1
     if params[:search_query].blank?
-      @reports = Report.all.order(:id).page(page).per(10)
+      @reports = Report.all.order(created_at: :desc).page(page).per(10)
     else
       @search_query = params[:search_query]
-      @reports = Report.search_reports(@search_query).order(:id).page(page).per(10)
+      @reports = Report.search_reports(@search_query).order(created_at: :desc).page(page).per(10)
     end
   end
 
