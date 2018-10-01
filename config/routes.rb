@@ -91,6 +91,9 @@ Rails.application.routes.draw do
 
       resources :reports, except: [:new, :create]
 
+      get 'tags', to: 'tags#index'
+      get 'tags/:name', to: 'tags#show', as: "tag"
+
       # Ensure only admins can view these pages
       authenticate :admin_user, lambda { |u| u.admin? } do
         mount Sidekiq::Web => '/sidekiq'

@@ -28,7 +28,13 @@
         %strong Responses Count:
       .col-sm-10
         .text-left
-          #{@post.responses_count}                  
+          #{@post.responses_count}  
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Tags:
+      .col-sm-10
+        .text-left
+          #{@post.tag_list}                            
     .row.mb-3
       .col-sm-2.text-sm-right
         %strong Content:

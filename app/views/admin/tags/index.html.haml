@@ -1,0 +1,23 @@
+.card
+  .d-flex.p-3.justify-content-between.border.border-top-0.border-right-0.border-left-0
+    %h3.card-title Tags
+
+  .d-flex.justify-content-center.search.my-3
+    .col-md-6
+      = form_tag admin_tags_path, method: :get do
+        = text_field_tag 'search_query', @search_query, class: 'form-control', placeholder: "Search..."
+
+  .table-responsive
+    %table.table.table-hover
+      %thead
+        %tr
+          %td Name
+          %td Count
+      %tbody
+        - @tags.each do |tag|
+          %tr
+            %td= link_to tag.name, admin_tag_path(name: tag.name)
+            %td= tag.taggings_count
+
+  .d-flex.justify-content-center
+    = paginate @tags, window: 1

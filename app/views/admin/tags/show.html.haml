@@ -1,0 +1,52 @@
+%ol.breadcrumb
+  %li.breadcrumb-item
+    = link_to "Tags", admin_tags_path
+  %li.breadcrumb-item.active Tag Details
+
+.card
+  .card-body
+    .d-flex.justify-content-between
+      %h3 Tag Details
+
+    %hr
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Name:
+      .col-sm-10
+        .text-left
+          #{@tag.name}
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Count:
+      .col-sm-10
+        .text-left
+          #{@tag.taggings_count}                                                               
+
+    %hr
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Posts
+      .col-sm-10
+        - if @posts.total_count > 0
+          .table-responsive
+            %table.table.table-hover.tours-table
+              %thead
+                %tr
+                  %td ID
+                  %td Upvotes
+                  %td Responses
+                  %td Content
+                  %td
+                  %td
+              %tbody
+                - @posts.each do |post|
+                  %tr
+                    %td= link_to post.id, admin_post_path(post)
+                    %td= post.cached_votes_up
+                    %td= post.responses_count
+                    %td= post.content.truncate(50)
+                    %td= link_to "Edit", edit_admin_post_path(post)
+                    %td= link_to "Delete", admin_post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger'
+          = paginate @posts, window: 1, param_name: :posts_page
+        - else
+          None   

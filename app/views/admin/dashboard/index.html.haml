@@ -8,13 +8,17 @@
             %thead
               %tr
                 %td ID
-                %td Content
+                %td Upvotes
+                %td Responses
+                %td Tags
                 %td
             %tbody
               - @recent_posts.each do |post|
                 %tr
                   %td= post.id
-                  %td= post.content.truncate(40)
+                  %td= post.cached_votes_up
+                  %td= post.responses_count
+                  %td= post.tag_list
                   %td= link_to "View", admin_post_path(post)
       .card-footer
         = link_to 'See All Posts', admin_posts_path, class: 'card-link'   
@@ -27,6 +31,7 @@
             %thead
               %tr
                 %td ID
+                %td Upvotes
                 %td Content
                 %td Post
                 %td
@@ -34,6 +39,7 @@
               - @recent_responses.each do |response|
                 %tr
                   %td= response.id
+                  %td= response.cached_votes_up
                   %td= response.content.truncate(40)
                   %td= link_to response.post.id, admin_post_path(response.post)
                   %td= link_to "View", admin_post_response_path(response.post, response)         
