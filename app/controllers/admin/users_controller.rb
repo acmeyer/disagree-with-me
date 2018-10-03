@@ -46,6 +46,9 @@ class Admin::UsersController < Admin::ApplicationController
     @reports = @user.reports.page(reports_page).per(5)
     auth_tokens_page = params[:auth_tokens_page] || 1
     @auth_tokens = @user.auth_tokens.page(auth_tokens_page).per(5)
+    oauth_tokens_page = params[:oauth_tokens_page] || 1
+    @oauth_tokens = @user.oauth_tokens.page(oauth_tokens_page).per(5)
+
   end
 
   def disable

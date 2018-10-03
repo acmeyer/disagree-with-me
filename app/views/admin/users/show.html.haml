@@ -26,6 +26,12 @@
       .col-sm-10
         .text-left
           #{@user.email}                                                    
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Confirmed email:
+      .col-sm-10
+        .text-left
+          #{@user.confirmed?}                                                    
 
     %hr
     .row.mb-3
@@ -146,5 +152,28 @@
                         = link_to "Expire", expire_admin_user_auth_token_path(@user, auth_token), method: :post, data: { confirm: 'Are you sure?' }, class: 'text-danger'
                     %td= link_to "Delete", admin_user_auth_token_path(@user, auth_token), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger'
           = paginate @auth_tokens, window: 1, param_name: :auth_tokens_page
+        - else
+          None                              
+    
+    %hr
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Oauth Tokens
+      .col-sm-10
+        - if @oauth_tokens.total_count > 0
+          .table-responsive
+            %table.table.table-hover.tours-table
+              %thead
+                %tr
+                  %td ID
+                  %td Provider
+                  %td Created At
+              %tbody
+                - @oauth_tokens.each do |oauth_token|
+                  %tr
+                    %td= oauth_token.id
+                    %td= oauth_token.provider
+                    %td= oauth_token.created_at
+          = paginate @oauth_tokens, window: 1, param_name: :oauth_tokens_page
         - else
           None                              
