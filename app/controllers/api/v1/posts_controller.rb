@@ -9,7 +9,7 @@ class Api::V1::PostsController < Api::V1::ApiController
     else
       @current_page = 1
     end
-    filtered_posts = filter_posts(Post.all, params)
+    filtered_posts = filter_posts(Post.approved, params)
     @posts = filtered_posts
     render_posts
   end

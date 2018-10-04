@@ -46,7 +46,8 @@ class Admin::ResponsesController < Admin::ApplicationController
     params.fetch(:response, {}).permit(
       :user_id,
       :content,
-      :cached_votes_up
+      :cached_votes_up,
+      :status
     )
   end
 end

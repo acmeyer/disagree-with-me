@@ -46,7 +46,8 @@ class Admin::PostsController < Admin::ApplicationController
       :content,
       :responses_count,
       :cached_votes_up,
-      :tag_list
+      :tag_list,
+      :status
     )
   end
 end

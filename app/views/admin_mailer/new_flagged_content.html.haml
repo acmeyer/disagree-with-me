@@ -1,0 +1,26 @@
+%div There's been new content flagged as #{@flagged_as} in the app. Details are below.
+
+%p 
+  %strong Type of content flagged: 
+  %br
+  #{@content_type}
+%p 
+  %strong Flagged content ID: 
+  %br
+  #{@resource.id}
+%p
+  %strong Confidence score: 
+  %br
+  #{@confidence_score}
+%p 
+  %strong Content:
+  %br
+  #{@resource.content}
+%p
+  - if @content_type == 'post'
+    #{link_to 'View it in the Admin Dashboard', admin_post_url(@resource)}.
+  - else
+    #{link_to 'View it in the Admin Dashboard', admin_post_response_url(@resource.post, @resource)}.
+
+%p
+  \- The Admin Alert Bot

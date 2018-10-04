@@ -10,7 +10,7 @@ class Api::V1::ResponsesController < Api::V1::ApiController
     else
       @current_page = 1
     end
-    filtered_responses = filter_responses(@post.responses, params)
+    filtered_responses = filter_responses(@post.responses.approved, params)
     @responses = filtered_responses
     render_responses
   end

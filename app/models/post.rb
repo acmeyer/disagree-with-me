@@ -11,7 +11,14 @@ class Post < ApplicationRecord
 
   validates :content, presence: true
 
+  after_create :check_content
   after_save :update_tags, if: Proc.new { |post| post.saved_change_to_content? }
+
+  enum status: [:processing, :inappropriate, :appropriate, :needs_review]
+  
+  scope :approved, -> { where(status: :appropriate) }
+  scope :not_approved, -> { where.not(status: :appropriate) }
+  scope :pending_review, -> { where(status: :needs_review) }
 
   include PgSearch
   pg_search_scope :search_posts, :against => [:content]
@@ -77,5 +84,10 @@ class Post < ApplicationRecord
     tags = response.entities.map{|e| e.name}.join(',')
     self.tag_list = tags
     self.save
+  end
+
+  def check_content
+    self.update(status: :processing)
+    ProcessContentWorker.perform_async(self.id, 'post', self.content)
   end
 end

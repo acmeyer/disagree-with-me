@@ -10,11 +10,16 @@ class Response < ApplicationRecord
 
   validates :content, presence: true
 
-  after_create :create_notifications
+  after_create :create_notifications, :check_content
+
+  enum status: [:processing, :inappropriate, :appropriate, :needs_review]
 
   scope :thanked, -> { where(author_thanked: true) }
   scope :not_thanked, -> { where(author_thanked: false) }
   scope :upvoted, -> { where('cached_weighted_score > ?', 0) }
+  scope :approved, -> { where(status: :appropriate) }
+  scope :not_approved, -> { where.not(status: :appropriate) }
+  scope :pending_review, -> { where(status: :needs_review) }
 
   include PgSearch
   pg_search_scope :search_responses, :against => [:content]
@@ -32,5 +37,10 @@ class Response < ApplicationRecord
       notification_type: 'New Response',
       notifiable: self,
     )
+  end
+
+  def check_content
+    self.update(status: :processing)
+    ProcessContentWorker.perform_async(self.id, 'response', self.content)
   end
 end

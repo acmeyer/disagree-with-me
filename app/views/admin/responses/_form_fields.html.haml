@@ -14,3 +14,6 @@
 .form-group
   = f.label :user_id, class: ''
   = f.number_field :user_id, class: 'form-control'
+.form-group
+  = f.label :status, class: ''
+  = f.select :status, Response.statuses.keys.to_a, {}, class: 'form-control'   

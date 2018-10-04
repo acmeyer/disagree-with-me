@@ -13,6 +13,7 @@
         %tr
           %td ID
           %td Post
+          %td Status
           %td Upvotes
           %td Reports
           %td Content
@@ -24,6 +25,7 @@
           %tr
             %td= link_to response.id, admin_post_response_path(response.post, response)
             %td= link_to response.post.id, admin_post_path(response.post)
+            %td= response.status.humanize
             %td= response.cached_votes_up
             %td= response.reports.count
             %td= response.content.truncate(35)

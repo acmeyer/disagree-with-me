@@ -1,52 +1,43 @@
 .row
-  .col-md-6.mb-3
+  .col-lg-6.mb-3
     .card
       .card-body
-        %h5.card-title Recent Posts
+        %h5.card-title Pending Posts
         .table-responsive
           %table.table.table-hover.table-sm
             %thead
               %tr
                 %td ID
-                %td Upvotes
-                %td Responses
-                %td Tags
+                %td Status
                 %td
             %tbody
-              - @recent_posts.each do |post|
+              - @pending_posts.each do |post|
                 %tr
                   %td= post.id
-                  %td= post.cached_votes_up
-                  %td= post.responses_count
-                  %td= post.tag_list
+                  %td= post.status.humanize
                   %td= link_to "View", admin_post_path(post)
       .card-footer
         = link_to 'See All Posts', admin_posts_path, class: 'card-link'   
-  .col-md-6.mb-3
+  .col-lg-6.mb-3
     .card
       .card-body
-        %h5.card-title Recent Responses
+        %h5.card-title Pending Responses
         .table-responsive
           %table.table.table-hover.table-sm
             %thead
               %tr
                 %td ID
-                %td Upvotes
-                %td Content
-                %td Post
+                %td Status
                 %td
             %tbody
-              - @recent_responses.each do |response|
+              - @pending_responses.each do |response|
                 %tr
                   %td= response.id
-                  %td= response.cached_votes_up
-                  %td= response.content.truncate(40)
-                  %td= link_to response.post.id, admin_post_path(response.post)
-                  %td= link_to "View", admin_post_response_path(response.post, response)         
-
+                  %td= response.status.humanize
+                  %td= link_to "View", admin_post_response_path(response.post, response)              
 
 .row
-  .col-md-6.mb-3
+  .col-lg-6.mb-3
     .card
       .card-body
         %h5.card-title Unresolved Reports
@@ -71,7 +62,7 @@
                   %td= link_to "View", admin_report_path(report)
       .card-footer
         = link_to 'See All Reports', admin_reports_path, class: 'card-link' 
-  .col-md-6.mb-3
+  .col-lg-6.mb-3
     .card
       .card-body
         %h5.card-title Recent Users
@@ -89,4 +80,52 @@
                   %td= user.email
                   %td= link_to "View", admin_user_path(user)
       .card-footer
-        = link_to 'See All Users', admin_users_path, class: 'card-link'         
+        = link_to 'See All Users', admin_users_path, class: 'card-link'            
+
+.row
+  .col-lg-6.mb-3
+    .card
+      .card-body
+        %h5.card-title Recent Posts
+        .table-responsive
+          %table.table.table-hover.table-sm
+            %thead
+              %tr
+                %td ID
+                %td Upvotes
+                %td Responses
+                %td Content
+                %td
+            %tbody
+              - @recent_posts.each do |post|
+                %tr
+                  %td= post.id
+                  %td= post.cached_votes_up
+                  %td= post.responses_count
+                  %td= post.content.truncate(35)
+                  %td= link_to "View", admin_post_path(post)
+      .card-footer
+        = link_to 'See All Posts', admin_posts_path, class: 'card-link'   
+  .col-lg-6.mb-3
+    .card
+      .card-body
+        %h5.card-title Recent Responses
+        .table-responsive
+          %table.table.table-hover.table-sm
+            %thead
+              %tr
+                %td ID
+                %td Upvotes
+                %td Content
+                %td Post
+                %td
+            %tbody
+              - @recent_responses.each do |response|
+                %tr
+                  %td= response.id
+                  %td= response.cached_votes_up
+                  %td= response.content.truncate(40)
+                  %td= link_to response.post.id, admin_post_path(response.post)
+                  %td= link_to "View", admin_post_response_path(response.post, response)         
+
+     
