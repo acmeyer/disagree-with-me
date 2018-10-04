@@ -17,6 +17,7 @@
           %td Reports
           %td Tags
           %td Author
+          %td Author active
           %td
           %td
       %tbody
@@ -28,6 +29,7 @@
             %td= post.reports.count
             %td= post.tag_list
             %td= link_to post.author.id, admin_user_path(post.author)
+            %td= post.author_active?
             %td= link_to "Edit", edit_admin_post_path(post)
             %td= link_to "Delete", admin_post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger'
 

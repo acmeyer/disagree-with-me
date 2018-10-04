@@ -16,6 +16,7 @@
           %td ID
           %td Email
           %td Confirmed
+          %td Active
           %td Posts
           %td Responses
           %td Reports
@@ -27,6 +28,7 @@
             %td= link_to user.id, admin_user_path(user)
             %td= link_to user.email, "mailto:#{user.email}"
             %td= user.confirmed?
+            %td= user.active?
             %td= user.posts.count
             %td= user.responses.count
             %td= user.reports.count

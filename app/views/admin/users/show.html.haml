@@ -31,7 +31,13 @@
         %strong Confirmed email:
       .col-sm-10
         .text-left
-          #{@user.confirmed?}                                                    
+          #{@user.confirmed?}
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Active in last week:
+      .col-sm-10
+        .text-left
+          #{@user.active?}                                                          
 
     %hr
     .row.mb-3

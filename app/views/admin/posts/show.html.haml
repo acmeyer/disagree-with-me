@@ -19,6 +19,18 @@
           #{@post.id}
     .row.mb-3
       .col-sm-2.text-sm-right
+        %strong Author:
+      .col-sm-10
+        .text-left
+          #{link_to @post.author.id, admin_user_path(@post.author)}  
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Author active in last week:
+      .col-sm-10
+        .text-left
+          #{@post.author_active?}                     
+    .row.mb-3
+      .col-sm-2.text-sm-right
         %strong Upvotes:
       .col-sm-10
         .text-left
@@ -46,7 +58,7 @@
         %strong Top Response:
       .col-sm-10
         .text-left
-          #{@post.top_response.try(:formatted_content)}                                                                 
+          #{@post.top_response.try(:formatted_content)}                                                                         
 
     %hr
     .row.mb-3
