@@ -51,13 +51,13 @@ class PostActions extends React.Component {
   }
 
   handleShare = (type) => {
-    let subject = "Check out this conversation on Disagree with Me";
+    let subject = "I thought you might find this conversation on Disagree with Me interesting...";
     let shareLink = `${protocol}${domain}/conversations/${this.props.post.id}`;
-    let message = `"${_.truncate(this.props.post.content, 200)}" Agree? Disagree? Join the conversation.`;
-    let email = `${message}\n${shareLink}`;
+    let tweet = `"${_.truncate(this.props.post.content, {'length': 175})}" Disagree? Join the conversation: `;
+    let email = `"${this.props.post.content}"%0D%0A%0D%0ADisagree? Join the conversation here: ${shareLink}`;
     if (type === 'twitter') {
       window.open(
-        `https://twitter.com/intent/tweet?text=${message}&url=${shareLink}&hashtags=disagreewithme&via=DisagreeApp`,
+        `https://twitter.com/intent/tweet?text=${tweet}&url=${shareLink}&hashtags=disagreewithme`,
         '_blank'
       );
       mixpanel.track('Shared Conversation', {post_id: this.props.post.id, via: 'twitter'});
