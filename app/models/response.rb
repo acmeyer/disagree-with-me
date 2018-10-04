@@ -10,7 +10,8 @@ class Response < ApplicationRecord
 
   validates :content, presence: true
 
-  after_create :create_notifications, :check_content
+  after_create :check_content
+  after_save :create_notifications, if: Proc.new { |response| response.saved_change_to_status? && response.appropriate? }
 
   enum status: [:processing, :inappropriate, :appropriate, :needs_review]
 

@@ -15,7 +15,7 @@ class ProcessContentWorker
       resource.update!(status: :needs_review)
       AdminMailer.new_flagged_content(resource.id, obj_type, result['sentence_type'], result['confidence_score']).deliver_later
     else
-      resouce.update!(status: :appropriate)
+      resource.update!(status: :appropriate)
     end
   end
 end
