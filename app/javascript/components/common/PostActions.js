@@ -51,22 +51,25 @@ class PostActions extends React.Component {
   }
 
   handleShare = (type) => {
+    let subject = "Check out this conversation on Disagree with Me";
     let shareLink = `${protocol}${domain}/conversations/${this.props.post.id}`;
+    let message = `"${_.truncate(this.props.post.content, 200)}" Agree? Disagree? Join the conversation.`;
+    let email = `${message}\n${shareLink}`;
     if (type === 'twitter') {
       window.open(
-        `https://twitter.com/intent/tweet?text=Check+out+this+conversation+on+Disagree+with+Me&url=${shareLink}&hashtags=disagreewithme&via=DisagreeApp`,
+        `https://twitter.com/intent/tweet?text=${message}&url=${shareLink}&hashtags=disagreewithme&via=DisagreeApp`,
         '_blank'
       );
       mixpanel.track('Shared Conversation', {post_id: this.props.post.id, via: 'twitter'});
     } else if (type === 'facebook') {
       window.open(
-        `https://www.facebook.com/sharer/sharer.php?u=${shareLink}&t=Check+out+this+conversation+on+Disagree+with+Me`,
+        `https://www.facebook.com/sharer/sharer.php?u=${shareLink}&quote=${this.props.post.content}`,
         '_blank'
       );
       mixpanel.track('Shared Conversation', {post_id: this.props.post.id, via: 'facebook'});
     } else if (type === 'email') {
       window.open(
-        `mailto:?subject=Check+out+this+conversation+on+Disagree+with+Me&body=${shareLink}`,
+        `mailto:?subject=${subject}&body=${email}`,
         '_blank'
       );
       mixpanel.track('Shared Conversation', {post_id: this.props.post.id, via: 'email'});
