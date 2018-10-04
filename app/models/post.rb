@@ -62,6 +62,10 @@ class Post < ApplicationRecord
     end
   end
 
+  def author_active?
+    self.author.active?
+  end
+
   private
   def update_tags
     # auto-add tags using Google's Natural Language API

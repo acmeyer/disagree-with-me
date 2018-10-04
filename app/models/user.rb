@@ -85,6 +85,11 @@ class User < ApplicationRecord
     self.save
   end
 
+  def active?
+    return false if self.auth_tokens.blank?
+    return self.auth_tokens.order(:last_used_at).last.last_used_at > 1.week.ago
+  end
+
   def self.create_or_load_from_omniauth(auth)
     # Find or create an auth token
     token = OauthToken.where(provider: auth[:provider], uid: auth[:uid], token: auth[:token]).first_or_initialize

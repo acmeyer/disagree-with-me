@@ -14,6 +14,7 @@ class Response < ApplicationRecord
 
   scope :thanked, -> { where(author_thanked: true) }
   scope :not_thanked, -> { where(author_thanked: false) }
+  scope :upvoted, -> { where('cached_weighted_score > ?', 0) }
 
   include PgSearch
   pg_search_scope :search_responses, :against => [:content]
