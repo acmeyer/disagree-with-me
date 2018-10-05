@@ -127,7 +127,7 @@ class NavBar extends React.Component {
 
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-md fixed-top">
-        <div className="container">
+        <div className="container-fluid">
           <Link to="/" className="navbar-brand">
             Disagree with Me
           </Link>
@@ -143,6 +143,13 @@ class NavBar extends React.Component {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbar-collapse-menu">
+            <ul className="navbar-nav mr-auto">
+              <li className="nav-item">
+                <Link to="/how-it-works" className={'nav-link'}>
+                  How it Works
+                </Link>
+              </li>
+            </ul>
             {navLinks}
           </div>
           <Alert

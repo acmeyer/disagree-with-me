@@ -6,7 +6,7 @@ class Footer extends React.Component {
   render() {
     return (
       <footer className="footer py-3">
-        <div className="container">
+        <div className="container-fluid">
           <hr />
           <div className="d-flexalign-items-center">
             <div className="small text-muted d-inline-block">&copy; Disagree with Me</div>

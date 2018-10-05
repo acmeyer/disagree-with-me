@@ -122,5 +122,6 @@ Rails.application.routes.draw do
   get "popular", to: "web_app#index"
   get "terms", to: "web_app#index"
   get "privacy", to: "web_app#index"
+  get "how-it-works", to: "web_app#index"
   root to: "web_app#index"
 end

@@ -17,6 +17,7 @@ import UserSettingsView from './user/UserSettingsView';
 import ActivityView from './activity/ActivityView';
 import AboutPage from './about/AboutPage';
 import TermsPage from './terms/TermsPage';
+import HowItWorksPage from './how_it_works/HowItWorksPage';
 import {connect} from 'react-redux';
 
 import {
@@ -46,6 +47,7 @@ class App extends React.Component {
           <Route exact path="/" render={props => <HomeView key={this.props.user.id} {...props} />} />
           <Route path="/latest" render={props => <HomeView key={this.props.user.id} {...props} />} />
           <Route path="/popular" render={props => <HomeView key={this.props.user.id} {...props} />} />
+          <Route path="/how-it-works" component={HowItWorksPage} />
           <Route path="/about" component={AboutPage} />
           <Route path="/terms" component={TermsPage} />
           <Route path="/privacy" component={PrivacyPage} />

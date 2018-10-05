@@ -29,7 +29,7 @@ class Api::V1::UsersController < Api::V1::ApiController
     else
       @current_page = 1
     end
-    @posts = @user.posts.order(created_at: :desc)
+    @posts = @user.posts.approved.order(created_at: :desc)
     render_posts
   end
 
@@ -40,7 +40,7 @@ class Api::V1::UsersController < Api::V1::ApiController
     else
       @current_page = 1
     end
-    @responses = @user.responses.order(created_at: :desc)
+    @responses = @user.responses.approved.order(created_at: :desc)
     render_responses
   end
 
