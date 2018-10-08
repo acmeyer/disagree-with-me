@@ -8,7 +8,7 @@ class ProcessContentWorker
       resource = Response.find(obj_id)
     end
     response = HTTParty.post(
-      "https://apis.paralleldots.com/v3/abuse?text=#{content}&api_key=#{ENV['PARALLELDOTS_API_KEY']}"
+      "https://apis.paralleldots.com/v3/abuse?text=#{content.parameterize}&api_key=#{ENV['PARALLELDOTS_API_KEY']}"
     )
     result = JSON.parse(response.body)
     if result['sentence_type'] == 'Abusive'

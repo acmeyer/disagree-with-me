@@ -11,7 +11,7 @@ class Post < ApplicationRecord
 
   validates :content, presence: true
 
-  after_create :check_content
+  after_create :check_content, :update_tags
   after_save :update_tags, if: Proc.new { |post| post.saved_change_to_content? }
 
   enum status: [:processing, :inappropriate, :appropriate, :needs_review]
