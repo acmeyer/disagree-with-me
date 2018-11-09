@@ -46,7 +46,13 @@
         %strong Responses Count:
       .col-sm-10
         .text-left
-          #{@post.responses_count}  
+          #{@post.responses_count} 
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Topic:
+      .col-sm-10
+        .text-left
+          #{@post.topic.try(:title)}             
     .row.mb-3
       .col-sm-2.text-sm-right
         %strong Tags:

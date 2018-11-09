@@ -11,6 +11,19 @@ class Admin::TopicsController < Admin::ApplicationController
     end
   end
 
+  def new
+    @topic = Topic.new
+  end
+
+  def create
+    @topic = Topic.new(topic_params)
+    if @topic.save
+      redirect_to admin_topic_path(@topic), notice: 'Topic was successfully created.'
+    else
+      render :new
+    end
+  end
+
   def edit
   end
 
@@ -23,6 +36,8 @@ class Admin::TopicsController < Admin::ApplicationController
   end
 
   def show
+    posts_page = params[:posts_page] || 1
+    @posts = @topic.posts.page(posts_page).per(5)
   end
 
   def destroy

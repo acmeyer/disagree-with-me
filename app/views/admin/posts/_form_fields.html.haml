@@ -22,5 +22,8 @@
   = f.text_area :tag_list, class: 'form-control'
   %small.form-text.text-muted Tags are separated by a comma.
 .form-group
+  = f.label :topic, class: ''
+  = f.collection_select(:topic_id, Topic.all, :id, :title, {prompt: true}, class: 'form-control')
+.form-group
   = f.label :status, class: ''
   = f.select :status, Post.statuses.keys.to_a, {}, class: 'form-control' 
