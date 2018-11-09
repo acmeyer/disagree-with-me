@@ -1,0 +1,20 @@
+%ol.breadcrumb
+  %li.breadcrumb-item
+    = link_to "Topics", admin_topics_path
+  %li.breadcrumb-item.active Edit Topic
+
+.card
+  .card-body
+    .d-flex.justify-content-between
+      %h3 Editing Topic #{@topic.id}
+      .actions
+        = link_to 'Show', [:admin, @topic], class: 'btn btn-light'
+
+    %hr
+    = form_for [:admin, @topic] do |f|
+      .row.justify-content-center
+        .col-sm-6    
+          = render 'form_fields', f: f, topic: @topic
+          %hr
+          .actions
+            = f.submit 'Update', class: 'btn btn-primary btn-block', data: {disable_with: 'Updating...'}

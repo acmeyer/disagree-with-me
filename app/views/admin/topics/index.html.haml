@@ -1,0 +1,31 @@
+.card
+  .d-flex.p-3.justify-content-between.border.border-top-0.border-right-0.border-left-0
+    %h3.card-title Topics
+
+  .d-flex.justify-content-center.search.my-3
+    .col-md-6
+      = form_tag admin_topics_path, method: :get do
+        = text_field_tag 'search_query', @search_query, class: 'form-control', placeholder: "Search..."
+
+  .table-responsive
+    %table.table.table-hover
+      %thead
+        %tr
+          %td ID
+          %td Title
+          %td Posts
+          %td Created
+          %td
+          %td
+      %tbody
+        - @topics.each do |topic|
+          %tr
+            %td= link_to topic.id, admin_topic_path(topic)
+            %td= topic.title
+            %td= topic.posts.size
+            %td= topic.created_at.to_formatted_s(:short)
+            %td= link_to "Edit", edit_admin_topic_path(topic)
+            %td= link_to "Delete", admin_topic_path(topic), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger'
+
+  .d-flex.justify-content-center
+    = paginate @topics, window: 1

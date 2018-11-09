@@ -49,6 +49,8 @@ Rails.application.routes.draw do
 
         resources :reports, only: [:create]
 
+        resources :topics, only: [:index, :show, :create]
+
         resources :notifications, only: [:index] do
           collection do
             post 'mark_all_read'
@@ -90,6 +92,8 @@ Rails.application.routes.draw do
       end
 
       resources :reports, except: [:new, :create]
+
+      resources :topics
 
       get 'tags', to: 'tags#index'
       get 'tags/:name', to: 'tags#show', as: "tag"

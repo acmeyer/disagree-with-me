@@ -1,6 +1,8 @@
 - if admin_user_signed_in?
   %li.nav-item{class: "#{params[:controller] == 'admin/users' ? 'active' : ''}"}
     = link_to "Users", admin_users_path, class: 'nav-link'
+  %li.nav-item{class: "#{params[:controller] == 'admin/topics' ? 'active' : ''}"}
+    = link_to "Topics", admin_topics_path, class: 'nav-link'      
   %li.nav-item{class: "#{params[:controller] == 'admin/posts' ? 'active' : ''}"}
     = link_to "Posts", admin_posts_path, class: 'nav-link'  
   %li.nav-item{class: "#{params[:controller] == 'admin/responses' ? 'active' : ''}"}

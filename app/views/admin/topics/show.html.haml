@@ -1,0 +1,62 @@
+%ol.breadcrumb
+  %li.breadcrumb-item
+    = link_to "Topics", admin_topics_path
+  %li.breadcrumb-item.active Topic Details
+
+.card
+  .card-body
+    .d-flex.justify-content-between
+      %h3 Topic Details
+      .actions
+        = link_to 'Edit', edit_admin_topic_path(@topic), class: 'btn btn-light'
+        = link_to 'Delete', admin_topic_path(@topic), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+    %hr
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Topic id:
+      .col-sm-10
+        .text-left
+          #{@topic.id}
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Title:
+      .col-sm-10
+        .text-left
+          #{@topic.title}   
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Created:
+      .col-sm-10
+        .text-left
+          #{@topic.created_at.to_formatted_s(:short)}                    
+
+    %hr
+    .row.mb-3
+      .col-sm-2.text-sm-right
+        %strong Posts
+      .col-sm-10
+        - if @posts.total_count > 0
+          .table-responsive
+            %table.table.table-hover.tours-table
+              %thead
+                %tr
+                  %td ID
+                  %td Status
+                  %td Upvotes
+                  %td Responses
+                  %td Tags
+                  %td
+                  %td
+              %tbody
+                - @posts.each do |post|
+                  %tr
+                    %td= link_to post.id, admin_post_path(post)
+                    %td= post.status.humanize
+                    %td= post.cached_votes_up
+                    %td= post.responses_count
+                    %td= post.tag_list
+                    %td= link_to "Edit", edit_admin_post_path(post)
+                    %td= link_to "Delete", admin_post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger'
+          = paginate @posts, window: 1, param_name: :responses_page
+        - else
+          None            

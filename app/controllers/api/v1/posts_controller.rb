@@ -57,16 +57,21 @@ class Api::V1::PostsController < Api::V1::ApiController
   end
 
   def filter_posts(posts, params)
-    if params[:latest] == "true"
+    if !params[:topic].blank?
+      topic = Topic.find_by_title(params[:topic])
+      posts = topic.posts if topic
+    elsif params[:latest] == "true"
       posts = posts.order(created_at: :desc)
     elsif params[:popular] == "true"
       posts = posts.order(cached_weighted_score: :desc).order(responses_count: :desc)
-    elsif params[:sort]
-      posts = posts.order(params[:sort])
     elsif params[:random] == "true"
       posts = posts.order("RANDOM()")
     else
       posts = posts.order(created_at: :desc)
+    end
+
+    if !params[:sort].blank?
+      posts = posts.order(params[:sort])
     end
 
     return posts
