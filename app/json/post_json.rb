@@ -31,7 +31,6 @@ class PostJson
       responses_count: post.responses_count,
       upvotes_count: post.cached_votes_up,
       tags: post.tag_list,
-      topic: post.topic.try(:title),
       created_at: (post.created_at.to_f * 1000).to_i,
       updated_at: (post.updated_at.to_f * 1000).to_i,
     }
@@ -45,7 +44,6 @@ class PostJson
       responses_count: post.responses_count,
       upvotes_count: post.cached_votes_up,
       tags: post.tag_list,
-      topic: post.topic.try(:title),
       top_response: ResponseJson.new(post.top_response, user, :short).call,
       created_at: (post.created_at.to_f * 1000).to_i,
       updated_at: (post.updated_at.to_f * 1000).to_i,

@@ -6,7 +6,8 @@ class Post < ApplicationRecord
   acts_as_taggable
 
   belongs_to :author, class_name: "User", foreign_key: :user_id
-  belongs_to :topic, touch: true
+  has_many :posts_topics
+  has_many :topics, through: :posts_topics
   has_many :responses, dependent: :destroy
   has_many :reports, as: :reportable, dependent: :destroy
 

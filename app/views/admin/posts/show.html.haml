@@ -49,10 +49,12 @@
           #{@post.responses_count} 
     .row.mb-3
       .col-sm-2.text-sm-right
-        %strong Topic:
+        %strong Topics:
       .col-sm-10
         .text-left
-          #{@post.topic.try(:title)}             
+          - @post.topics.each do |topic|
+            #{topic.title}
+            %br
     .row.mb-3
       .col-sm-2.text-sm-right
         %strong Tags:

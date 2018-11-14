@@ -43,7 +43,6 @@ class Admin::PostsController < Admin::ApplicationController
   def post_params
     params.fetch(:post, {}).permit(
       :user_id,
-      :topic_id,
       :content,
       :responses_count,
       :cached_votes_up,

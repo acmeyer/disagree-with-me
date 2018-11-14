@@ -8,9 +8,11 @@ import {
   Menu,
   Popover,
   MenuItem,
+  NonIdealState,
 } from "@blueprintjs/core";
 
 import {
+  showComposeView,
   showLoginModal,
   fetchPosts,
   showTopic,
@@ -122,8 +124,16 @@ class TopicView extends React.Component {
     )
   }
 
+  handleCreatePost = () => {
+    if (this.props.user.loggedIn) {
+      this.props.showComposeView();
+    } else {
+      this.props.showLoginModal('login');
+    }
+  }
+
   render() {
-    let content, loadMore;
+    let content, posts, loadMore;
 
     if (this.props.isLoading) {
       content = <LoadingView />;
@@ -139,9 +149,20 @@ class TopicView extends React.Component {
           </div>
         );
       }
+      if (this.props.posts.length > 0) {
+        posts = this.props.posts.map(this.renderPost);
+      } else {
+        posts = (
+          <NonIdealState
+            title="No Conversations"
+            description="There aren't any conversations for this topic yet. Be the first to start a conversation about this topic."
+            action={<Button text="Create" onClick={() => this.handleCreatePost()} />}
+          />
+        );
+      }
       content = (
         <div>
-          {this.props.posts.map(this.renderPost)}
+          {posts}
           {loadMore}
         </div>
       );
@@ -165,6 +186,7 @@ class TopicView extends React.Component {
 
 function actions(dispatch) {
   return {
+    showComposeView: () => { dispatch(showComposeView()) },
     showTopic: (topic) => { dispatch(showTopic(topic)) },
     showLoginModal: (view) => { dispatch(showLoginModal(view)) },
     fetchPosts: (page, options) => { dispatch(fetchPosts(page, options)) },

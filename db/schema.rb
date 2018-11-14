@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_09_185250) do
+ActiveRecord::Schema.define(version: 2018_11_14_205056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,10 +87,17 @@ ActiveRecord::Schema.define(version: 2018_11_09_185250) do
     t.float "cached_weighted_average", default: 0.0
     t.datetime "deleted_at"
     t.integer "status"
-    t.bigint "topic_id"
     t.index ["deleted_at"], name: "index_posts_on_deleted_at"
-    t.index ["topic_id"], name: "index_posts_on_topic_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "posts_topics", force: :cascade do |t|
+    t.bigint "post_id"
+    t.bigint "topic_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_posts_topics_on_post_id"
+    t.index ["topic_id"], name: "index_posts_topics_on_topic_id"
   end
 
   create_table "reports", force: :cascade do |t|

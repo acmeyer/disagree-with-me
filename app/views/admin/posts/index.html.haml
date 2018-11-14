@@ -16,7 +16,6 @@
           %td Upvotes
           %td Responses
           %td Reports
-          %td Topic
           %td Tags
           %td
           %td
@@ -28,7 +27,6 @@
             %td= post.cached_votes_up
             %td= post.responses_count
             %td= post.reports.count
-            %td= post.topic.try(:title)
             %td= post.tag_list
             %td= link_to "Edit", edit_admin_post_path(post)
             %td= link_to "Delete", admin_post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger'
