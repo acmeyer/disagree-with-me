@@ -22,8 +22,9 @@ class TopicJson
     topic_json = {
       id: topic.id,
       title: topic.title,
-      created_at: (post.created_at.to_f * 1000).to_i,
-      updated_at: (post.updated_at.to_f * 1000).to_i,
+      posts_count: topic.posts.size,
+      created_at: (topic.created_at.to_f * 1000).to_i,
+      updated_at: (topic.updated_at.to_f * 1000).to_i,
     }
     return topic_json
   end

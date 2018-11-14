@@ -57,8 +57,8 @@ class Api::V1::PostsController < Api::V1::ApiController
   end
 
   def filter_posts(posts, params)
-    if !params[:topic].blank?
-      topic = Topic.find_by_title(params[:topic])
+    if !params[:topicId].blank?
+      topic = Topic.find(params[:topicId])
       posts = topic.posts if topic
     elsif params[:latest] == "true"
       posts = posts.order(created_at: :desc)

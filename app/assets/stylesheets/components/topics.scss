@@ -1,0 +1,12 @@
+.topic-cell {
+  height: 150px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $gray !important;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+}

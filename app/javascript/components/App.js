@@ -13,6 +13,7 @@ import ConfirmEmailModal from './common/ConfirmEmailModal';
 import HomeView from './home/HomeView';
 import ConversationView from './conversations/ConversationView';
 import UserView from './user/UserView';
+import TopicView from './topics/TopicView';
 import UserSettingsView from './user/UserSettingsView';
 import ActivityView from './activity/ActivityView';
 import AboutPage from './about/AboutPage';
@@ -21,6 +22,7 @@ import HowItWorksPage from './how_it_works/HowItWorksPage';
 import {connect} from 'react-redux';
 
 import {
+  fetchTopics,
   fetchUser,
   fetchNotifications,
 } from '../actions';
@@ -33,6 +35,7 @@ class App extends React.Component {
       this.props.fetchUser();
       this.props.fetchNotifications(1, {list: 'unread'});
     }
+    this.props.fetchTopics();
   }
 
   render() {
@@ -45,8 +48,7 @@ class App extends React.Component {
           <ComposePostModal />
           <ConfirmEmailModal />
           <Route exact path="/" render={props => <HomeView key={this.props.user.id} {...props} />} />
-          <Route path="/latest" render={props => <HomeView key={this.props.user.id} {...props} />} />
-          <Route path="/popular" render={props => <HomeView key={this.props.user.id} {...props} />} />
+          <Route path="/topics/:topicId" render={props => <TopicView key={this.props.user.id} {...props} />} />
           <Route path="/how-it-works" component={HowItWorksPage} />
           <Route path="/about" component={AboutPage} />
           <Route path="/terms" component={TermsPage} />
@@ -139,6 +141,7 @@ class App extends React.Component {
 
 function actions(dispatch) {
   return {
+    fetchTopics: () => { dispatch(fetchTopics()) },
     fetchNotifications: (page, options) => { dispatch(fetchNotifications(page, options)) },
     fetchUser: () => { dispatch(fetchUser()) },
   };

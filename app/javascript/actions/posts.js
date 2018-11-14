@@ -55,7 +55,7 @@ function toggleBookmark(post) {
   }
 }
 
-export function fetchPosts(page = 1, list = 'popular') {
+export function fetchPosts(page = 1, topicId = 'latest') {
   return (dispatch, getState) => {
     let headers = {headers: {}};
     const userEmail = getState().user.email;
@@ -66,14 +66,14 @@ export function fetchPosts(page = 1, list = 'popular') {
         'User-Email': userEmail,
       };
     }
-    let url = `${serverDomain}/posts?page=${page}`;
+    let url = `${serverDomain}`;
 
-    if (list === 'latest') {
-      url = url + '&latest=true';
-    } else if (list === 'popular') {
-      url = url + '&popular=true';
+    if (topicId === 'latest') {
+      url = url + `/posts?page=${page}&latest=true`;
+    } else if (topicId === 'popular') {
+      url = url + `/posts?page=${page}&popular=true`;
     } else {
-      url = url + '&random=true';
+      url = url + `/posts?page=${page}&topicId=${topicId}`;
     }
 
 

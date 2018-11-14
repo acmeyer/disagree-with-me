@@ -117,6 +117,7 @@ Rails.application.routes.draw do
   get "login", to: "web_app#index"
   get "signup", to: "web_app#index"
   get "reset_password", to: "web_app#index"
+  get "topics/:topic_id", to: "web_app#index", as: 'topic'
   get "conversations/:post_id", to: "web_app#index", as: 'conversation'
   get "bookmarks", to: "web_app#index"
   get "me/:route", to: "web_app#index", as: 'me'

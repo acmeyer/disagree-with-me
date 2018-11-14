@@ -7,6 +7,7 @@ const conversationActions = require('./conversation');
 const reportingActions = require('./reporting');
 const searchActions = require('./search');
 const notificationActions = require('./notifications');
+const topicActions = require('./topics');
 
 module.exports = {
   ...userActions,
@@ -18,4 +19,5 @@ module.exports = {
   ...reportingActions,
   ...searchActions,
   ...notificationActions,
+  ...topicActions,
 };

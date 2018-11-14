@@ -1,8 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withRouter, Link} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import LoadingView from '../common/LoadingView';
 import PostCell from '../common/PostCell';
+import TopicCell from '../topics/TopicCell';
 import { 
   NonIdealState, 
   Button,
@@ -13,7 +14,7 @@ import {
 
 import {
   showLoginModal,
-  fetchPosts,
+  fetchTopics,
   showComposeView,
   search,
   clearSearch,
@@ -28,18 +29,15 @@ class HomeView extends React.Component {
 
     const searchParams = queryString.parse(this.props.location.search);
 
-    const currentUrl = this.props.match.url;
-
     this.state = {
-      list: currentUrl === '/popular' ? 'popular' : 'latest',
       searchQuery: searchParams.query || '',
       sortBy: searchParams.sortBy || 'Relevance',
     };
   }
 
   componentDidMount() {
-    // Fetch posts
-    this.fetchNewPosts();
+    // Fetch topics
+    this.fetchNewTopics();
 
     // Show login if coming to login page and not logged in yet
     const currentUrl = this.props.match.url;
@@ -54,12 +52,12 @@ class HomeView extends React.Component {
       mixpanel.track('Shown Reset Password Modal');
     }
 
-    mixpanel.track('Viewed Home Page', {list: this.state.list});
+    mixpanel.track('Viewed Home Page');
   }
 
   componentDidUpdate(prevProps) {
     if (!_.isEqual(this.props.user.id, prevProps.user.id)) {
-      this.fetchNewPosts();
+      this.fetchNewTopics();
     }
   }
 
@@ -68,6 +66,10 @@ class HomeView extends React.Component {
       this.props.history.push(`?query=${this.state.searchQuery}&sortBy=${this.state.sortBy}`);
     }
     this.props.history.push(`/conversations/${post.id}`);
+  }
+
+  showTopic = (topic) => {
+    this.props.history.push(`/topics/${topic.id}`);
   }
 
   showPostComments = (e, post) => {
@@ -79,8 +81,8 @@ class HomeView extends React.Component {
     }
   }
 
-  fetchNewPosts = () => {
-    this.props.fetchPosts(1, this.state.list);
+  fetchNewTopics = () => {
+    this.props.fetchTopics(1);
   }
 
   handleCreate = () => {
@@ -91,11 +93,10 @@ class HomeView extends React.Component {
     }
   }
 
-  handleLoadMorePosts = () => {
+  handleLoadMoreTopics = () => {
     const page = this.props.page + 1;
-    const {list} = this.state;
-    this.props.fetchPosts(page, list);
-    mixpanel.track('Load More Posts', {page: 'home', list: 'list'});
+    this.props.fetchTopics(page);
+    mixpanel.track('Load More Topics', {page: 'home'});
   }
 
   renderPost = (post) => {
@@ -107,6 +108,17 @@ class HomeView extends React.Component {
         showTopResponse 
         showPost={() => this.showPost(post)}
         showPostComments={(e) => this.showPostComments(e, post)}
+      />
+    );
+  }
+
+  renderTopic = (topic) => {
+    return (
+      <TopicCell 
+        key={topic.id} 
+        user={this.props.user} 
+        topic={topic}
+        showTopic={() => this.showTopic(topic)}
       />
     );
   }
@@ -146,15 +158,6 @@ class HomeView extends React.Component {
         })}
       </Menu>
     );
-  }
-
-  renderListFilters = () => {
-    return (
-      <div className="list-filters">
-        <Link to="/latest" className={`filter text-dark mr-2 ${this.state.list === 'latest' ? 'font-weight-bold' : ''}`}>Latest</Link>
-        <Link to="/popular" className={`filter text-dark mr-2 ${this.state.list === 'popular' ? 'font-weight-bold' : ''}`}>Popular</Link>
-      </div>
-    )
   }
 
   renderSearchFilters = () => {
@@ -219,7 +222,6 @@ class HomeView extends React.Component {
         );
       }
     } else {
-      filters = this.renderListFilters();
       if (this.props.isLoading) {
         content = <LoadingView />;
       } else {
@@ -227,7 +229,7 @@ class HomeView extends React.Component {
           loadMore = (
             <div className="load-more text-center m-3">
               <Button 
-                onClick={this.handleLoadMorePosts}
+                onClick={this.handleLoadMoreTopics}
                 loading={this.props.loadingMore}
                 text="Load More"
               />
@@ -235,8 +237,8 @@ class HomeView extends React.Component {
           );
         }
         content = (
-          <div>
-            {this.props.posts.map(this.renderPost)}
+          <div className="row">
+            {this.props.topics.map(this.renderTopic)}
             {loadMore}
           </div>
         );
@@ -280,18 +282,18 @@ function actions(dispatch) {
     clearSearch: () => { dispatch(clearSearch()) },
     showComposeView: () => { dispatch(showComposeView()) },
     showLoginModal: (view) => { dispatch(showLoginModal(view)) },
-    fetchPosts: (page, options) => { dispatch(fetchPosts(page, options)) },
+    fetchTopics: (page, options) => { dispatch(fetchTopics(page, options)) },
   };
 }
 
 function select(store) {
   return {
-    isLoading: store.posts.loading,
+    isLoading: store.topics.loading,
     user: store.user,
-    posts: store.posts.list,
-    page: store.posts.page,
-    moreResults: store.posts.moreResults,
-    loadingMore: store.posts.loadingMore,
+    topics: store.topics.list,
+    page: store.topics.page,
+    moreResults: store.topics.moreResults,
+    loadingMore: store.topics.loadingMore,
     searchIsLoading: store.search.loading,
     searchResults: store.search.list,
   };

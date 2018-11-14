@@ -9,6 +9,7 @@ import { reportModalReducer } from './reportModal';
 import { searchReducer } from './search';
 import { notificationsReducer } from './notifications';
 import { confirmEmailModalReducer } from './confirmEmailModal';
+import { topicsReducer } from './topics';
 
 export default combineReducers({
   user: userReducer,
@@ -21,4 +22,5 @@ export default combineReducers({
   search: searchReducer,
   notifications: notificationsReducer,
   confirmEmailModal: confirmEmailModalReducer,
+  topics: topicsReducer,
 });
