@@ -49,7 +49,7 @@ Rails.application.routes.draw do
 
         resources :reports, only: [:create]
 
-        resources :topics, only: [:index, :show, :create]
+        resources :topics, only: [:index, :show]
 
         resources :notifications, only: [:index] do
           collection do
