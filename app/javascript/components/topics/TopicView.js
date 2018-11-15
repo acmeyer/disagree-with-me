@@ -69,8 +69,8 @@ class TopicView extends React.Component {
   handleLoadMorePosts = () => {
     const page = this.props.page + 1;
     const {topic} = this.state;
-    this.props.fetchPosts(page, topic);
-    mixpanel.track('Load More Posts', {page: 'topic', topic: topic});
+    this.props.fetchPosts(page, topic.id);
+    mixpanel.track('Load More Posts', {page: 'topic', topic: topic.id});
   }
 
   renderPost = (post) => {
