@@ -4,6 +4,8 @@ class Topic < ApplicationRecord
 
   validates :title, presence: true, uniqueness: true
 
+  paginates_per 25
+
   include PgSearch
   pg_search_scope :search_topics, :against => [:title]
 end
