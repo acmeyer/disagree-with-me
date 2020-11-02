@@ -17,17 +17,17 @@ class HowItWorksPage extends React.Component {
           <p>Anyone on the internet can browse Disagree with Me and read every conversation. But only those who sign up can participate by posting ideas or opinions and providing opposing viewpoints to others.</p>
           <p>We require you to sign up in order to participate for two main reasons:</p>
           <ol>
-            <li>It helps protects all users from the annoyance of spam and bots.</li>
+            <li>It helps protect all users from the annoyance of spam and bots.</li>
             <li>It provides a mechanism for accountability. Disagree with Me is not a place for people who act like jerks on the internet. If you act like a jerk, then your account may be disabled.</li>
           </ol>
           <p>Anyone who is signed up for Disagree with Me can also help in policing users by reporting any content that they think violates our <Link to="/terms">terms</Link>. This helps create a place where many people enjoy participating.</p>
           <h2 id="anonymity">Anonymity</h2>
           <p>Although an account is required to participate on Disagree with Me, no emails or usernames will be shown next to any post or response. The reason for this is because an important concept in creating a place where dissent can thrive is by separating a viewpoint from the person holding that viewpoint.</p>
-          <p>By creating a separation between the person and the viewpoint, it prevents others from disagreeing solely based on the person who said it. Disagree with Me is a network where the idea is the center, not the people.</p>
+          <p>By creating a separation between the person and the viewpoint, it prevents others from disagreeing solely based on the person who said it. Disagree with Me is a network where ideas are at the center, not people. Users may come and go but ideas will stay around.</p>
           <h2 id="filtering">Filtering</h2>
           <p>Creating a place where people are encouraged to disagree and do so anonymously has the potential of becoming a cesspool on the internet. Besides <a href="#accountability">accountability</a>, another way Disagree with Me prevents this from happening is by enabling tools for better filtering.</p>
           <p>One of the unique mechanisms that separates Disagree with Me from other online discussion sites, is that the users of the site provide the filtering of content. We do this by giving anyone who posts a new idea or opinion control over the most helpful responses to their post.</p>
-          <p>As people respond to your opinion, you have the chance to Thank them for their response. By Thanking a user for their response, you provide a signal to other users that their viewpoint was helpful to you in seeing the other opposing view.</p>
+          <p>As people respond to your opinion, you have the chance to Thank them for their response. By Thanking a user for their response, you provide a signal to other users that their viewpoint was helpful in seeing the other opposing view.</p>
           <h2 id="participation">Participation</h2>
           <p>In order to create a place where the content is engaging, we have mechanisms in place to encourage participation. Sites are best when lots of people are participating and interacting with each other. This is especially true in network-style applications.</p>
           <p>So on Disagree with Me, any post who’s author has become inactive for more than a week, will automatically thank responders that have received upvotes from the community. This ensures that anyone who posts an opinion and then leaves the site for good, can still create an active and engaging conversation. This also provides insurance to responders that even if a post’s author is not participating, their response could still be shown on the site and become a top response for others to see.</p>
