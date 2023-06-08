@@ -8,6 +8,6 @@ Ultimately, this application never reallly went anywhere. It got good initial pr
 
 When ChatGPT and LLMs came out, they actual offered a better version of this since you could _always_ get an alternative opinion on a viewpoint from the AI, 24/7 and it is usually thoughtful and well presented.
 
-Therefore, I decided to make this open source since there could be some interesting things someone, somewhere picks up. But do note, if you are reading this. This was created a number of years ago, so many of the libraries, services, and concepts could be very out of date.
+Therefore, I decided to make this open source since there could be some interesting things someone, somewhere picks up. But do note, if you are reading this, this was created a number of years ago, so many of the libraries, services, and concepts could be very out of date.
 
 Oh, and if you would like to use a better and more modern version of Disagree with Me, check out the [Disagree with Me bot](https://poe.com/DisagreeWithMe) I put together on Poe.
